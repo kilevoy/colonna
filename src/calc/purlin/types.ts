@@ -1,40 +1,127 @@
 /** Light-gauge steel framing (ЛСТК) purlin types. */
 
 export type LstkProfileType = "2TPS" | "2PS" | "Z";
-export type SteelGrade = "MP350" | "MP390";
+export type LstkSteelGrade = "MP350" | "MP390";
+
+/** Hot-rolled steel grades for purlin selection */
+export type RolledSteelGrade = "С255Б" | "С355Б" | "С245" | "С345";
+export type RolledProfileCategory =
+  | "beam_normal"
+  | "beam_wide"
+  | "beam_column"
+  | "square_tube"
+  | "rect_tube";
+
+export type MaterialType = "lstk" | "rolled";
+
+/* ─── ЛСТК профили ─── */
 
 export interface LstkProfile {
-  /** Original Russian name, e.g. "2ТПС 145х45х1,5" */
   name: string;
   type: LstkProfileType;
   h_mm: number;
-  /** Width — present for 2ТПС/2ПС, null for Z */
   b_mm: number | null;
   t_mm: number;
   /** Baseline (working coefficient = 0.85) bending capacity, kN·m */
   M_pred_baseline_kNm: number;
-  /** Default working coefficient for "по умолчанию" mode (0.85 / 0.87 / 0.9 by thickness) */
+  /** Default working coefficient */
   default_coef: number;
-  /** Linear mass, kg/m */
   mass_kg_per_m: number;
   Ry_MPa: number;
 }
 
-export type SnowDriftMode = "none" | "along" | "across";
+export interface LstkCandidate {
+  profile: LstkProfile;
+  spacing_mm: number;
+  M_pred_eff_kNm: number;
+  M_design_kNm: number;
+  K: number;
+  nPurlins: number;
+  massPerFrameStep_kg: number;
+  massPerBuilding_kg: number;
+}
 
+export interface LstkSectionResult {
+  best: LstkCandidate | null;
+  grade: LstkSteelGrade;
+  type: LstkProfileType;
+}
+
+/* ─── Сортовые профили (shared profiles.json from column engine) ─── */
+
+export interface RolledProfile {
+  name: string;
+  category: RolledProfileCategory;
+  h_mm: number | null;
+  b_mm: number | null;
+  s_mm: number | null;
+  t_mm: number | null;
+  R_mm: number | null;
+  A_cm2: number;
+  mass_kg_per_m: number;
+  Ix_cm4: number;
+  Wx_cm3: number;
+  Sx_cm3: number | null;
+  ix_cm: number;
+  Iy_cm4: number;
+  Wy_cm3: number;
+  iy_cm: number;
+  /** Allowable steel grades for this profile */
+  steels: RolledSteelGrade[];
+}
+
+export interface RolledCandidate {
+  profile: RolledProfile;
+  steel: RolledSteelGrade;
+  spacing_mm: number;
+  Ry_MPa: number;
+  /** Design moment, kN·m */
+  M_design_kNm: number;
+  /** Max utilization ratio among all checks */
+  K_max: number;
+  limitingCheck: string;
+  /** Per-check utilizations */
+  checks: Record<string, number>;
+  nPurlins: number;
+  massPerFrameStep_kg: number;
+  massPerBuilding_kg: number;
+}
+
+export interface RolledSectionResult {
+  best: RolledCandidate | null;
+  steel: RolledSteelGrade;
+  category: RolledProfileCategory;
+}
+
+/* ─── Общие типы ─── */
+
+export type SnowDriftMode = "none" | "along" | "across";
 export type RoofShape = "gable" | "monoslope";
 
+export interface PurlinLoads {
+  q_snow_kPa: number;
+  q_windRoof_kPa: number;
+  q_roof_kPa: number;
+  q_total_kPa: number;
+}
+
+export interface SnowDriftResult {
+  mu2: number;
+  designSpan_m: number;
+}
+
 export interface PurlinInput {
+  materialType: MaterialType;
+
   /** γn — coefficient of responsibility */
   gamma_n: number;
-  /** Roof shape: gable (двускатная) splits slope length /2; monoslope keeps full */
+  /** Roof shape */
   roofShape: RoofShape;
 
   /** Building geometry */
   span_m: number;
   length_m: number;
   height_m: number;
-  /** Roof slope, degrees (cosine factor for snow) */
   roofSlope_deg: number;
   /** Frame pitch (m) — equals purlin span */
   framePitch_m: number;
@@ -45,15 +132,13 @@ export interface PurlinInput {
   /** Snow ground load, kN/m² */
   Sg_kPa: number;
 
-  /** Roof structure (kPa) — choose from dropdown of constructions */
+  /** Roof structure (kPa) */
   roofStructure: string;
   roofLoad_kPa: number;
 
-  /** Snow drift settings */
+  /** Snow drift */
   snowDrift: SnowDriftMode;
-  /** Height drop for drift (m), used when drift ≠ none */
   drift_dropHeight_m: number;
-  /** Existing building dimension (m) */
   drift_existingSize_m: number;
 
   /** Purlin step constraints (mm) */
@@ -64,56 +149,48 @@ export interface PurlinInput {
   snowGuardPurlin: boolean;
   fencePurlin: boolean;
 
-  /** Maximum utilization: either "default" (per-thickness from Excel) or fixed fraction (e.g. 0.8) */
+  /** Maximum utilization for rolled steel (default = 0.85) */
   maxUtilization: "default" | number;
 
-  /** Sandwich panel cassette height filter (mm), 0 = no filter */
+  /** Sandwich panel cassette height filter (mm). Only for ЛСТК; 0 = no filter */
   cassetteHeightFilter_mm: number;
+
+  /** For rolled: steel prices */
+  prices?: Record<RolledSteelGrade, number>;
 }
 
-export interface PurlinCandidate {
-  profile: LstkProfile;
-  spacing_mm: number;
-  /** Effective M_pred at applied coefficient, kN·m */
-  M_pred_eff_kNm: number;
-  /** Design moment per purlin, kN·m */
-  M_design_kNm: number;
-  /** Utilization ratio = M_design / M_pred_eff */
-  K: number;
-  /** Number of purlins per slope */
-  nPurlins: number;
-  /** Mass for one frame step, kg */
-  massPerFrameStep_kg: number;
-  /** Mass for full building, kg */
-  massPerBuilding_kg: number;
-}
+/* ─── Выходные данные ─── */
 
-export interface PurlinSectionResult {
-  /** Best candidate for given grade × type combination */
-  best: PurlinCandidate | null;
-  grade: SteelGrade;
-  type: LstkProfileType;
-}
-
-export interface PurlinOutput {
-  /** Combined load q [kPa] = q_snow + q_wind_roof + q_roof_struct */
+/** ЛСТК output */
+export interface LstkOutput {
   q_total_kPa: number;
   q_snow_kPa: number;
   q_windRoof_kPa: number;
   q_roof_kPa: number;
-
-  /** Effective μ₂ used in snow */
   mu2: number;
-
-  /** Effective design span (m) — for snow drift it may shift */
   designSpan_m: number;
-
-  /** Slope length (m) */
   L_slope_m: number;
+  sections: LstkSectionResult[];
+  top10: LstkCandidate[];
+}
 
-  /** Best candidate per (grade, type), 6 cells: 2 grades × 3 types */
-  sections: PurlinSectionResult[];
+/** Сортовой output */
+export interface RolledOutput {
+  q_total_kPa: number;
+  q_snow_kPa: number;
+  q_windRoof_kPa: number;
+  q_roof_kPa: number;
+  mu2: number;
+  designSpan_m: number;
+  L_slope_m: number;
+  sections: RolledSectionResult[];
+  top10: RolledCandidate[];
+}
 
-  /** Top 10 overall (lightest) candidates */
-  top10: PurlinCandidate[];
+/** Union output — one of these is populated based on materialType */
+export type PurlinOutput = LstkOutput | RolledOutput;
+
+/** Type guard */
+export function isLstkOutput(out: PurlinOutput): out is LstkOutput {
+  return "sections" in out && out.sections.length > 0 && "type" in (out.sections[0] ?? {});
 }

@@ -1,12 +1,16 @@
 import { useMemo, useState, useCallback } from "react";
-import { runPurlinCalculation, getCassetteHeightFilter } from "./calc/purlin/engine";
+import { runPurlinCalculation, getCassetteHeightFilter } from "./calc/purlin/index";
+import { isLstkOutput } from "./calc/purlin/types";
 import type {
   PurlinInput,
   PurlinOutput,
-  SteelGrade,
+  LstkSteelGrade,
   LstkProfileType,
+  RolledSteelGrade,
+  RolledProfileCategory,
   SnowDriftMode,
   RoofShape,
+  MaterialType,
 } from "./calc/purlin/types";
 import type { TerrainType } from "./calc/types";
 import { searchSettlements, getSettlementClimateById } from "./types/climate";
@@ -20,6 +24,7 @@ const STRUCTURES = structuresJson as StructureRow[];
 const lookupStructure = (id: string) => STRUCTURES.find((s) => s.id === id);
 
 const DEFAULT_INPUT: PurlinInput = {
+  materialType: "lstk",
   gamma_n: 1,
   roofShape: "gable",
   span_m: 24,
@@ -41,14 +46,37 @@ const DEFAULT_INPUT: PurlinInput = {
   fencePurlin: false,
   maxUtilization: "default",
   cassetteHeightFilter_mm: getCassetteHeightFilter("С-П 150 мм"),
+  prices: {
+    "С255Б": 148.8,
+    "С355Б": 155.88,
+    "С245": 130.2,
+    "С345": 141,
+  },
 };
 
-const TYPE_LABELS: Record<LstkProfileType, string> = {
+const LSTK_TYPE_LABELS: Record<LstkProfileType, string> = {
   "2TPS": "2ТПС",
   "2PS": "2ПС",
   "Z": "Z",
 };
-const GRADE_LABELS: Record<SteelGrade, string> = { MP350: "МП350", MP390: "МП390" };
+const LSTK_GRADE_LABELS: Record<LstkSteelGrade, string> = {
+  MP350: "МП350",
+  MP390: "МП390",
+};
+
+const ROLLED_GRADE_LABELS: Record<RolledSteelGrade, string> = {
+  "С255Б": "С255Б",
+  "С355Б": "С355Б",
+  "С245": "С245",
+  "С345": "С345",
+};
+const ROLLED_CAT_LABELS: Record<RolledProfileCategory, string> = {
+  beam_normal: "Двутавр Б",
+  beam_wide: "Двутавр Ш",
+  beam_column: "Двутавр К",
+  square_tube: "Труба □",
+  rect_tube: "Труба прям.",
+};
 
 export function PurlinApp() {
   const [input, setInput] = useState<PurlinInput>(DEFAULT_INPUT);
@@ -103,16 +131,57 @@ export function PurlinApp() {
     });
   };
 
+  const isLstk = input.materialType === "lstk";
+
   return (
     <div>
-      <h1 style={{ fontSize: 22, marginBottom: 4 }}>Калькулятор прогонов покрытия (ЛСТК)</h1>
+      <h1 style={{ fontSize: 22, marginBottom: 4 }}>Калькулятор прогонов покрытия</h1>
       <p style={{ color: "#666", fontSize: 13, marginTop: 0 }}>
-        Подбор лёгких стальных тонкостенных профилей (2ТПС, 2ПС, Z) под профлист/сэндвич-панели. Каталог 100 профилей × 2 марки стали (МП350, МП390).
+        Подбор лёгких стальных тонкостенных профилей (ЛСТК) или сортового металла под профлист/сэндвич-панели.
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 16 }}>
+      <div style={{ marginBottom: 12 }}>
+        <button
+          onClick={() => upd({ materialType: "lstk" })}
+          style={{
+            padding: "6px 14px",
+            marginRight: 6,
+            background: isLstk ? "#0c4a6e" : "#f1f5f9",
+            color: isLstk ? "white" : "#334155",
+            border: "1px solid #cbd5e1",
+            borderRadius: 4,
+            cursor: "pointer",
+          }}
+        >
+          ЛСТК
+        </button>
+        <button
+          onClick={() => upd({ materialType: "rolled" })}
+          style={{
+            padding: "6px 14px",
+            background: !isLstk ? "#0c4a6e" : "#f1f5f9",
+            color: !isLstk ? "white" : "#334155",
+            border: "1px solid #cbd5e1",
+            borderRadius: 4,
+            cursor: "pointer",
+          }}
+        >
+          Сортовой металл
+        </button>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 16,
+          marginBottom: 16,
+        }}
+      >
         {/* Column 1: geometry */}
-        <fieldset style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}>
+        <fieldset
+          style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}
+        >
           <legend style={{ fontWeight: 600 }}>Геометрия здания</legend>
           <SelectField
             label="Тип кровли"
@@ -123,11 +192,31 @@ export function PurlinApp() {
             ]}
             onChange={(v) => upd({ roofShape: v as RoofShape })}
           />
-          <Field label="Пролёт, м" value={input.span_m} onChange={(v) => upd({ span_m: v })} />
-          <Field label="Длина здания, м" value={input.length_m} onChange={(v) => upd({ length_m: v })} />
-          <Field label="Высота до низа фермы, м" value={input.height_m} onChange={(v) => upd({ height_m: v })} />
-          <Field label="Уклон кровли, °" value={input.roofSlope_deg} onChange={(v) => upd({ roofSlope_deg: v })} />
-          <Field label="Шаг рам / пролёт прогона, м" value={input.framePitch_m} onChange={(v) => upd({ framePitch_m: v })} />
+          <Field
+            label="Пролёт, м"
+            value={input.span_m}
+            onChange={(v) => upd({ span_m: v })}
+          />
+          <Field
+            label="Длина здания, м"
+            value={input.length_m}
+            onChange={(v) => upd({ length_m: v })}
+          />
+          <Field
+            label="Высота до низа фермы, м"
+            value={input.height_m}
+            onChange={(v) => upd({ height_m: v })}
+          />
+          <Field
+            label="Уклон кровли, °"
+            value={input.roofSlope_deg}
+            onChange={(v) => upd({ roofSlope_deg: v })}
+          />
+          <Field
+            label="Шаг рам / пролёт прогона, м"
+            value={input.framePitch_m}
+            onChange={(v) => upd({ framePitch_m: v })}
+          />
           <Field
             label="γₙ (коэф. ответственности)"
             value={input.gamma_n}
@@ -137,35 +226,63 @@ export function PurlinApp() {
         </fieldset>
 
         {/* Column 2: loads */}
-        <fieldset style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}>
+        <fieldset
+          style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}
+        >
           <legend style={{ fontWeight: 600 }}>Климат и нагрузки</legend>
           <div style={{ marginBottom: 8 }}>
-            <label style={{ fontSize: 13, display: "block" }}>Город (автозаполнение w₀, Sg)</label>
+            <label style={{ fontSize: 13, display: "block" }}>
+              Город (автозаполнение w₀, Sg)
+            </label>
             <input
-              style={{ width: "100%", padding: 4, boxSizing: "border-box" }}
+              style={{
+                width: "100%",
+                padding: 4,
+                boxSizing: "border-box",
+              }}
               value={cityQuery}
               onChange={(e) => setCityQuery(e.target.value)}
               placeholder="Введите название..."
             />
             {cityMatches.length > 0 && (
-              <div style={{ border: "1px solid #ddd", maxHeight: 200, overflow: "auto" }}>
+              <div
+                style={{
+                  border: "1px solid #ddd",
+                  maxHeight: 200,
+                  overflow: "auto",
+                }}
+              >
                 {cityMatches.map((s) => (
                   <div
                     key={s.id}
-                    style={{ padding: "4px 8px", cursor: "pointer", fontSize: 13 }}
+                    style={{
+                      padding: "4px 8px",
+                      cursor: "pointer",
+                      fontSize: 13,
+                    }}
                     onClick={() => handleCitySelect(s.id)}
-                    onMouseOver={(e) => (e.currentTarget.style.background = "#eef")}
-                    onMouseOut={(e) => (e.currentTarget.style.background = "")}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.background = "#eef")
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.style.background = "")
+                    }
                   >
                     {s.settlement} — {s.region}{" "}
                     <span style={{ color: "#999" }}>
-                      (w₀={s.wind.w0Kpa ?? "—"}, Sg={s.snow.sgKpa ?? "—"})
+                      (w₀={s.wind.w0Kpa ?? "—"}, Sg={
+                        s.snow.sgKpa ?? "—"
+                      })
                     </span>
                   </div>
                 ))}
               </div>
             )}
-            {selectedCity && <div style={{ fontSize: 12, color: "#080" }}>Выбран: {selectedCity}</div>}
+            {selectedCity && (
+              <div style={{ fontSize: 12, color: "#080" }}>
+                Выбран: {selectedCity}
+              </div>
+            )}
           </div>
           <SelectField
             label="Тип местности"
@@ -177,12 +294,25 @@ export function PurlinApp() {
             ]}
             onChange={(v) => upd({ terrainType: v as TerrainType })}
           />
-          <Field label="w₀ (ветер), кПа" value={input.w0_kPa} onChange={(v) => upd({ w0_kPa: v })} step={0.01} />
-          <Field label="Sg (снег), кПа" value={input.Sg_kPa} onChange={(v) => upd({ Sg_kPa: v })} step={0.05} />
+          <Field
+            label="w₀ (ветер), кПа"
+            value={input.w0_kPa}
+            onChange={(v) => upd({ w0_kPa: v })}
+            step={0.01}
+          />
+          <Field
+            label="Sg (снег), кПа"
+            value={input.Sg_kPa}
+            onChange={(v) => upd({ Sg_kPa: v })}
+            step={0.05}
+          />
           <SelectField
             label="Конструкция покрытия"
             value={input.roofStructure}
-            options={STRUCTURES.map((s) => [s.id, `${s.id} (${s.kPa.toFixed(3)} кПа)`])}
+            options={STRUCTURES.map((s) => [
+              s.id,
+              `${s.id} (${s.kPa.toFixed(3)} кПа)`,
+            ])}
             onChange={setRoofStructure}
           />
           <Field
@@ -193,9 +323,13 @@ export function PurlinApp() {
           />
         </fieldset>
 
-        {/* Column 3: snow drift + step constraints */}
-        <fieldset style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}>
-          <legend style={{ fontWeight: 600 }}>Снеговой мешок и параметры подбора</legend>
+        {/* Column 3 */}
+        <fieldset
+          style={{ border: "1px solid #ccc", padding: 12, borderRadius: 6 }}
+        >
+          <legend style={{ fontWeight: 600 }}>
+            Снеговой мешок и параметры подбора
+          </legend>
           <SelectField
             label="Снеговой мешок"
             value={input.snowDrift}
@@ -260,7 +394,7 @@ export function PurlinApp() {
                 onChange={(e) => setMaxUtilFixed(e.target.checked)}
                 style={{ marginRight: 6 }}
               />
-              Фикс. макс. к-т исп. (иначе по умолчанию: 0.85/0.87/0.90 по толщине)
+              Фикс. макс. к-т исп. (иначе по умолчанию)
             </label>
             {maxUtilFixed && (
               <input
@@ -270,7 +404,11 @@ export function PurlinApp() {
                 max={1}
                 value={maxUtilValue}
                 onChange={(e) => setMaxUtilValue(Number(e.target.value))}
-                style={{ width: "100%", padding: 4, boxSizing: "border-box" }}
+                style={{
+                  width: "100%",
+                  padding: 4,
+                  boxSizing: "border-box",
+                }}
               />
             )}
           </div>
@@ -293,130 +431,325 @@ export function PurlinApp() {
       </button>
 
       {error && (
-        <div style={{ marginTop: 12, color: "#b91c1c", fontSize: 14 }}>
+        <div
+          style={{
+            marginTop: 12,
+            color: "#b91c1c",
+            fontSize: 14,
+          }}
+        >
           Ошибка: {error}
         </div>
       )}
 
-      {out && (
-        <div style={{ marginTop: 18 }}>
-          <h2 style={{ fontSize: 18, marginBottom: 6 }}>Нагрузки</h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(5, 1fr)",
-              gap: 12,
-              padding: 10,
-              background: "#f8fafc",
-              borderRadius: 6,
-              marginBottom: 16,
-            }}
-          >
-            <Stat label="q снег, кПа" value={out.q_snow_kPa.toFixed(4)} />
-            <Stat label="q ветер (FGH+), кПа" value={out.q_windRoof_kPa.toFixed(4)} />
-            <Stat label="q покрытие, кПа" value={out.q_roof_kPa.toFixed(4)} />
-            <Stat label="q итог, кПа" value={out.q_total_kPa.toFixed(4)} />
-            <Stat label="μ₂" value={out.mu2.toFixed(3)} />
-          </div>
-
-          <h2 style={{ fontSize: 18, marginBottom: 6 }}>Подобранные сечения по типам и маркам стали</h2>
-          <div style={{ overflow: "auto", marginBottom: 16 }}>
-            <table style={{ borderCollapse: "collapse", fontSize: 13, minWidth: 880 }}>
-              <thead style={{ background: "#f1f5f9" }}>
-                <tr>
-                  <th style={th}>Сталь</th>
-                  <th style={th}>Тип</th>
-                  <th style={th}>Профиль</th>
-                  <th style={th}>Шаг, мм</th>
-                  <th style={th}>М_расч, кН·м</th>
-                  <th style={th}>М_пред, кН·м</th>
-                  <th style={th}>K</th>
-                  <th style={th}>Кол-во</th>
-                  <th style={th}>Масса/м, кг</th>
-                  <th style={th}>Масса на 1 шаг, кг</th>
-                  <th style={th}>Масса на здание, кг</th>
-                </tr>
-              </thead>
-              <tbody>
-                {out.sections.map((s) => {
-                  const c = s.best;
-                  const key = `${s.grade}-${s.type}`;
-                  if (!c) {
-                    return (
-                      <tr key={key}>
-                        <td style={td}>{GRADE_LABELS[s.grade]}</td>
-                        <td style={td}>{TYPE_LABELS[s.type]}</td>
-                        <td style={td} colSpan={9}>
-                          <span style={{ color: "#999" }}>нет подходящего профиля</span>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  return (
-                    <tr
-                      key={key}
-                      style={{ background: c.K > 0.95 ? "#fef2f2" : undefined }}
-                    >
-                      <td style={td}>{GRADE_LABELS[s.grade]}</td>
-                      <td style={td}>{TYPE_LABELS[s.type]}</td>
-                      <td style={td}>{c.profile.name}</td>
-                      <td style={td}>{c.spacing_mm}</td>
-                      <td style={td}>{c.M_design_kNm.toFixed(2)}</td>
-                      <td style={td}>{c.M_pred_eff_kNm.toFixed(2)}</td>
-                      <td style={td}>{c.K.toFixed(3)}</td>
-                      <td style={td}>{c.nPurlins}</td>
-                      <td style={td}>{c.profile.mass_kg_per_m.toFixed(3)}</td>
-                      <td style={td}>{c.massPerFrameStep_kg.toFixed(2)}</td>
-                      <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          <h2 style={{ fontSize: 18, marginBottom: 6 }}>Топ-10 по массе на здание</h2>
-          <div style={{ overflow: "auto" }}>
-            <table style={{ borderCollapse: "collapse", fontSize: 13, minWidth: 720 }}>
-              <thead style={{ background: "#f1f5f9" }}>
-                <tr>
-                  <th style={th}>#</th>
-                  <th style={th}>Сталь</th>
-                  <th style={th}>Профиль</th>
-                  <th style={th}>Шаг, мм</th>
-                  <th style={th}>K</th>
-                  <th style={th}>Кол-во</th>
-                  <th style={th}>Масса/м, кг</th>
-                  <th style={th}>Масса на здание, кг</th>
-                </tr>
-              </thead>
-              <tbody>
-                {out.top10.map((c, i) => (
-                  <tr
-                    key={i}
-                    style={{ background: c.K > 0.95 ? "#fef2f2" : undefined }}
-                  >
-                    <td style={td}>{i + 1}</td>
-                    <td style={td}>{c.profile.Ry_MPa === 350 ? "МП350" : "МП390"}</td>
-                    <td style={td}>{c.profile.name}</td>
-                    <td style={td}>{c.spacing_mm}</td>
-                    <td style={td}>{c.K.toFixed(3)}</td>
-                    <td style={td}>{c.nPurlins}</td>
-                    <td style={td}>{c.profile.mass_kg_per_m.toFixed(3)}</td>
-                    <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {out && isLstkOutput(out) && (
+        <LstkResultView out={out} />
+      )}
+      {out && !isLstkOutput(out) && (
+        <RolledResultView out={out as import("./calc/purlin/types").RolledOutput} />
       )}
     </div>
   );
 }
 
-const th: React.CSSProperties = { padding: "6px 8px", borderBottom: "1px solid #e2e8f0", textAlign: "left", whiteSpace: "nowrap" };
-const td: React.CSSProperties = { padding: "4px 8px", borderBottom: "1px solid #f1f5f9" };
+/* ─── ЛСТК результат ─── */
+function LstkResultView({ out }: { out: import("./calc/purlin/types").LstkOutput }) {
+  return (
+    <div style={{ marginTop: 18 }}>
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>Нагрузки</h2>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: 12,
+          padding: 10,
+          background: "#f8fafc",
+          borderRadius: 6,
+          marginBottom: 16,
+        }}
+      >
+        <Stat label="q снег, кПа" value={out.q_snow_kPa.toFixed(4)} />
+        <Stat label="q ветер (FGH+), кПа" value={out.q_windRoof_kPa.toFixed(4)} />
+        <Stat label="q покрытие, кПа" value={out.q_roof_kPa.toFixed(4)} />
+        <Stat label="q итог, кПа" value={out.q_total_kPa.toFixed(4)} />
+        <Stat label="μ₂" value={out.mu2.toFixed(3)} />
+      </div>
+
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>
+        Подобранные сечения по типам и маркам стали
+      </h2>
+      <div style={{ overflow: "auto", marginBottom: 16 }}>
+        <table
+          style={{
+            borderCollapse: "collapse",
+            fontSize: 13,
+            minWidth: 880,
+          }}
+        >
+          <thead style={{ background: "#f1f5f9" }}>
+            <tr>
+              <th style={th}>Сталь</th>
+              <th style={th}>Тип</th>
+              <th style={th}>Профиль</th>
+              <th style={th}>Шаг, мм</th>
+              <th style={th}>М_расч, кН·м</th>
+              <th style={th}>М_пред, кН·м</th>
+              <th style={th}>K</th>
+              <th style={th}>Кол-во</th>
+              <th style={th}>Масса/м, кг</th>
+              <th style={th}>Масса на 1 шаг, кг</th>
+              <th style={th}>Масса на здание, кг</th>
+            </tr>
+          </thead>
+          <tbody>
+            {out.sections.map((s) => {
+              const c = s.best;
+              const key = `${s.grade}-${s.type}`;
+              if (!c) {
+                return (
+                  <tr key={key}>
+                    <td style={td}>
+                      {LSTK_GRADE_LABELS[s.grade]}
+                    </td>
+                    <td style={td}>
+                      {LSTK_TYPE_LABELS[s.type]}
+                    </td>
+                    <td style={td} colSpan={9}>
+                      <span style={{ color: "#999" }}>
+                        нет подходящего профиля
+                      </span>
+                    </td>
+                  </tr>
+                );
+              }
+              return (
+                <tr
+                  key={key}
+                  style={{
+                    background: c.K > 0.95 ? "#fef2f2" : undefined,
+                  }}
+                >
+                  <td style={td}>{LSTK_GRADE_LABELS[s.grade]}</td>
+                  <td style={td}>{LSTK_TYPE_LABELS[s.type]}</td>
+                  <td style={td}>{c.profile.name}</td>
+                  <td style={td}>{c.spacing_mm}</td>
+                  <td style={td}>{c.M_design_kNm.toFixed(2)}</td>
+                  <td style={td}>{c.M_pred_eff_kNm.toFixed(2)}</td>
+                  <td style={td}>{c.K.toFixed(3)}</td>
+                  <td style={td}>{c.nPurlins}</td>
+                  <td style={td}>{c.profile.mass_kg_per_m.toFixed(3)}</td>
+                  <td style={td}>{c.massPerFrameStep_kg.toFixed(2)}</td>
+                  <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>Топ-10 по массе на здание</h2>
+      <div style={{ overflow: "auto" }}>
+        <table
+          style={{
+            borderCollapse: "collapse",
+            fontSize: 13,
+            minWidth: 720,
+          }}
+        >
+          <thead style={{ background: "#f1f5f9" }}>
+            <tr>
+              <th style={th}>#</th>
+              <th style={th}>Сталь</th>
+              <th style={th}>Профиль</th>
+              <th style={th}>Шаг, мм</th>
+              <th style={th}>K</th>
+              <th style={th}>Кол-во</th>
+              <th style={th}>Масса/м, кг</th>
+              <th style={th}>Масса на здание, кг</th>
+            </tr>
+          </thead>
+          <tbody>
+            {out.top10.map((c, i) => (
+              <tr
+                key={i}
+                style={{
+                  background: c.K > 0.95 ? "#fef2f2" : undefined,
+                }}
+              >
+                <td style={td}>{i + 1}</td>
+                <td style={td}>
+                  {c.profile.Ry_MPa === 350 ? "МП350" : "МП390"}
+                </td>
+                <td style={td}>{c.profile.name}</td>
+                <td style={td}>{c.spacing_mm}</td>
+                <td style={td}>{c.K.toFixed(3)}</td>
+                <td style={td}>{c.nPurlins}</td>
+                <td style={td}>{c.profile.mass_kg_per_m.toFixed(3)}</td>
+                <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Сортовой результат ─── */
+function RolledResultView({
+  out,
+}: {
+  out: import("./calc/purlin/types").RolledOutput;
+}) {
+  return (
+    <div style={{ marginTop: 18 }}>
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>Нагрузки</h2>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: 12,
+          padding: 10,
+          background: "#f8fafc",
+          borderRadius: 6,
+          marginBottom: 16,
+        }}
+      >
+        <Stat label="q снег, кПа" value={out.q_snow_kPa.toFixed(4)} />
+        <Stat label="q ветер, кПа" value={out.q_windRoof_kPa.toFixed(4)} />
+        <Stat label="q покрытие, кПа" value={out.q_roof_kPa.toFixed(4)} />
+        <Stat label="q итог, кПа" value={out.q_total_kPa.toFixed(4)} />
+        <Stat label="μ₂" value={out.mu2.toFixed(3)} />
+      </div>
+
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>
+        Подобранные сечения по типам и маркам стали
+      </h2>
+      <div style={{ overflow: "auto", marginBottom: 16 }}>
+        <table
+          style={{
+            borderCollapse: "collapse",
+            fontSize: 13,
+            minWidth: 960,
+          }}
+        >
+          <thead style={{ background: "#f1f5f9" }}>
+            <tr>
+              <th style={th}>Сталь</th>
+              <th style={th}>Тип</th>
+              <th style={th}>Профиль</th>
+              <th style={th}>Шаг, мм</th>
+              <th style={th}>M_расч, кН·м</th>
+              <th style={th}>K_макс</th>
+              <th style={th}>Лимит</th>
+              <th style={th}>Кол-во</th>
+              <th style={th}>Масса/м, кг</th>
+              <th style={th}>Масса на здание, кг</th>
+            </tr>
+          </thead>
+          <tbody>
+            {out.sections.map((s) => {
+              const c = s.best;
+              const key = `${s.steel}-${s.category}`;
+              if (!c) {
+                return (
+                  <tr key={key}>
+                    <td style={td}>
+                      {ROLLED_GRADE_LABELS[s.steel]}
+                    </td>
+                    <td style={td}>
+                      {ROLLED_CAT_LABELS[s.category]}
+                    </td>
+                    <td style={td} colSpan={8}>
+                      <span style={{ color: "#999" }}>
+                        нет подходящего профиля
+                      </span>
+                    </td>
+                  </tr>
+                );
+              }
+              return (
+                <tr
+                  key={key}
+                  style={{
+                    background: c.K_max > 0.95 ? "#fef2f2" : undefined,
+                  }}
+                >
+                  <td style={td}>{ROLLED_GRADE_LABELS[s.steel]}</td>
+                  <td style={td}>{ROLLED_CAT_LABELS[s.category]}</td>
+                  <td style={td}>{c.profile.name}</td>
+                  <td style={td}>{c.spacing_mm}</td>
+                  <td style={td}>{c.M_design_kNm.toFixed(2)}</td>
+                  <td style={td}>{c.K_max.toFixed(3)}</td>
+                  <td style={td}>{c.limitingCheck}</td>
+                  <td style={td}>{c.nPurlins}</td>
+                  <td style={td}>{c.profile.mass_kg_per_m.toFixed(1)}</td>
+                  <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style={{ fontSize: 18, marginBottom: 6 }}>Топ-10 по массе на здание</h2>
+      <div style={{ overflow: "auto" }}>
+        <table
+          style={{
+            borderCollapse: "collapse",
+            fontSize: 13,
+            minWidth: 720,
+          }}
+        >
+          <thead style={{ background: "#f1f5f9" }}>
+            <tr>
+              <th style={th}>#</th>
+              <th style={th}>Сталь</th>
+              <th style={th}>Профиль</th>
+              <th style={th}>Шаг, мм</th>
+              <th style={th}>K_макс</th>
+              <th style={th}>Кол-во</th>
+              <th style={th}>Масса/м, кг</th>
+              <th style={th}>Масса на здание, кг</th>
+            </tr>
+          </thead>
+          <tbody>
+            {out.top10.map((c, i) => (
+              <tr
+                key={i}
+                style={{
+                  background: c.K_max > 0.95 ? "#fef2f2" : undefined,
+                }}
+              >
+                <td style={td}>{i + 1}</td>
+                <td style={td}>{ROLLED_GRADE_LABELS[c.steel]}</td>
+                <td style={td}>{c.profile.name}</td>
+                <td style={td}>{c.spacing_mm}</td>
+                <td style={td}>{c.K_max.toFixed(3)}</td>
+                <td style={td}>{c.nPurlins}</td>
+                <td style={td}>{c.profile.mass_kg_per_m.toFixed(1)}</td>
+                <td style={td}>{c.massPerBuilding_kg.toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Shared UI components ─── */
+
+const th: React.CSSProperties = {
+  padding: "6px 8px",
+  borderBottom: "1px solid #e2e8f0",
+  textAlign: "left",
+  whiteSpace: "nowrap",
+};
+const td: React.CSSProperties = {
+  padding: "4px 8px",
+  borderBottom: "1px solid #f1f5f9",
+};
 
 function Field({
   label,
@@ -463,9 +796,7 @@ function SelectField({
         style={{ width: "100%", padding: 4, boxSizing: "border-box" }}
       >
         {options.map(([v, l]) => (
-          <option key={v} value={v}>
-            {l}
-          </option>
+          <option key={v} value={v}>{l}</option>
         ))}
       </select>
     </div>
