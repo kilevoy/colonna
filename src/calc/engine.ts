@@ -14,6 +14,11 @@ import profilesJson from "../data/profiles/profiles.json";
 const PROFILES = profilesJson as ProfileData[];
 const E_MPA = 206000;
 
+function priceBySuffix(input: CalculationInput, suffix: string): number {
+  const entry = Object.entries(input.prices).find(([steel]) => steel.includes(suffix));
+  return entry?.[1] ?? 0;
+}
+
 /**
  * μ (расчётная длина) per Excel `Сводка!B130`:
  *   фахверковая → 0.7
@@ -188,10 +193,18 @@ function checkProfile(
 
   const strutStep =
     input.columnType === "fachwerk" ? input.fachverkPitch_m : input.framePitch_m;
-  const strutMass = struts * 12 * strutStep * 1.15;
-  const columnMass = profile.mass_kg_per_m * H;
+  const legacyStrutMass = struts * 12 * strutStep * 1.15;
+  const braceMass = struts * 9.6 * strutStep * 1.15;
+  const legacyTotalMass = profile.mass_kg_per_m * H + legacyStrutMass;
+  const columnMass = profile.mass_kg_per_m * H * 1.15;
+  const strutMass = braceMass;
   const totalMass = columnMass + strutMass;
-  const cost = (totalMass * pricePerKg(steel, input.prices)) / 1000;
+  const mainCostMass = legacyTotalMass - braceMass;
+  const bracePrice = priceBySuffix(input, "245");
+  const cost =
+    (mainCostMass * pricePerKg(steel, input.prices) * 1.15 +
+      braceMass * bracePrice) /
+    1000;
 
   return {
     rank: 0,

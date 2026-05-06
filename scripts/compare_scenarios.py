@@ -9,12 +9,16 @@ import json
 import os
 import sys
 import subprocess
+import tempfile
 
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
 from verify_baseline import calc  # noqa: E402
 
-ORACLE_JSON = "/tmp/oracle_results.json"
+ORACLE_JSON = os.environ.get(
+    "COLUMN_ORACLE_JSON",
+    os.path.join(tempfile.gettempdir(), "colonna_column_oracle_results.json"),
+)
 
 if not os.path.exists(ORACLE_JSON) or "--refresh" in sys.argv:
     print("Generating Excel ground truth via LibreOffice…")

@@ -142,6 +142,26 @@ export interface WindResult {
   verticalRoof_kPa: number;
 }
 
+export interface WindTraceResult extends WindResult {
+  w0Kpa: number;
+  terrainType: TerrainType;
+  heightM: number;
+  kZe: number;
+  zeta: number;
+  nuLongB: number;
+  nuShortB: number;
+  nuFghPlus: number;
+  gammaF: number;
+  externalPressureCoeffB: number;
+  externalPressureCoeffFghPlus: number;
+  longB_kPa: number;
+  shortB_kPa: number;
+  fghPlus_kPa: number;
+  windBeforeSideFactor_kPa: number;
+  sideFactor: number;
+  missingDebugFields: string[];
+}
+
 /**
  * Wind calculation per СП 20.13330.2016 matching the source Excel.
  *
@@ -157,13 +177,13 @@ export interface WindResult {
  *   Short-side wind (wind perpendicular to span):
  *     - zone B    → ν = ν(span, h)             [Q20 / L40]
  */
-export function calcWind(
+export function calcWindDetailed(
   w0: number,
   terrain: TerrainType,
   height_m: number,
   span_m: number,
   length_m: number,
-): WindResult {
+): WindTraceResult {
   const h = Math.max(height_m, 5);
   const kze = getKze(terrain, h);
   const zeta = getZeta(terrain, h);
@@ -176,9 +196,45 @@ export function calcWind(
   const longB = zoneTotal(w0, kze, -0.8, gamma_f, zeta, nuLongB);
   const shortB = zoneTotal(w0, kze, -0.8, gamma_f, zeta, nuShortB);
   const fghPlus = zoneTotal(w0, kze, 0.2, gamma_f, zeta, nuFghPlus);
+  const horizontalPressure_kPa = Math.max(longB, shortB) + fghPlus;
 
   return {
-    horizontalPressure_kPa: Math.max(longB, shortB) + fghPlus,
+    horizontalPressure_kPa,
     verticalRoof_kPa: fghPlus,
+    w0Kpa: w0,
+    terrainType: terrain,
+    heightM: h,
+    kZe: kze,
+    zeta,
+    nuLongB,
+    nuShortB,
+    nuFghPlus,
+    gammaF: gamma_f,
+    externalPressureCoeffB: -0.8,
+    externalPressureCoeffFghPlus: 0.2,
+    longB_kPa: longB,
+    shortB_kPa: shortB,
+    fghPlus_kPa: fghPlus,
+    windBeforeSideFactor_kPa: horizontalPressure_kPa,
+    sideFactor: 1,
+    missingDebugFields: [
+      "windTrace.internalPressureCoeff",
+      "windTrace.dynamicCoeff",
+      "windTrace.pulsationCoeff",
+    ],
+  };
+}
+
+export function calcWind(
+  w0: number,
+  terrain: TerrainType,
+  height_m: number,
+  span_m: number,
+  length_m: number,
+): WindResult {
+  const detailed = calcWindDetailed(w0, terrain, height_m, span_m, length_m);
+  return {
+    horizontalPressure_kPa: detailed.horizontalPressure_kPa,
+    verticalRoof_kPa: detailed.verticalRoof_kPa,
   };
 }

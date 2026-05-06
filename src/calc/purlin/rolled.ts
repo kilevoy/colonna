@@ -7,10 +7,15 @@ import type {
 } from "./types";
 
 import profilesJson from "../../data/profiles/profiles.json";
+import { getKze, getNu, getZeta } from "../wind";
 
 const PROFILES = profilesJson as RolledProfile[];
 const E_MPA = 206000;
 const GAMMA_C = 0.95;
+const PURLIN_ROLLED_EXCLUDED_PROFILE_NAMES = new Set([
+  // Workbook sort-steel reference marks this profile as excluded.
+  "пр.200х120х4",
+]);
 
 /* ─── Local Ry lookup (matches column engine/steel.ts) ─── */
 
@@ -97,6 +102,10 @@ function evaluateRolledProfile(
   input: PurlinInput,
   L_slope_m: number,
 ): RolledCandidate | null {
+  if (PURLIN_ROLLED_EXCLUDED_PROFILE_NAMES.has(profile.name)) {
+    return null;
+  }
+
   const L = input.framePitch_m; // purlin span = frame pitch
   const s_m = spacing_mm / 1000;
   const gamma_n = input.gamma_n;
@@ -122,6 +131,20 @@ function evaluateRolledProfile(
   // 1. Strength (bending)
   const sigma = M_design / (Wx_m3 * 1000); // MPa (MN·m / m³)
   checks["прочность"] = sigma / (Ry * GAMMA_C);
+  const windFacade_kPa = calcFacadeWindPressure(
+    input.w0_kPa,
+    input.terrainType,
+    input.height_m,
+    input.length_m,
+  ) * gamma_n;
+  const windForce_kN = (windFacade_kPa * input.height_m * input.framePitch_m) / 2;
+  const roofSlopeRad = (input.roofSlope_deg * Math.PI) / 180;
+  const Wy_m3 = profile.Wy_cm3 / 1e6;
+  const biaxialSigma =
+    windForce_kN / (profile.A_cm2 / 1e4) +
+    M_design / Wx_m3 +
+    ((q_total_kPa * s_m * L * L) / 8) * Math.tan(roofSlopeRad) / Wy_m3;
+  checks["прочность с ветром/уклоном"] = biaxialSigma / 1e3 / (Ry * GAMMA_C);
 
   // 2. Deflection (limit L/200)
   const f = (5 * q_line * Math.pow(L, 4)) / (384 * E_MPA * 1e3 * Ix_m4); // m
@@ -175,17 +198,21 @@ function evaluateRolledProfile(
 
   // --- Mass calculation ---
   const slopeFactor = input.roofShape === "gable" ? 2 : 1;
-  const halfSlope_m = (input.span_m - 0.3) / slopeFactor;
-  const baseCount = Math.max(1, Math.ceil(halfSlope_m / s_m));
+  const halfSlope_m =
+    (input.span_m - 0.3) /
+    slopeFactor /
+    Math.cos((input.roofSlope_deg * Math.PI) / 180);
+  const baseCount = Math.max(1, Math.ceil(halfSlope_m / s_m) + 1);
   const sgExtra = input.snowGuardPurlin ? 1 : 0;
   const fenceExtra = input.fencePurlin ? 0.5 : 0;
   const countPerHalf = baseCount + sgExtra + fenceExtra;
   const nPurlins = countPerHalf * slopeFactor;
+  const overlapOrWasteFactor = 1.03;
 
   const massPerFrameStep_kg =
     countPerHalf * profile.mass_kg_per_m * slopeFactor * input.framePitch_m;
   const massPerBuilding_kg =
-    (massPerFrameStep_kg * input.length_m) / input.framePitch_m;
+    (massPerFrameStep_kg * input.length_m * overlapOrWasteFactor) / input.framePitch_m;
 
   return {
     profile,
@@ -231,6 +258,20 @@ export function enumerateRolledCandidates(
     }
   }
   return out;
+}
+
+function calcFacadeWindPressure(
+  w0: number,
+  terrain: PurlinInput["terrainType"],
+  height_m: number,
+  length_m: number,
+): number {
+  const h = Math.max(height_m, 5);
+  const kze = getKze(terrain, h);
+  const zeta = getZeta(terrain, h);
+  const nu = getNu(0.4 * length_m, h);
+  const mean = Math.abs(w0 * kze * -0.8 * 1.4);
+  return mean + mean * zeta * nu;
 }
 
 /** Group rolled candidates by (steel, category) and pick lightest in each group. */

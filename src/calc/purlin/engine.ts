@@ -32,10 +32,9 @@ function evaluateLstkProfile(
     return null;
   }
 
-  const appliedCoef =
-    input.maxUtilization === "default"
-      ? profile.default_coef
-      : input.maxUtilization;
+  // The workbook-backed LSTK branch uses profile-specific coefficients here.
+  // input.maxUtilization is a hot-rolled selection cap, not an LSTK capacity factor.
+  const appliedCoef = profile.default_coef;
   const M_pred_eff = (profile.M_pred_baseline_kNm / 0.85) * appliedCoef;
 
   const s_m = spacing_mm / 1000;

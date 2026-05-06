@@ -25,7 +25,10 @@ import sys
 import tempfile
 import json
 
-SRC_XLSX = "/home/ubuntu/attachments/31cc5e15-2e68-4a08-998c-834f1b5a9fc6/+++v6.1+1.xlsx"
+SRC_XLSX = os.environ.get(
+    "COLUMN_XLSX",
+    os.path.expanduser("~/attachments/31cc5e15-2e68-4a08-998c-834f1b5a9fc6/+++v6.1+1.xlsx"),
+)
 
 
 def patch_and_recalc(out_dir, params, idx):

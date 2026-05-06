@@ -1,8 +1,13 @@
-import { runPurlinCalculation, getCassetteHeightFilter } from "../src/calc/purlin/engine";
+import {
+  getCassetteHeightFilter,
+  isLstkOutput,
+  runPurlinCalculation,
+} from "../src/calc/purlin/index";
 import type { PurlinInput } from "../src/calc/purlin/types";
 
 function runScenario(name: string, overrides: Partial<PurlinInput>) {
   const base: PurlinInput = {
+    materialType: "lstk",
     gamma_n: 1,
     roofShape: "gable",
     span_m: 24,
@@ -30,6 +35,9 @@ function runScenario(name: string, overrides: Partial<PurlinInput>) {
     input.cassetteHeightFilter_mm = getCassetteHeightFilter(input.roofStructure);
   }
   const out = runPurlinCalculation(input);
+  if (!isLstkOutput(out)) {
+    throw new Error("Expected LSTK purlin output for verification scenario.");
+  }
 
   console.log(`\n### ${name}`);
   console.log(`  q_snow=${out.q_snow_kPa.toFixed(4)} q_wind=${out.q_windRoof_kPa.toFixed(4)} q_roof=${out.q_roof_kPa.toFixed(4)} q_total=${out.q_total_kPa.toFixed(4)} (μ₂=${out.mu2.toFixed(3)})`);
