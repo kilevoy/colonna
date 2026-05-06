@@ -1,5 +1,6 @@
-export { calculateProject } from "./calculate-project";
+export { calculateProject, calculateProjectWithSummary } from "./calculate-project";
 export { defaultProjectInput } from "./defaults";
+export { buildProjectSummary, formatProjectSummaryMarkdown } from "./project-summary";
 export { mapProjectToBeamCellInput } from "./map-project-to-beam-cell";
 export { mapProjectToColumnInput } from "./map-project-to-column";
 export { mapProjectToCraneBeamInput } from "./map-project-to-crane-beam";

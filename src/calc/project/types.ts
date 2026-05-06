@@ -123,3 +123,46 @@ export interface ProjectCalculationResult {
   warnings: string[];
   mappingNotes: string[];
 }
+
+export type ProjectBlockName =
+  | "column"
+  | "truss"
+  | "purlin"
+  | "craneBeam"
+  | "windowRiegel"
+  | "beamCell";
+
+export type ProjectBlockCalculationStatus = "ok" | "warning" | "error" | "notCalculated";
+
+export type ProjectBlockCalculationSource = "native" | "velican-oracle" | "mixed" | "unknown";
+
+export interface ProjectBlockStatus {
+  block: ProjectBlockName;
+  status: ProjectBlockCalculationStatus;
+  source: ProjectBlockCalculationSource;
+  selectedProfiles: string[];
+  massKg: number | null;
+  costRub: number | null;
+  utilization: number | null;
+  warnings: string[];
+  notes: string[];
+}
+
+export interface ProjectCalculationSummary {
+  projectName: string;
+  city?: string;
+  calculatedAt: string;
+  blocks: ProjectBlockStatus[];
+  totalMassKg: number;
+  totalCostRub: number;
+  massByBlock: Partial<Record<ProjectBlockName, number>>;
+  costByBlock: Partial<Record<ProjectBlockName, number>>;
+  warnings: string[];
+  mappingNotes: string[];
+  incompleteFields: string[];
+}
+
+export interface ProjectCalculationWithSummary {
+  result: ProjectCalculationResult;
+  summary: ProjectCalculationSummary;
+}

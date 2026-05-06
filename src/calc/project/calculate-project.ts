@@ -10,7 +10,13 @@ import { mapProjectToCraneBeamInput } from "./map-project-to-crane-beam";
 import { mapProjectToPurlinInput } from "./map-project-to-purlin";
 import { mapProjectToTrussInput } from "./map-project-to-truss";
 import { mapProjectToWindowRiegelInput } from "./map-project-to-window-riegel";
-import type { ProjectBlockMapping, ProjectCalculationResult, ProjectInput } from "./types";
+import { buildProjectSummary } from "./project-summary";
+import type {
+  ProjectBlockMapping,
+  ProjectCalculationResult,
+  ProjectCalculationWithSummary,
+  ProjectInput,
+} from "./types";
 
 function collectMapping<T>(block: string, mapped: ProjectBlockMapping<T>, notes: string[], warnings: string[]): T {
   notes.push(...mapped.mappingNotes.map((note) => `${block}: ${note}`));
@@ -90,5 +96,13 @@ export function calculateProject(project: ProjectInput): ProjectCalculationResul
     },
     warnings,
     mappingNotes,
+  };
+}
+
+export function calculateProjectWithSummary(project: ProjectInput): ProjectCalculationWithSummary {
+  const result = calculateProject(project);
+  return {
+    result,
+    summary: buildProjectSummary(result),
   };
 }
