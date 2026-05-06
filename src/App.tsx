@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react";
+import { lazy, Suspense, useMemo, useState, useCallback } from "react";
 import { runCalculation, computeMu } from "./calc/engine";
 import type {
   CalculationInput,
@@ -675,9 +675,16 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 import { TrussApp } from "./TrussApp";
 import { PurlinApp } from "./PurlinApp";
-import { CraneBeamApp } from "./CraneBeamApp";
-import { WindowRiegelApp } from "./WindowRiegelApp";
-import { BeamCellApp } from "./BeamCellApp";
+
+const CraneBeamApp = lazy(() =>
+  import("./CraneBeamApp").then((module) => ({ default: module.CraneBeamApp })),
+);
+const WindowRiegelApp = lazy(() =>
+  import("./WindowRiegelApp").then((module) => ({ default: module.WindowRiegelApp })),
+);
+const BeamCellApp = lazy(() =>
+  import("./BeamCellApp").then((module) => ({ default: module.BeamCellApp })),
+);
 
 type Mode = "column" | "truss" | "purlins" | "craneBeam" | "windowRiegel" | "beamCell";
 
@@ -730,9 +737,11 @@ export function App() {
       {mode === "column" && <ColumnApp />}
       {mode === "truss" && <TrussApp />}
       {mode === "purlins" && <PurlinApp />}
-      {mode === "craneBeam" && <CraneBeamApp />}
-      {mode === "windowRiegel" && <WindowRiegelApp />}
-      {mode === "beamCell" && <BeamCellApp />}
+      <Suspense fallback={<div style={{ color: "#64748b", fontSize: 14 }}>Загрузка расчетного блока...</div>}>
+        {mode === "craneBeam" && <CraneBeamApp />}
+        {mode === "windowRiegel" && <WindowRiegelApp />}
+        {mode === "beamCell" && <BeamCellApp />}
+      </Suspense>
     </div>
   );
 }
