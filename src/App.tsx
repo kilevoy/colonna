@@ -676,6 +676,9 @@ function Stat({ label, value }: { label: string; value: string }) {
 import { TrussApp } from "./TrussApp";
 import { PurlinApp } from "./PurlinApp";
 
+const ProjectApp = lazy(() =>
+  import("./ProjectApp").then((module) => ({ default: module.ProjectApp })),
+);
 const CraneBeamApp = lazy(() =>
   import("./CraneBeamApp").then((module) => ({ default: module.CraneBeamApp })),
 );
@@ -686,9 +689,10 @@ const BeamCellApp = lazy(() =>
   import("./BeamCellApp").then((module) => ({ default: module.BeamCellApp })),
 );
 
-type Mode = "column" | "truss" | "purlins" | "craneBeam" | "windowRiegel" | "beamCell";
+type Mode = "project" | "column" | "truss" | "purlins" | "craneBeam" | "windowRiegel" | "beamCell";
 
 const MODES: Mode[] = [
+  "project",
   "column",
   "truss",
   "purlins",
@@ -698,8 +702,9 @@ const MODES: Mode[] = [
 ];
 
 export function App() {
-  const [mode, setMode] = useState<Mode>("column");
+  const [mode, setMode] = useState<Mode>("project");
   const labelOf = (m: Mode) => {
+    if (m === "project") return "Единое здание";
     if (m === "column") return "Колонна";
     if (m === "truss") return "Ферма";
     if (m === "purlins") return "Прогоны";
@@ -738,6 +743,7 @@ export function App() {
       {mode === "truss" && <TrussApp />}
       {mode === "purlins" && <PurlinApp />}
       <Suspense fallback={<div style={{ color: "#64748b", fontSize: 14 }}>Загрузка расчетного блока...</div>}>
+        {mode === "project" && <ProjectApp />}
         {mode === "craneBeam" && <CraneBeamApp />}
         {mode === "windowRiegel" && <WindowRiegelApp />}
         {mode === "beamCell" && <BeamCellApp />}

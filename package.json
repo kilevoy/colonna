@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "node --max-old-space-size=4096 ./node_modules/vitest/vitest.mjs run --pool=forks --poolOptions.forks.singleFork --maxWorkers=1 --minWorkers=1 --no-file-parallelism",
+    "test": "node --max-old-space-size=4096 ./node_modules/vitest/vitest.mjs run --pool=threads --maxWorkers=1 --minWorkers=1 --no-file-parallelism",
     "verify": "npm run typecheck && npm test && npm run build",
     "typecheck": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc --noEmit",
     "typecheck:scripts": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.scripts.json",
