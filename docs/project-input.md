@@ -15,14 +15,16 @@ behavior.
 - `climate`: wind, snow, terrain, responsibility level/coefficient.
 - `geometry`: span, length, height, roof slope, frame step, facade post step,
   column height, crane rail level.
-- `roof`: roof type, construction, roof load, deck profile, snow bag mode,
-  snow retention and barrier purlin flags.
-- `walls`: wall construction/load and window opening metadata.
+- `roof`: roof type/shape, construction, roof load, manual roof load flag, deck
+  profile, snow bag mode, snow retention and barrier purlin flags.
+- `walls`: wall construction/load, manual wall load flag and window opening
+  metadata.
 - `cranes`: support crane and hanging crane data.
 - `materials`: preferred steel/material choices for each block.
 - `prices`: common rub/ton prices for rolled steel, tubes, channels and LSTK.
-- `calculationSettings`: max utilization, purlin step limits, deflection limit,
-  and oracle backend flags for new blocks.
+- `calculationSettings`: max utilization, purlin step limits, preliminary
+  purlin system preference, deflection limit, and oracle backend flags for new
+  blocks.
 
 ## Mappers
 
@@ -43,6 +45,16 @@ are kept explicit through notes instead of inventing engineering values.
 
 Column, truss and purlin map the shared climate, geometry and roof load fields
 directly into the native calculators.
+
+`PurlinLayout` also reads `roof.roofShape` / `roof.roofType`,
+`calculationSettings.purlinSystemPreference`, purlin step limits and
+`BuildingLayout` to derive preliminary purlin quantity and total length for the
+building specification. This does not change purlin formulas.
+
+Roof and wall construction names/loads use the shared envelope construction
+catalog from the legacy column block. Selecting a construction updates the
+numeric load from the catalog; editing the numeric load turns the internal
+manual-load flag on.
 
 Crane beam maps support crane capacity, span, wheel data, rail, duty group and
 price metadata into the oracle wrapper.

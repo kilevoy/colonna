@@ -60,7 +60,8 @@ export function mapProjectToColumnInput(project: ProjectInput): ProjectBlockMapp
   return {
     input,
     mappingNotes: [
-      "ProjectInput climate, geometry, roof, walls and crane data mapped directly to native column input.",
+      "ProjectInput climate, geometry, roof construction/load, wall construction/load and crane data mapped directly to native column input.",
+      "Native column height uses geometry.columnHeightM; geometry.buildingHeightM remains shared building geometry for other blocks.",
       "Column type defaults to fachwerk for project-level calculation; per-type column sweeps remain a UI/debug concern.",
     ],
     warnings: [],

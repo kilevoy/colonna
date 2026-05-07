@@ -30,6 +30,7 @@ export function mapProjectToCraneBeamInput(project: ProjectInput): ProjectBlockM
     mappingNotes: [
       "ProjectInput support crane data mapped to crane-beam oracle wrapper.",
       "Explicit wheel load, trolley mass, crane mass, steel and deflection limit are kept in normalized input but only partially mapped by the current VELICAN wrapper.",
+      "Support crane enabled flag and rail level are project/column inputs; current crane-beam wrapper does not expose direct enabled or rail-level fields.",
     ],
     warnings: project.calculationSettings.useOracleForCraneBeam ? [] : ["Project setting disables oracle crane beam, but no native crane-beam backend exists yet."],
   };

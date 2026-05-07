@@ -42,7 +42,7 @@ export function mapProjectToPurlinInput(project: ProjectInput): ProjectBlockMapp
   return {
     input,
     mappingNotes: [
-      "ProjectInput climate, geometry, roof loads, step limits and purlin extras mapped to native purlin input.",
+      "ProjectInput climate, geometry, roof construction/load, step limits and purlin extras mapped to native purlin input.",
       "LSTK MP350/MP390 prices are present in ProjectInput but native purlin input currently exposes only rolled steel prices.",
     ],
     warnings: [],

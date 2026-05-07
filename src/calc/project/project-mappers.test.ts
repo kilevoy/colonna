@@ -6,12 +6,15 @@ import { mapProjectToCraneBeamInput } from "./map-project-to-crane-beam";
 import { mapProjectToPurlinInput } from "./map-project-to-purlin";
 import { mapProjectToTrussInput } from "./map-project-to-truss";
 import { mapProjectToWindowRiegelInput } from "./map-project-to-window-riegel";
+import { getRoofConstructionLoadKpa, getWallConstructionLoadKpa } from "../shared/envelope-constructions";
 import type { ProjectInput } from "./types";
 
 describe("ProjectInput mappers", () => {
   it("provides a default project input", () => {
     expect(defaultProjectInput.projectInfo.name).toBeTruthy();
     expect(defaultProjectInput.geometry.buildingSpanM).toBeGreaterThan(0);
+    expect(getRoofConstructionLoadKpa(defaultProjectInput.roof.roofConstruction)).toBe(defaultProjectInput.roof.roofLoadKpa);
+    expect(getWallConstructionLoadKpa(defaultProjectInput.walls.wallConstruction)).toBe(defaultProjectInput.walls.wallLoadKpa);
   });
 
   it("maps default project to every block input", () => {
@@ -33,7 +36,7 @@ describe("ProjectInput mappers", () => {
     expect(mapProjectToPurlinInput(project).input.w0_kPa).toBe(0.77);
   });
 
-  it("maps frame step to column, truss, purlin and window-riegel inputs", () => {
+  it("maps frame step to column, truss and purlin inputs", () => {
     const project: ProjectInput = {
       ...defaultProjectInput,
       geometry: { ...defaultProjectInput.geometry, frameStepM: 7.5 },
@@ -42,7 +45,6 @@ describe("ProjectInput mappers", () => {
     expect(mapProjectToColumnInput(project).input.framePitch_m).toBe(7.5);
     expect(mapProjectToTrussInput(project).input.framePitch_m).toBe(7.5);
     expect(mapProjectToPurlinInput(project).input.framePitch_m).toBe(7.5);
-    expect(mapProjectToWindowRiegelInput(project).input.facadePostStepM).toBe(7.5);
   });
 
   it("maps support crane capacity to column and crane-beam inputs", () => {

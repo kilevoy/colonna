@@ -1,4 +1,8 @@
 import type { ProjectInput } from "./types";
+import { getRoofConstructionLoadKpa, getWallConstructionLoadKpa } from "../shared/envelope-constructions";
+
+const defaultRoofConstruction = "профлист";
+const defaultWallConstruction = "профлист";
 
 export const defaultProjectInput: ProjectInput = {
   projectInfo: {
@@ -28,16 +32,19 @@ export const defaultProjectInput: ProjectInput = {
   },
   roof: {
     roofType: "gable",
-    roofConstruction: "С-П 150 мм",
-    roofLoadKpa: 0.32028,
-    deckProfile: "С-П 150 мм",
+    roofShape: "gable",
+    roofConstruction: defaultRoofConstruction,
+    roofLoadKpa: getRoofConstructionLoadKpa(defaultRoofConstruction) ?? 0.105,
+    useManualRoofLoad: false,
+    deckProfile: defaultRoofConstruction,
     snowBagMode: "none",
     snowRetentionPurlin: false,
     barrierPurlin: false,
   },
   walls: {
-    wallConstruction: "профлист",
-    wallLoadKpa: 0.105,
+    wallConstruction: defaultWallConstruction,
+    wallLoadKpa: getWallConstructionLoadKpa(defaultWallConstruction) ?? 0.105,
+    useManualWallLoad: false,
     openingWidthM: 3,
     openingHeightM: 1,
     windowType: 1,
@@ -86,6 +93,7 @@ export const defaultProjectInput: ProjectInput = {
     maxUtilization: 0.85,
     purlinMinStepMm: 500,
     purlinMaxStepMm: 1500,
+    purlinSystemPreference: "auto",
     deflectionLimit: 1 / 200,
     useOracleForCraneBeam: true,
     useOracleForWindowRiegel: true,

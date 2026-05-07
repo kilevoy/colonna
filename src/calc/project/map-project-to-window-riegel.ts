@@ -6,13 +6,17 @@ export function mapProjectToWindowRiegelInput(project: ProjectInput): ProjectBlo
     openingWidthM: project.walls.openingWidthM,
     openingHeightM: project.walls.openingHeightM ?? 1,
     wallHeightM: project.geometry.buildingHeightM,
-    facadePostStepM: project.geometry.frameStepM,
+    facadePostStepM: project.geometry.facadePostStepM,
     windLoadKpa: project.climate.windLoadKpa,
     terrainType: project.climate.terrainType === "B" ? "В" : project.climate.terrainType,
     buildingHeightM: project.geometry.buildingHeightM,
     wallLoadKpa: project.walls.wallLoadKpa,
     steel: project.materials.windowRiegelSteel,
     pricePerTonRub: project.prices.tubeC245RubPerTon,
+    extraOptions: {
+      facadePostStepM: project.geometry.facadePostStepM,
+      wallConstruction: project.walls.wallConstruction,
+    },
     rawOracleInput: {
       city: project.climate.city ?? project.projectInfo.city ?? "",
       responsibilityLevel: project.climate.responsibilityLevel ?? project.climate.responsibilityCoeff,
@@ -27,8 +31,8 @@ export function mapProjectToWindowRiegelInput(project: ProjectInput): ProjectBlo
   return {
     input,
     mappingNotes: [
-      "ProjectInput opening height, frame step, wind, terrain and building height mapped to window-riegel oracle wrapper.",
-      "Opening width, wall load and steel are kept in normalized input but are not direct VELICAN window-riegel inputs yet.",
+      "ProjectInput opening height, facade post step, wind, terrain and building height mapped to window-riegel oracle wrapper.",
+      "Opening width, wall construction, wall load and steel are kept in normalized input but are not direct VELICAN window-riegel inputs yet.",
     ],
     warnings: project.calculationSettings.useOracleForWindowRiegel ? [] : ["Project setting disables oracle window riegel, but no native window-riegel backend exists yet."],
   };

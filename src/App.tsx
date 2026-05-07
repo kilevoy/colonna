@@ -13,8 +13,13 @@ import {
   searchSettlements,
   getSettlementClimateById,
 } from "./types/climate";
-import structuresJson from "./data/structures/structures.json";
 import cranesJson from "./data/cranes/cranes.json";
+import {
+  getRoofConstructionLoadKpa,
+  getWallConstructionLoadKpa,
+  roofConstructionOptions,
+  wallConstructionOptions,
+} from "./calc/shared/envelope-constructions";
 
 const COLUMN_TYPES: ColumnType[] = ["edge", "fachwerk", "middle"];
 const COLUMN_LABELS: Record<ColumnType, string> = {
@@ -24,10 +29,6 @@ const COLUMN_LABELS: Record<ColumnType, string> = {
 };
 type Results = Record<ColumnType, CalculationOutput>;
 
-interface StructureRow {
-  id: string;
-  kPa: number;
-}
 interface CraneRow {
   capacity: string;
   span_m: number;
@@ -38,7 +39,6 @@ interface CraneRow {
   craneMass_t: number;
 }
 
-const STRUCTURES = structuresJson as StructureRow[];
 const CRANES = cranesJson as CraneRow[];
 
 const CRANE_CAPACITIES: CraneCapacity[] = [
@@ -48,10 +48,6 @@ const CRANE_SPANS = [12, 18, 24, 30, 36];
 
 function lookupCrane(capacity: string, span_m: number): CraneRow | undefined {
   return CRANES.find((c) => c.capacity === capacity && c.span_m === span_m);
-}
-
-function lookupStructure(id: string): StructureRow | undefined {
-  return STRUCTURES.find((s) => s.id === id);
 }
 
 const DEFAULT_INPUT: CalculationInput = {
@@ -145,17 +141,17 @@ export function ColumnApp() {
     setInput((p) => ({ ...p, ...patch }));
 
   const setRoofStructure = (id: string) => {
-    const s = lookupStructure(id);
+    const loadKpa = getRoofConstructionLoadKpa(id);
     upd({
       roofStructure: id,
-      roofLoad_kPa: s ? s.kPa : input.roofLoad_kPa,
+      roofLoad_kPa: loadKpa ?? input.roofLoad_kPa,
     });
   };
   const setWallStructure = (id: string) => {
-    const s = lookupStructure(id);
+    const loadKpa = getWallConstructionLoadKpa(id);
     upd({
       wallStructure: id,
-      wallLoad_kPa: s ? s.kPa : input.wallLoad_kPa,
+      wallLoad_kPa: loadKpa ?? input.wallLoad_kPa,
     });
   };
 
@@ -285,14 +281,14 @@ export function ColumnApp() {
           <SelectField
             label="Конструкция покрытия"
             value={input.roofStructure}
-            options={STRUCTURES.map((s) => [s.id, `${s.id} (${s.kPa.toFixed(3)} кПа)`])}
+            options={roofConstructionOptions.map((option) => [option.id, `${option.label} (${option.kPa.toFixed(3)} кПа)`])}
             onChange={setRoofStructure}
           />
           <Field label="Нагрузка от кровли, кПа" value={input.roofLoad_kPa} onChange={(v) => upd({ roofLoad_kPa: v })} step={0.001} />
           <SelectField
             label="Конструкция ограждения"
             value={input.wallStructure}
-            options={STRUCTURES.map((s) => [s.id, `${s.id} (${s.kPa.toFixed(3)} кПа)`])}
+            options={wallConstructionOptions.map((option) => [option.id, `${option.label} (${option.kPa.toFixed(3)} кПа)`])}
             onChange={setWallStructure}
           />
           <Field label="Нагрузка от ограждения, кПа" value={input.wallLoad_kPa} onChange={(v) => upd({ wallLoad_kPa: v })} step={0.001} />

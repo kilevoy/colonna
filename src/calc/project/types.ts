@@ -5,6 +5,9 @@ import type { CraneBeamInput, CraneBeamResult } from "../crane-beam";
 import type { WindowRiegelInput, WindowRiegelResult } from "../window-riegel";
 import type { BeamCellInput, BeamCellResult } from "../beam-cell";
 
+export type PurlinSystemPreference = "auto" | "sortSteel" | "mp350" | "mp390";
+export type ProjectRoofShape = "gable" | "singleSlope";
+
 export interface ProjectInput {
   projectInfo: {
     name: string;
@@ -33,8 +36,10 @@ export interface ProjectInput {
   };
   roof: {
     roofType: RoofType;
+    roofShape?: ProjectRoofShape;
     roofConstruction: string;
     roofLoadKpa: number;
+    useManualRoofLoad: boolean;
     deckProfile?: string;
     snowBagMode?: SnowDriftMode;
     snowRetentionPurlin: boolean;
@@ -43,6 +48,7 @@ export interface ProjectInput {
   walls: {
     wallConstruction: string;
     wallLoadKpa: number;
+    useManualWallLoad: boolean;
     openingWidthM?: number;
     openingHeightM?: number;
     windowType?: number;
@@ -91,6 +97,7 @@ export interface ProjectInput {
     maxUtilization: number;
     purlinMinStepMm: number;
     purlinMaxStepMm: number;
+    purlinSystemPreference: PurlinSystemPreference;
     deflectionLimit?: number;
     useOracleForCraneBeam: boolean;
     useOracleForWindowRiegel: boolean;

@@ -26,7 +26,7 @@ export function mapProjectToTrussInput(project: ProjectInput): ProjectBlockMappi
   return {
     input,
     mappingNotes: [
-      "ProjectInput geometry, climate, roof load and max utilization mapped to native truss input.",
+      "ProjectInput geometry, climate, roof construction/load and max utilization mapped to native truss input.",
       "Purlin pitch is not yet a shared ProjectInput field; truss mapper keeps purlinPitch_mm=0.",
     ],
     warnings: [],

@@ -1,22 +1,34 @@
 import { useMemo, useState, type ReactNode } from "react";
 import {
+  applyProjectRoofConstruction,
+  applyProjectWallConstruction,
   calculateProjectWithSummary,
   defaultProjectInput,
+  resetProjectRoofLoadFromConstruction,
+  resetProjectWallLoadFromConstruction,
+  setProjectManualRoofLoad,
+  setProjectManualWallLoad,
   type ProjectInput,
   type ProjectCalculationSummary,
 } from "./calc/project";
 import { buildBuildingSpecification, type BuildingSpecification } from "./calc/specification";
 import type { TerrainType } from "./calc/types";
+import {
+  roofConstructionOptions,
+  wallConstructionOptions,
+} from "./calc/shared/envelope-constructions";
 
 type ProjectCalculationView =
   | {
       summary: ProjectCalculationSummary;
       specification: BuildingSpecification;
+      durationMs: number;
       error: null;
     }
   | {
       summary: null;
       specification: null;
+      durationMs: null;
       error: string;
     };
 
@@ -55,20 +67,6 @@ function updateGeometry(
   return {
     ...project,
     geometry: { ...project.geometry, ...patch },
-  };
-}
-
-function updateRoof(project: ProjectInput, patch: Partial<ProjectInput["roof"]>): ProjectInput {
-  return {
-    ...project,
-    roof: { ...project.roof, ...patch },
-  };
-}
-
-function updateWalls(project: ProjectInput, patch: Partial<ProjectInput["walls"]>): ProjectInput {
-  return {
-    ...project,
-    walls: { ...project.walls, ...patch },
   };
 }
 
@@ -176,6 +174,35 @@ function SelectField({
   );
 }
 
+function ConstructionSelectField({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: Array<{ id: string; label: string; kPa: number }>;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label style={{ display: "grid", gap: 4, fontSize: 13, color: "#334155" }}>
+      {label}
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        style={{ padding: "7px 8px", border: "1px solid #cbd5e1", borderRadius: 6 }}
+      >
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label} ({option.kPa.toFixed(3)} кПа)
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 function CheckField({
   label,
   checked,
@@ -190,6 +217,30 @@ function CheckField({
       <input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
       {label}
     </label>
+  );
+}
+
+function LoadModeField({ isManual, onReset }: { isManual: boolean; onReset: () => void }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#475569" }}>
+      <span>{isManual ? "Ручная нагрузка" : "Нагрузка из справочника"}</span>
+      {isManual && (
+        <button
+          type="button"
+          onClick={onReset}
+          style={{
+            padding: "6px 9px",
+            border: "1px solid #cbd5e1",
+            borderRadius: 6,
+            background: "white",
+            color: "#334155",
+            cursor: "pointer",
+          }}
+        >
+          Вернуть из справочника
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -304,18 +355,39 @@ function TextList({ title, items }: { title: string; items: string[] }) {
 }
 
 export function ProjectApp() {
-  const [project, setProject] = useState<ProjectInput>(defaultProjectInput);
+  const [draftProject, setDraftProject] = useState<ProjectInput>(defaultProjectInput);
+  const [calculatedProject, setCalculatedProject] = useState<ProjectInput>(defaultProjectInput);
 
   const view = useMemo<ProjectCalculationView>(() => {
     try {
-      const { summary } = calculateProjectWithSummary(project);
-      const specification = buildBuildingSpecification(project);
-      return { summary, specification, error: null };
+      const startedAt = performance.now();
+      const { summary } = calculateProjectWithSummary(calculatedProject);
+      const specification = buildBuildingSpecification(calculatedProject);
+      return {
+        summary,
+        specification,
+        durationMs: performance.now() - startedAt,
+        error: null,
+      };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      return { summary: null, specification: null, error: message };
+      return { summary: null, specification: null, durationMs: null, error: message };
     }
-  }, [project]);
+  }, [calculatedProject]);
+
+  const hasPendingChanges = useMemo(
+    () => JSON.stringify(draftProject) !== JSON.stringify(calculatedProject),
+    [draftProject, calculatedProject],
+  );
+
+  const calculateDraft = () => {
+    setCalculatedProject(draftProject);
+  };
+
+  const resetProject = () => {
+    setDraftProject(defaultProjectInput);
+    setCalculatedProject(defaultProjectInput);
+  };
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
@@ -323,18 +395,56 @@ export function ProjectApp() {
         Техническая вкладка. Все блоки ниже считаются от одного ProjectInput; старые вкладки остаются legacy/debug preview.
       </div>
 
+      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <button
+          type="button"
+          onClick={calculateDraft}
+          style={{
+            padding: "9px 16px",
+            border: "none",
+            borderRadius: 6,
+            background: "#0369a1",
+            color: "white",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          Рассчитать
+        </button>
+        <button
+          type="button"
+          onClick={resetProject}
+          style={{
+            padding: "9px 16px",
+            border: "1px solid #cbd5e1",
+            borderRadius: 6,
+            background: "white",
+            color: "#334155",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          Сбросить
+        </button>
+        {hasPendingChanges && (
+          <div style={{ color: "#92400e", fontSize: 13 }}>
+            Есть несохраненные изменения. Нажмите «Рассчитать», чтобы обновить результаты.
+          </div>
+        )}
+      </div>
+
       <div style={{ display: "grid", gap: 12 }}>
         <FieldGroup title="Project">
           <TextField
             label="Название проекта"
-            value={project.projectInfo.name}
-            onChange={(name) => setProject((current) => updateProjectInfo(current, { name }))}
+            value={draftProject.projectInfo.name}
+            onChange={(name) => setDraftProject((current) => updateProjectInfo(current, { name }))}
           />
           <TextField
             label="Город"
-            value={project.projectInfo.city ?? ""}
+            value={draftProject.projectInfo.city ?? ""}
             onChange={(city) =>
-              setProject((current) => updateClimate(updateProjectInfo(current, { city }), { city }))
+              setDraftProject((current) => updateClimate(updateProjectInfo(current, { city }), { city }))
             }
           />
         </FieldGroup>
@@ -342,53 +452,77 @@ export function ProjectApp() {
         <FieldGroup title="Climate">
           <NumberField
             label="Ветер, кПа"
-            value={project.climate.windLoadKpa}
+            value={draftProject.climate.windLoadKpa}
             step={0.01}
-            onChange={(windLoadKpa) => setProject((current) => updateClimate(current, { windLoadKpa }))}
+            onChange={(windLoadKpa) => setDraftProject((current) => updateClimate(current, { windLoadKpa }))}
           />
           <NumberField
             label="Снег, кПа"
-            value={project.climate.snowLoadKpa}
+            value={draftProject.climate.snowLoadKpa}
             step={0.01}
-            onChange={(snowLoadKpa) => setProject((current) => updateClimate(current, { snowLoadKpa }))}
+            onChange={(snowLoadKpa) => setDraftProject((current) => updateClimate(current, { snowLoadKpa }))}
           />
           <SelectField
             label="Тип местности"
-            value={project.climate.terrainType}
-            onChange={(terrainType) => setProject((current) => updateClimate(current, { terrainType }))}
+            value={draftProject.climate.terrainType}
+            onChange={(terrainType) => setDraftProject((current) => updateClimate(current, { terrainType }))}
           />
         </FieldGroup>
 
         <FieldGroup title="Geometry">
-          <NumberField label="Пролет, м" value={project.geometry.buildingSpanM} onChange={(buildingSpanM) => setProject((current) => updateGeometry(current, { buildingSpanM }))} />
-          <NumberField label="Длина, м" value={project.geometry.buildingLengthM} onChange={(buildingLengthM) => setProject((current) => updateGeometry(current, { buildingLengthM }))} />
-          <NumberField label="Высота, м" value={project.geometry.buildingHeightM} onChange={(buildingHeightM) => setProject((current) => updateGeometry(current, { buildingHeightM, columnHeightM: buildingHeightM }))} />
-          <NumberField label="Уклон кровли, град" value={project.geometry.roofSlopeDeg} onChange={(roofSlopeDeg) => setProject((current) => updateGeometry(current, { roofSlopeDeg }))} />
-          <NumberField label="Шаг рам, м" value={project.geometry.frameStepM} onChange={(frameStepM) => setProject((current) => updateGeometry(current, { frameStepM }))} />
-          <NumberField label="Шаг фахверка, м" value={project.geometry.facadePostStepM} onChange={(facadePostStepM) => setProject((current) => updateGeometry(current, { facadePostStepM }))} />
+          <NumberField label="Пролет, м" value={draftProject.geometry.buildingSpanM} onChange={(buildingSpanM) => setDraftProject((current) => updateGeometry(current, { buildingSpanM }))} />
+          <NumberField label="Длина, м" value={draftProject.geometry.buildingLengthM} onChange={(buildingLengthM) => setDraftProject((current) => updateGeometry(current, { buildingLengthM }))} />
+          <NumberField label="Высота, м" value={draftProject.geometry.buildingHeightM} onChange={(buildingHeightM) => setDraftProject((current) => updateGeometry(current, { buildingHeightM, columnHeightM: buildingHeightM }))} />
+          <NumberField label="Уклон кровли, град" value={draftProject.geometry.roofSlopeDeg} onChange={(roofSlopeDeg) => setDraftProject((current) => updateGeometry(current, { roofSlopeDeg }))} />
+          <NumberField label="Шаг рам, м" value={draftProject.geometry.frameStepM} onChange={(frameStepM) => setDraftProject((current) => updateGeometry(current, { frameStepM }))} />
+          <NumberField label="Шаг фахверка, м" value={draftProject.geometry.facadePostStepM} onChange={(facadePostStepM) => setDraftProject((current) => updateGeometry(current, { facadePostStepM }))} />
         </FieldGroup>
 
         <FieldGroup title="Roof / Walls">
-          <NumberField label="Кровля, кПа" value={project.roof.roofLoadKpa} step={0.01} onChange={(roofLoadKpa) => setProject((current) => updateRoof(current, { roofLoadKpa }))} />
-          <NumberField label="Стены, кПа" value={project.walls.wallLoadKpa} step={0.01} onChange={(wallLoadKpa) => setProject((current) => updateWalls(current, { wallLoadKpa }))} />
+          <ConstructionSelectField
+            label="Конструкция покрытия"
+            value={draftProject.roof.roofConstruction}
+            options={roofConstructionOptions}
+            onChange={(roofConstruction) =>
+              setDraftProject((current) => applyProjectRoofConstruction(current, roofConstruction))
+            }
+          />
+          <NumberField label="Нагрузка покрытия, кПа" value={draftProject.roof.roofLoadKpa} step={0.001} onChange={(roofLoadKpa) => setDraftProject((current) => setProjectManualRoofLoad(current, roofLoadKpa))} />
+          <LoadModeField
+            isManual={draftProject.roof.useManualRoofLoad}
+            onReset={() => setDraftProject((current) => resetProjectRoofLoadFromConstruction(current))}
+          />
+          <ConstructionSelectField
+            label="Конструкция ограждения"
+            value={draftProject.walls.wallConstruction}
+            options={wallConstructionOptions}
+            onChange={(wallConstruction) =>
+              setDraftProject((current) => applyProjectWallConstruction(current, wallConstruction))
+            }
+          />
+          <NumberField label="Нагрузка ограждения, кПа" value={draftProject.walls.wallLoadKpa} step={0.001} onChange={(wallLoadKpa) => setDraftProject((current) => setProjectManualWallLoad(current, wallLoadKpa))} />
+          <LoadModeField
+            isManual={draftProject.walls.useManualWallLoad}
+            onReset={() => setDraftProject((current) => resetProjectWallLoadFromConstruction(current))}
+          />
         </FieldGroup>
 
         <FieldGroup title="Cranes">
-          <CheckField label="Есть опорный кран" checked={project.cranes.supportCrane.enabled} onChange={(enabled) => setProject((current) => updateSupportCrane(current, { enabled }))} />
-          <NumberField label="Грузоподъемность, т" value={Number(project.cranes.supportCrane.capacityT)} step={0.5} onChange={(capacityT) => setProject((current) => updateSupportCrane(current, { capacityT }))} />
-          <NumberField label="Отметка рельса, м" value={project.cranes.supportCrane.railLevelM} onChange={(railLevelM) => setProject((current) => updateSupportCrane(updateGeometry(current, { craneRailLevelM: railLevelM }), { railLevelM }))} />
+          <CheckField label="Есть опорный кран" checked={draftProject.cranes.supportCrane.enabled} onChange={(enabled) => setDraftProject((current) => updateSupportCrane(current, { enabled }))} />
+          <NumberField label="Грузоподъемность, т" value={Number(draftProject.cranes.supportCrane.capacityT)} step={0.5} onChange={(capacityT) => setDraftProject((current) => updateSupportCrane(current, { capacityT }))} />
+          <NumberField label="Отметка рельса, м" value={draftProject.cranes.supportCrane.railLevelM} onChange={(railLevelM) => setDraftProject((current) => updateSupportCrane(updateGeometry(current, { craneRailLevelM: railLevelM }), { railLevelM }))} />
         </FieldGroup>
 
         <FieldGroup title="Settings">
-          <NumberField label="Max utilization" value={project.calculationSettings.maxUtilization} step={0.01} onChange={(maxUtilization) => setProject((current) => updateSettings(current, { maxUtilization }))} />
-          <NumberField label="Мин. шаг прогонов, мм" value={project.calculationSettings.purlinMinStepMm} step={5} onChange={(purlinMinStepMm) => setProject((current) => updateSettings(current, { purlinMinStepMm }))} />
-          <NumberField label="Макс. шаг прогонов, мм" value={project.calculationSettings.purlinMaxStepMm} step={5} onChange={(purlinMaxStepMm) => setProject((current) => updateSettings(current, { purlinMaxStepMm }))} />
+          <NumberField label="Max utilization" value={draftProject.calculationSettings.maxUtilization} step={0.01} onChange={(maxUtilization) => setDraftProject((current) => updateSettings(current, { maxUtilization }))} />
+          <NumberField label="Мин. шаг прогонов, мм" value={draftProject.calculationSettings.purlinMinStepMm} step={5} onChange={(purlinMinStepMm) => setDraftProject((current) => updateSettings(current, { purlinMinStepMm }))} />
+          <NumberField label="Макс. шаг прогонов, мм" value={draftProject.calculationSettings.purlinMaxStepMm} step={5} onChange={(purlinMaxStepMm) => setDraftProject((current) => updateSettings(current, { purlinMaxStepMm }))} />
         </FieldGroup>
       </div>
 
       {view.error || !view.summary || !view.specification ? (
         <div style={{ padding: 12, border: "1px solid #fecaca", borderRadius: 8, color: "#991b1b", background: "#fef2f2" }}>
-          Ошибка расчета: {view.error}
+          Ошибка расчета: {view.error ?? "результаты недоступны"}
         </div>
       ) : (
         <>
@@ -400,6 +534,7 @@ export function ProjectApp() {
               <div>Total cost<br /><strong>{formatNumber(view.summary.totalCostRub)} руб</strong></div>
               <div>Warnings<br /><strong>{view.summary.warnings.length}</strong></div>
               <div>Mapping notes<br /><strong>{view.summary.mappingNotes.length}</strong></div>
+              <div>Расчет<br /><strong>{formatNumber(view.durationMs, 0)} мс</strong></div>
             </div>
             <SummaryTable summary={view.summary} />
           </section>

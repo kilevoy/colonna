@@ -12,6 +12,9 @@ export function mapProjectToBeamCellInput(project: ProjectInput): ProjectBlockMa
     steel: project.materials.beamCellSteel,
     pricePerTonRub: project.prices.iBeamC345RubPerTon,
     deflectionLimit: project.calculationSettings.deflectionLimit,
+    extraOptions: {
+      roofConstruction: project.roof.roofConstruction,
+    },
     rawOracleInput: {
       lengthAlongMain: project.geometry.buildingLengthM,
       widthAcrossMain: project.geometry.buildingSpanM,
@@ -25,7 +28,7 @@ export function mapProjectToBeamCellInput(project: ProjectInput): ProjectBlockMa
   return {
     input,
     mappingNotes: [
-      "ProjectInput frame step, roof load, steel and price mapped to beam-cell oracle wrapper.",
+      "ProjectInput frame step, roof construction/load, steel and price mapped to beam-cell oracle wrapper.",
       "Snow, wind, roof slope and deflection limit are kept in normalized input but are not direct VELICAN beam-cell inputs yet.",
     ],
     warnings: project.calculationSettings.useOracleForBeamCell ? [] : ["Project setting disables oracle beam-cell, but no native beam-cell backend exists yet."],

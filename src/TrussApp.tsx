@@ -10,17 +10,7 @@ import {
 } from "./calc/truss/types";
 import type { TerrainType } from "./calc/types";
 import { searchSettlements, getSettlementClimateById } from "./types/climate";
-import structuresJson from "./data/structures/structures.json";
-
-interface StructureRow {
-  id: string;
-  kPa: number;
-}
-const STRUCTURES = structuresJson as StructureRow[];
-
-function lookupStructure(id: string): StructureRow | undefined {
-  return STRUCTURES.find((s) => s.id === id);
-}
+import { getRoofConstructionLoadKpa, roofConstructionOptions } from "./calc/shared/envelope-constructions";
 
 const DEFAULT_INPUT: TrussInput = {
   height_m: 12,
@@ -83,8 +73,8 @@ export function TrussApp() {
     setInput((p) => ({ ...p, ...patch }));
 
   const setRoofStructure = (id: string) => {
-    const s = lookupStructure(id);
-    upd({ roofStructure: id, roofLoad_kPa: s ? s.kPa : input.roofLoad_kPa });
+    const loadKpa = getRoofConstructionLoadKpa(id);
+    upd({ roofStructure: id, roofLoad_kPa: loadKpa ?? input.roofLoad_kPa });
   };
 
   const updMinThick = (sec: TrussSection, v: number) =>
@@ -170,7 +160,7 @@ export function TrussApp() {
           <SelectField
             label="Конструкция покрытия"
             value={input.roofStructure}
-            options={STRUCTURES.map((s) => [s.id, `${s.id} (${s.kPa.toFixed(3)} кПа)`])}
+            options={roofConstructionOptions.map((option) => [option.id, `${option.label} (${option.kPa.toFixed(3)} кПа)`])}
             onChange={setRoofStructure}
           />
           <Field

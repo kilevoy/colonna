@@ -19,6 +19,7 @@ export interface SpecificationItem {
   steel: string | null;
   quantity: number | null;
   lengthM: number | null;
+  totalLengthM?: number | null;
   unitMassKg: number | null;
   totalMassKg: number | null;
   unitPriceRub: number | null;
