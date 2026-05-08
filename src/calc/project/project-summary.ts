@@ -60,6 +60,20 @@ function notCalculatedBlock(
   };
 }
 
+function skippedBlock(block: ProjectBlockName, warnings: string[]): ProjectBlockStatus {
+  return {
+    block,
+    status: "skipped",
+    source: "skipped",
+    selectedProfiles: [],
+    massKg: null,
+    costRub: null,
+    utilization: null,
+    warnings,
+    notes: ["VELICAN oracle block is skipped in normal ProjectApp mode."],
+  };
+}
+
 function columnStatus(result: CalculationOutput | null, warnings: string[]): ProjectBlockStatus {
   if (!result) return notCalculatedBlock("column", "native", warnings);
   const top = result.results[0] ?? null;
@@ -167,6 +181,9 @@ function oracleLikeStatus(
   result: CraneBeamResult | WindowRiegelResult | BeamCellResult | null,
   warnings: string[],
 ): ProjectBlockStatus {
+  if (!result && warnings.some((warning) => warning.startsWith("skipped:"))) {
+    return skippedBlock(block, warnings);
+  }
   if (!result) return notCalculatedBlock(block, "velican-oracle", warnings);
 
   const selectedProfiles =

@@ -141,7 +141,8 @@ function formatValue(value: unknown): string {
 function blockTitle(block: BlockComparisonResult["block"]): string {
   if (block === "column") return "Column";
   if (block === "truss") return "Truss";
-  return "Purlin";
+  if (block === "purlin") return "Purlin";
+  return "Window Riegel";
 }
 
 export function formatComparisonMarkdown(result: BlockComparisonResult): string {

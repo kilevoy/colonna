@@ -1,4 +1,4 @@
-export { buildBuildingSpecification } from "./build-building-specification";
+export { buildBuildingSpecification, buildBuildingSpecificationFromCalculation } from "./build-building-specification";
 export {
   buildColumnSpecificationSummary,
   deriveEdgeColumnGroup,

@@ -1,5 +1,21 @@
 # Project UI Performance
 
+## Stage 8.7.2 oracle mode
+
+`calculationSettings.enableOracleBlocks` is `false` by default. In this normal
+mode the unified project calculation runs only the native column, truss and
+purlin blocks. Crane beam, window riegel and beam-cell are reported as
+`skipped`/warning rows instead of loading VELICAN.
+
+When `Dev/oracle mode (VELICAN)` is enabled and the user presses calculate,
+`ProjectApp` uses `calculateProjectWithSummaryAsync()`. That async path loads the
+VELICAN-backed modules with dynamic imports. Editing the checkbox only changes
+draft state; it does not run a heavy calculation until the calculate button.
+
+The VELICAN preview tabs are replaced by light stubs in normal UI, so opening the
+app and switching between normal tabs no longer imports those workbook-backed
+modules.
+
 Вкладка "Единое здание" является техническим preview для проверки, что один `ProjectInput`
 транслируется во все расчетные блоки.
 

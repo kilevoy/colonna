@@ -7,6 +7,8 @@ const defaultWallConstruction = "профлист";
 export const defaultProjectInput: ProjectInput = {
   projectInfo: {
     name: "Default engineering verification project",
+    buildingSystem: "velikan",
+    buildingEnvelope: "cold",
     customer: "",
     city: "Уфа",
     notes: "Shared default for ProjectInput mapper tests.",
@@ -33,6 +35,7 @@ export const defaultProjectInput: ProjectInput = {
   roof: {
     roofType: "gable",
     roofShape: "gable",
+    drainage: "external",
     roofConstruction: defaultRoofConstruction,
     roofLoadKpa: getRoofConstructionLoadKpa(defaultRoofConstruction) ?? 0.105,
     useManualRoofLoad: false,
@@ -48,6 +51,11 @@ export const defaultProjectInput: ProjectInput = {
     openingWidthM: 3,
     openingHeightM: 1,
     windowType: 1,
+  },
+  openings: {
+    windows: [],
+    doors: [],
+    gates: [],
   },
   cranes: {
     supportCrane: {
@@ -89,14 +97,23 @@ export const defaultProjectInput: ProjectInput = {
     lstkMp350RubPerTon: 180000,
     lstkMp390RubPerTon: 190000,
   },
+  projectCosts: {
+    design: {
+      enabled: false,
+      method: "perArea",
+      pricePerM2Rub: 0,
+      fixedRub: 0,
+    },
+  },
   calculationSettings: {
     maxUtilization: 0.85,
     purlinMinStepMm: 500,
     purlinMaxStepMm: 1500,
     purlinSystemPreference: "auto",
     deflectionLimit: 1 / 200,
-    useOracleForCraneBeam: true,
-    useOracleForWindowRiegel: true,
-    useOracleForBeamCell: true,
+    enableOracleBlocks: false,
+    useOracleForCraneBeam: false,
+    useOracleForWindowRiegel: false,
+    useOracleForBeamCell: false,
   },
 };

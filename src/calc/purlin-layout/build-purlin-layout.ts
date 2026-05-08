@@ -126,13 +126,22 @@ export function buildPurlinLayout(
   options: {
     buildingLayout?: BuildingLayout;
     purlinResult?: PurlinOutput | null;
+    selectedSystem?: PurlinSystemKey;
+    selectedStepMm?: number | null;
   } = {},
 ): PurlinLayout {
   const buildingLayout = options.buildingLayout ?? buildBuildingLayout(project);
-  const system = selectedSystem(project);
+  const system = options.selectedSystem
+    ? {
+        system: options.selectedSystem,
+        notes: ["Selected purlin system is provided by PurlinAlternativesSummary."],
+      }
+    : selectedSystem(project);
   const roofShape = resolveRoofShape(project);
   const slope = slopeLength(project, roofShape.roofShape);
-  const step = purlinStep(project, options.purlinResult, system.system);
+  const step = options.selectedStepMm
+    ? { value: options.selectedStepMm / 1000, warnings: [] }
+    : purlinStep(project, options.purlinResult, system.system);
   const warnings = [...roofShape.warnings, ...slope.warnings, ...step.warnings];
   const notes = [
     ...system.notes,

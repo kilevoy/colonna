@@ -1,14 +1,18 @@
-import { isLstkOutput } from "../purlin";
 import { buildBuildingLayout, type BuildingLayout } from "../layout";
-import { buildPurlinLayout, type PurlinLayout, type PurlinSystemKey } from "../purlin-layout";
+import {
+  buildPurlinLayout,
+  type PurlinAlternativesSummary,
+  type PurlinLayout,
+} from "../purlin-layout";
 import {
   calculateProjectWithSummary,
   type ProjectBlockStatus,
+  type ProjectCalculationWithSummary,
   type ProjectCalculationResult,
   type ProjectCalculationSummary,
   type ProjectInput,
 } from "../project";
-import type { LstkCandidate, LstkOutput, PurlinOutput, RolledOutput } from "../purlin";
+import type { PurlinOutput } from "../purlin";
 import { deriveCraneBeamQuantity, deriveWindowRiegelQuantity, type DerivedQuantity } from "./quantity-rules";
 import { buildColumnSpecificationSummary, type ColumnSpecificationGroup } from "./column-specification";
 import type { BuildingSpecification, SpecificationGroup, SpecificationItem } from "./types";
@@ -47,10 +51,10 @@ function statusFor(item: Pick<SpecificationItem, "profile" | "totalMassKg" | "wa
   return "ok";
 }
 
-function withStatus(item: Omit<SpecificationItem, "status">): SpecificationItem {
+function withStatus(item: Omit<SpecificationItem, "status">, statusOverride?: SpecificationItem["status"]): SpecificationItem {
   return {
     ...item,
-    status: statusFor(item),
+    status: statusOverride ?? statusFor(item),
   };
 }
 
@@ -95,52 +99,7 @@ function buildFromBlock(params: {
     calculationSource: params.block.source,
     notes: [...params.block.notes, ...params.quantity.notes, ...(params.notes ?? [])],
     warnings: [...params.block.warnings, ...params.quantity.warnings, ...(params.warnings ?? [])],
-  });
-}
-
-function purlinSteel(output: PurlinOutput | null): string | null {
-  if (!output) return null;
-  if (isLstkOutput(output)) {
-    const best = (output as LstkOutput).top10[0] ?? null;
-    if (!best) return null;
-    return best.profile.Ry_MPa === 390 ? "MP390" : "MP350";
-  }
-  const best = (output as RolledOutput).top10[0] ?? null;
-  return best?.steel ?? null;
-}
-
-function bestLstkForSystem(output: LstkOutput, system: "mp350" | "mp390") {
-  const grade = system === "mp350" ? "MP350" : "MP390";
-  const candidates = output.sections
-    .filter((section) => section.grade === grade)
-    .map((section) => section.best)
-    .filter((candidate): candidate is LstkCandidate => candidate !== null);
-  candidates.sort((a, b) => a.massPerBuilding_kg - b.massPerBuilding_kg);
-  return candidates[0] ?? null;
-}
-
-function purlinCandidateForSystem(output: PurlinOutput | null, system: PurlinSystemKey): {
-  profile: string | null;
-  steel: string | null;
-  totalMassKg: number | null;
-} {
-  if (!output) return { profile: null, steel: null, totalMassKg: null };
-  if (system === "sortSteel") {
-    if (isLstkOutput(output)) return { profile: null, steel: null, totalMassKg: null };
-    const best = (output as RolledOutput).top10[0] ?? null;
-    return {
-      profile: best?.profile.name ?? null,
-      steel: best?.steel ?? null,
-      totalMassKg: finiteNumber(best?.massPerBuilding_kg),
-    };
-  }
-  if (!isLstkOutput(output)) return { profile: null, steel: null, totalMassKg: null };
-  const best = bestLstkForSystem(output as LstkOutput, system);
-  return {
-    profile: best?.profile.name ?? null,
-    steel: system === "mp350" ? "MP350" : "MP390",
-    totalMassKg: finiteNumber(best?.massPerBuilding_kg),
-  };
+  }, params.block.status === "skipped" ? "skipped" : undefined);
 }
 
 function buildColumnItemFromGroup(params: {
@@ -176,14 +135,14 @@ function buildColumnItemFromGroup(params: {
 function buildPurlinItem(params: {
   block: ProjectBlockStatus;
   layout: PurlinLayout;
-  purlinResult: PurlinOutput | null;
+  alternatives: PurlinAlternativesSummary;
 }): SpecificationItem {
-  const selected = purlinCandidateForSystem(params.purlinResult, params.layout.selectedSystem);
-  const totalMassKg = selected.totalMassKg ?? finiteNumber(params.block.massKg);
+  const selected = params.alternatives.alternatives.find((item) => item.system === params.alternatives.selectedSystem);
+  const totalMassKg = selected?.massKg ?? finiteNumber(params.block.massKg);
   const totalCostRub = finiteNumber(params.block.costRub);
   const quantity = params.layout.totalPieces;
-  const warnings = [...params.block.warnings, ...params.layout.warnings];
-  if (selected.profile === null) {
+  const warnings = [...params.block.warnings, ...params.layout.warnings, ...(selected?.warnings ?? [])];
+  if (!selected?.profile) {
     warnings.push("Selected purlin system profile is not available in the current purlin calculation result.");
   }
 
@@ -191,8 +150,8 @@ function buildPurlinItem(params: {
     id: "purlins.main",
     group: "purlins",
     elementName: "Selected purlin profile",
-    profile: (selected.profile ?? params.block.selectedProfiles.join(", ")) || null,
-    steel: selected.steel ?? purlinSteel(params.purlinResult),
+    profile: (selected?.profile ?? params.block.selectedProfiles.join(", ")) || null,
+    steel: selected?.system === "sortSteel" ? null : selected?.system.toUpperCase() ?? null,
     quantity,
     lengthM: params.layout.pieceLengthM,
     totalLengthM: params.layout.totalLengthM,
@@ -205,6 +164,9 @@ function buildPurlinItem(params: {
     notes: [
       ...params.block.notes,
       ...params.layout.notes,
+      ...params.alternatives.notes,
+      ...(selected?.notes ?? []),
+      `Selected purlin alternative: ${selected?.label ?? params.alternatives.selectedSystem}.`,
       "Purlin mass is taken from calculation result; layout quantity is preliminary.",
     ],
     warnings,
@@ -243,6 +205,8 @@ function buildBeamCellItems(
   const totalMassKg = finiteNumber(beamCellBlock.massKg);
   const totalCostRub = finiteNumber(beamCellBlock.costRub);
 
+  const statusOverride = beamCellBlock.status === "skipped" ? "skipped" : undefined;
+
   const endRoofBeams = withStatus({
     id: "beamCells.endRoofBeams",
     group: "beamCells" as const,
@@ -266,7 +230,7 @@ function buildBeamCellItems(
       ...beamCellBlock.warnings,
       "End roof beam quantity is layout-only; mass and cost are intentionally not derived yet.",
     ],
-  });
+  }, statusOverride);
 
   const aggregate = withStatus({
     id: "beamCells.aggregate",
@@ -290,7 +254,7 @@ function buildBeamCellItems(
       ...beamCellBlock.warnings,
       "BeamCell aggregate mass is kept separate from end roof beam quantity to avoid double counting.",
     ],
-  });
+  }, statusOverride);
 
   return [endRoofBeams, aggregate];
 }
@@ -301,6 +265,7 @@ function buildItems(
   summary: ProjectCalculationSummary,
   layout: BuildingLayout,
   purlinLayout: PurlinLayout,
+  purlinAlternatives: PurlinAlternativesSummary,
 ): BuildingSpecification["items"] {
   const blocks = summary.blocks;
   const columnBlock = block(blocks, "column");
@@ -333,7 +298,7 @@ function buildItems(
     buildPurlinItem({
       block: purlinBlock,
       layout: purlinLayout,
-      purlinResult: result.purlinResult,
+      alternatives: purlinAlternatives,
     }),
     buildFromBlock({
       id: "craneBeams.main",
@@ -384,11 +349,23 @@ function buildTotals(items: SpecificationItem[]): BuildingSpecification["totals"
   };
 }
 
-export function buildBuildingSpecification(projectInput: ProjectInput): BuildingSpecification {
-  const { result, summary } = calculateProjectWithSummary(projectInput);
+export function buildBuildingSpecificationFromCalculation(
+  projectInput: ProjectInput,
+  calculation: ProjectCalculationWithSummary,
+): BuildingSpecification {
+  const { result, summary, purlinAlternativesSummary } = calculation;
   const layout = buildBuildingLayout(projectInput);
-  const purlinLayout = buildPurlinLayout(projectInput, { buildingLayout: layout, purlinResult: result.purlinResult });
-  const items = buildItems(projectInput, result, summary, layout, purlinLayout);
+  const purlinAlternatives = purlinAlternativesSummary;
+  const selectedPurlinAlternative = purlinAlternatives.alternatives.find(
+    (item) => item.system === purlinAlternatives.selectedSystem,
+  );
+  const purlinLayout = buildPurlinLayout(projectInput, {
+    buildingLayout: layout,
+    purlinResult: result.purlinResult,
+    selectedSystem: purlinAlternatives.selectedSystem,
+    selectedStepMm: selectedPurlinAlternative?.stepMm ?? null,
+  });
+  const items = buildItems(projectInput, result, summary, layout, purlinLayout, purlinAlternatives);
   const itemWarnings = items.flatMap((item) => item.warnings.map((warning) => `${item.id}: ${warning}`));
 
   return {
@@ -400,12 +377,18 @@ export function buildBuildingSpecification(projectInput: ProjectInput): Building
       ...summary.warnings,
       ...layout.warnings.map((warning) => `layout: ${warning}`),
       ...purlinLayout.warnings.map((warning) => `purlinLayout: ${warning}`),
+      ...purlinAlternatives.warnings.map((warning) => `purlinAlternatives: ${warning}`),
       ...itemWarnings,
     ]),
     mappingNotes: [
       ...summary.mappingNotes,
       ...layout.notes.map((note) => `layout: ${note}`),
       ...purlinLayout.notes.map((note) => `purlinLayout: ${note}`),
+      ...purlinAlternatives.notes.map((note) => `purlinAlternatives: ${note}`),
     ],
   };
+}
+
+export function buildBuildingSpecification(projectInput: ProjectInput): BuildingSpecification {
+  return buildBuildingSpecificationFromCalculation(projectInput, calculateProjectWithSummary(projectInput));
 }

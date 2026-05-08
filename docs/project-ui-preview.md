@@ -1,75 +1,86 @@
 # Project UI Preview
 
-The `Единое здание` tab is a technical preview for the future project-level
-calculator. It proves that one shared `ProjectInput` can be mapped into all
-calculation blocks and summarized as one building.
+## Stage 9.UI.1 Card Configurator
 
-## Current Role
+The `Единое здание` tab is now a step-by-step building configurator. The input
+area is split into cards:
 
-This is not the final product frontend. It is intentionally small and direct:
-edit a few shared fields, press `Рассчитать`, and inspect the resulting project
-summary and first building specification.
+1. `Район строительства`
+2. `Габариты здания`
+3. `Каркас: система Великан`
+4. `Стены`
+5. `Кровля`
+6. `Окна, двери, ворота`
+7. `Проектирование`
+8. `Расчёт и спецификация`
 
-The older tabs remain available as legacy/debug previews:
+Each card has a step number, status, collapse control and short summary. The
+first card opens by default. The UI uses a warm orange accent, but keeps the
+existing calculation model and result tables.
 
-- Колонна
-- Ферма
-- Прогоны
-- Подкрановая балка
-- Оконный ригель
-- Балка покрытия
+## Draft And Calculated State
 
-## Editable Shared Fields
+All input cards edit `draftProjectInput` only. `calculateProjectWithSummary()` or
+`calculateProjectWithSummaryAsync()` runs only after the user presses
+`Рассчитать`.
 
-The preview currently exposes:
+The summary, building specification and `Варианты прогонов` table are tied to
+the last `calculatedProjectInput`. If the user changes a select or numeric field
+without pressing `Рассчитать`, the UI shows the pending-changes warning and keeps
+displaying the previous calculated result.
 
-- project name and city;
-- wind load, snow load and terrain type;
-- span, length, height, roof slope, frame step and facade post step;
-- roof construction and roof load;
-- wall construction and wall load;
-- support crane enabled flag, capacity and rail level;
-- max utilization and purlin min/max step.
+## Building System
 
-Those fields are intentionally limited, but they already flow through the
-ProjectInput mappers into several blocks.
+Only `Система: Великан` is active. `projectInfo.buildingSystem` defaults to
+`velikan`. Other building systems are not exposed in this stage, so there is no
+separate system-selection card.
 
-Roof and wall construction options come from the same catalog that the legacy
-column tab uses for `Конструкция покрытия` and `Конструкция ограждения`.
-Changing the construction updates the kPa value from that shared catalog and
-turns manual mode off. Editing the numeric load turns manual mode on
-automatically. When a load is manual, the UI shows `Вернуть из справочника` to
-restore the catalog value.
+The combined `Каркас: система Великан` card lists columns, `Балки покрытия`,
+roof purlins, end fakhverk, bracing/spacers and skipped oracle-only blocks. This
+is presentation-only and does not rename internal calculation keys.
 
-The manual-load checkboxes are not shown in the UI anymore; the flags remain in
-`ProjectInput` as internal state.
+## Roof, Walls And Purlins
 
-## Calculation Flow
+Roof and wall construction selects continue to use the shared envelope catalog.
+Selecting a construction updates the load from the catalog and resets the
+manual-load flag. Editing the numeric load turns manual mode on and shows
+`Ручная нагрузка` plus `Вернуть из справочника`.
 
-The tab uses:
+The roof card keeps `Система прогонов`: `Авто`, `Сортовой металл`, `ЛСТК MP350`
+and `ЛСТК MP390`. The select changes draft state only. The purlin alternative
+table remains in the final calculation card and displays the last calculated
+alternatives.
 
-- `calculateProjectWithSummary(projectInput)` for block results and totals;
-- `buildBuildingSpecification(projectInput)` for the first aggregate
-  specification table.
+## Informational UI Fields
 
-All six blocks are recalculated from the same `ProjectInput` only when the user
-presses `Рассчитать` or `Сбросить`:
+The stage adds UI-safe fields that are not connected to engineering formulas:
 
-- column
-- truss
-- purlin
-- craneBeam
-- windowRiegel
-- beamCell
+- `projectInfo.buildingEnvelope`
+- `roof.drainage`
+- `openings`
+- `projectCosts.design`
 
-Changing input fields updates only `draftProjectInput`, so heavy oracle-backed
-calculations do not run on every keystroke.
+Openings are captured for future specification work. Design cost is shown as a
+separate UI total and is not added to engineering metal-frame totals.
 
-## Partial Areas
+## Oracle Blocks
 
-Some mapper notes and specification warnings are expected. Quantity, length and
-unit mass are still partial in the first specification layers, so the UI shows
-`—` for unknown values instead of inventing them.
+`calculationSettings.enableOracleBlocks` remains `false` by default. In normal
+mode the project path stays fast: column, truss and purlin use native paths,
+while crane beam, window riegel and beam-cell stay skipped/warning.
 
-The final frontend will come later, after the engineering data model and
-specification quantities are stable.
+When oracle mode is enabled in the frame card and the user presses `Рассчитать`,
+the UI uses the async calculation path. Heavy VELICAN-backed modules must remain
+dynamic imports only.
+
+## Specification
+
+The final card keeps:
+
+- `ProjectCalculationSummary`
+- `Building Specification`
+- `Варианты прогонов`
+- warnings and mapping notes
+
+The specification still includes `Общая длина, м` from
+`SpecificationItem.totalLengthM`, especially for `purlins.main`.

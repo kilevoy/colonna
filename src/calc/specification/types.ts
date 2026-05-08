@@ -9,7 +9,7 @@ export type SpecificationGroup =
   | "beamCells"
   | "misc";
 
-export type SpecificationItemStatus = "ok" | "warning" | "missing";
+export type SpecificationItemStatus = "ok" | "warning" | "missing" | "skipped";
 
 export interface SpecificationItem {
   id: string;

@@ -1,4 +1,4 @@
-export type ComparisonBlock = "column" | "truss" | "purlin";
+export type ComparisonBlock = "column" | "truss" | "purlin" | "window_riegel";
 
 export type ComparisonStatus =
   | "ok"

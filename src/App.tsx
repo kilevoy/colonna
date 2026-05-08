@@ -675,15 +675,6 @@ import { PurlinApp } from "./PurlinApp";
 const ProjectApp = lazy(() =>
   import("./ProjectApp").then((module) => ({ default: module.ProjectApp })),
 );
-const CraneBeamApp = lazy(() =>
-  import("./CraneBeamApp").then((module) => ({ default: module.CraneBeamApp })),
-);
-const WindowRiegelApp = lazy(() =>
-  import("./WindowRiegelApp").then((module) => ({ default: module.WindowRiegelApp })),
-);
-const BeamCellApp = lazy(() =>
-  import("./BeamCellApp").then((module) => ({ default: module.BeamCellApp })),
-);
 
 type Mode = "project" | "column" | "truss" | "purlins" | "craneBeam" | "windowRiegel" | "beamCell";
 
@@ -696,6 +687,17 @@ const MODES: Mode[] = [
   "windowRiegel",
   "beamCell",
 ];
+
+function OraclePreviewStub({ title }: { title: string }) {
+  return (
+    <div style={{ border: "1px solid #cbd5e1", borderRadius: 8, padding: 16, color: "#475569", background: "#f8fafc" }}>
+      <h1 style={{ margin: "0 0 8px", fontSize: 20, color: "#0f172a" }}>{title}</h1>
+      <p style={{ margin: 0, fontSize: 14 }}>
+        VELICAN preview hidden in normal mode. Enable dev/oracle mode in the unified Project tab to run oracle blocks.
+      </p>
+    </div>
+  );
+}
 
 export function App() {
   const [mode, setMode] = useState<Mode>("project");
@@ -740,9 +742,9 @@ export function App() {
       {mode === "purlins" && <PurlinApp />}
       <Suspense fallback={<div style={{ color: "#64748b", fontSize: 14 }}>Загрузка расчетного блока...</div>}>
         {mode === "project" && <ProjectApp />}
-        {mode === "craneBeam" && <CraneBeamApp />}
-        {mode === "windowRiegel" && <WindowRiegelApp />}
-        {mode === "beamCell" && <BeamCellApp />}
+        {mode === "craneBeam" && <OraclePreviewStub title={labelOf(mode)} />}
+        {mode === "windowRiegel" && <OraclePreviewStub title={labelOf(mode)} />}
+        {mode === "beamCell" && <OraclePreviewStub title={labelOf(mode)} />}
       </Suspense>
     </div>
   );

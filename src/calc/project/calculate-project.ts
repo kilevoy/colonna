@@ -1,9 +1,6 @@
 import { runCalculation } from "../engine";
 import { runTrussCalculation } from "../truss/engine";
 import { runPurlinCalculation } from "../purlin";
-import { calculateCraneBeam } from "../crane-beam";
-import { calculateWindowRiegel } from "../window-riegel";
-import { calculateBeamCell } from "../beam-cell";
 import { mapProjectToBeamCellInput } from "./map-project-to-beam-cell";
 import { mapProjectToColumnInput } from "./map-project-to-column";
 import { mapProjectToCraneBeamInput } from "./map-project-to-crane-beam";
@@ -11,6 +8,7 @@ import { mapProjectToPurlinInput } from "./map-project-to-purlin";
 import { mapProjectToTrussInput } from "./map-project-to-truss";
 import { mapProjectToWindowRiegelInput } from "./map-project-to-window-riegel";
 import { buildProjectSummary } from "./project-summary";
+import { buildPurlinAlternatives } from "../purlin-layout";
 import type {
   ProjectBlockMapping,
   ProjectCalculationResult,
@@ -29,6 +27,21 @@ function blockWarning(block: string, error: unknown): string {
   return `${block}: calculation failed: ${message}`;
 }
 
+function oracleEnabled(
+  project: ProjectInput,
+  setting: "useOracleForCraneBeam" | "useOracleForWindowRiegel" | "useOracleForBeamCell",
+): boolean {
+  return project.calculationSettings.enableOracleBlocks === true && project.calculationSettings[setting] === true;
+}
+
+function oracleSkippedWarning(block: string): string {
+  return `${block}: skipped: VELICAN oracle is disabled for normal ProjectApp mode. Enable dev/oracle mode to run this block.`;
+}
+
+function oracleAsyncWarning(block: string): string {
+  return `${block}: skipped: VELICAN oracle was requested, but calculateProject() is synchronous. Use calculateProjectAsync() for dev/oracle mode.`;
+}
+
 export function calculateProject(project: ProjectInput): ProjectCalculationResult {
   const warnings: string[] = [];
   const mappingNotes: string[] = [];
@@ -43,9 +56,6 @@ export function calculateProject(project: ProjectInput): ProjectCalculationResul
   let columnResult: ProjectCalculationResult["columnResult"] = null;
   let trussResult: ProjectCalculationResult["trussResult"] = null;
   let purlinResult: ProjectCalculationResult["purlinResult"] = null;
-  let craneBeamResult: ProjectCalculationResult["craneBeamResult"] = null;
-  let windowRiegelResult: ProjectCalculationResult["windowRiegelResult"] = null;
-  let beamCellResult: ProjectCalculationResult["beamCellResult"] = null;
 
   try {
     columnResult = runCalculation(columnInput);
@@ -62,30 +72,27 @@ export function calculateProject(project: ProjectInput): ProjectCalculationResul
   } catch (error) {
     warnings.push(blockWarning("purlin", error));
   }
-  try {
-    craneBeamResult = calculateCraneBeam(craneBeamInput);
-  } catch (error) {
-    warnings.push(blockWarning("craneBeam", error));
-  }
-  try {
-    windowRiegelResult = calculateWindowRiegel(windowRiegelInput);
-  } catch (error) {
-    warnings.push(blockWarning("windowRiegel", error));
-  }
-  try {
-    beamCellResult = calculateBeamCell(beamCellInput);
-  } catch (error) {
-    warnings.push(blockWarning("beamCell", error));
-  }
+
+  warnings.push(
+    oracleEnabled(project, "useOracleForCraneBeam") ? oracleAsyncWarning("craneBeam") : oracleSkippedWarning("craneBeam"),
+  );
+  warnings.push(
+    oracleEnabled(project, "useOracleForWindowRiegel")
+      ? oracleAsyncWarning("windowRiegel")
+      : oracleSkippedWarning("windowRiegel"),
+  );
+  warnings.push(
+    oracleEnabled(project, "useOracleForBeamCell") ? oracleAsyncWarning("beamCell") : oracleSkippedWarning("beamCell"),
+  );
 
   return {
     projectInputSnapshot: project,
     columnResult,
     trussResult,
     purlinResult,
-    craneBeamResult,
-    windowRiegelResult,
-    beamCellResult,
+    craneBeamResult: null,
+    windowRiegelResult: null,
+    beamCellResult: null,
     mappedInputs: {
       column: columnInput,
       truss: trussInput,
@@ -99,10 +106,62 @@ export function calculateProject(project: ProjectInput): ProjectCalculationResul
   };
 }
 
+function removeOracleSkipWarnings(result: ProjectCalculationResult, blocks: string[]): void {
+  result.warnings = result.warnings.filter((warning) => !blocks.some((block) => warning.startsWith(`${block}: skipped:`)));
+}
+
+export async function calculateProjectAsync(project: ProjectInput): Promise<ProjectCalculationResult> {
+  const result = calculateProject(project);
+  const enabledBlocks: string[] = [];
+  if (oracleEnabled(project, "useOracleForCraneBeam")) enabledBlocks.push("craneBeam");
+  if (oracleEnabled(project, "useOracleForWindowRiegel")) enabledBlocks.push("windowRiegel");
+  if (oracleEnabled(project, "useOracleForBeamCell")) enabledBlocks.push("beamCell");
+  removeOracleSkipWarnings(result, enabledBlocks);
+
+  if (oracleEnabled(project, "useOracleForCraneBeam") && result.mappedInputs.craneBeam) {
+    try {
+      const { calculateCraneBeam } = await import("../crane-beam");
+      result.craneBeamResult = calculateCraneBeam(result.mappedInputs.craneBeam);
+    } catch (error) {
+      result.warnings.push(blockWarning("craneBeam", error));
+    }
+  }
+  if (oracleEnabled(project, "useOracleForWindowRiegel") && result.mappedInputs.windowRiegel) {
+    try {
+      const { calculateWindowRiegel } = await import("../window-riegel");
+      result.windowRiegelResult = calculateWindowRiegel(result.mappedInputs.windowRiegel);
+    } catch (error) {
+      result.warnings.push(blockWarning("windowRiegel", error));
+    }
+  }
+  if (oracleEnabled(project, "useOracleForBeamCell") && result.mappedInputs.beamCell) {
+    try {
+      const { calculateBeamCell } = await import("../beam-cell");
+      result.beamCellResult = calculateBeamCell(result.mappedInputs.beamCell);
+    } catch (error) {
+      result.warnings.push(blockWarning("beamCell", error));
+    }
+  }
+
+  return result;
+}
+
 export function calculateProjectWithSummary(project: ProjectInput): ProjectCalculationWithSummary {
   const result = calculateProject(project);
+  const purlinAlternativesSummary = buildPurlinAlternatives(project, result.purlinResult);
   return {
     result,
     summary: buildProjectSummary(result),
+    purlinAlternativesSummary,
+  };
+}
+
+export async function calculateProjectWithSummaryAsync(project: ProjectInput): Promise<ProjectCalculationWithSummary> {
+  const result = await calculateProjectAsync(project);
+  const purlinAlternativesSummary = buildPurlinAlternatives(project, result.purlinResult);
+  return {
+    result,
+    summary: buildProjectSummary(result),
+    purlinAlternativesSummary,
   };
 }

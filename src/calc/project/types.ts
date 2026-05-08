@@ -4,13 +4,44 @@ import type { PurlinInput, PurlinOutput, SnowDriftMode } from "../purlin";
 import type { CraneBeamInput, CraneBeamResult } from "../crane-beam";
 import type { WindowRiegelInput, WindowRiegelResult } from "../window-riegel";
 import type { BeamCellInput, BeamCellResult } from "../beam-cell";
+import type { PurlinAlternativesSummary } from "../purlin-layout";
 
 export type PurlinSystemPreference = "auto" | "sortSteel" | "mp350" | "mp390";
 export type ProjectRoofShape = "gable" | "singleSlope";
+export type ProjectBuildingSystem = "velikan";
+export type ProjectBuildingEnvelope = "cold" | "warm";
+export type ProjectOpeningType = "window" | "door" | "gate";
+export type ProjectDesignCostMethod = "perArea" | "fixed";
+export type ProjectRoofDrainage = "external" | "internal" | "notSpecified";
+
+export interface ProjectOpeningItem {
+  id: string;
+  type: ProjectOpeningType;
+  widthM: number;
+  heightM: number;
+  quantity: number;
+  facade?: string;
+  comment?: string;
+}
+
+export interface ProjectOpenings {
+  windows: ProjectOpeningItem[];
+  doors: ProjectOpeningItem[];
+  gates: ProjectOpeningItem[];
+}
+
+export interface ProjectDesignCost {
+  enabled: boolean;
+  method: ProjectDesignCostMethod;
+  pricePerM2Rub: number;
+  fixedRub: number;
+}
 
 export interface ProjectInput {
   projectInfo: {
     name: string;
+    buildingSystem?: ProjectBuildingSystem;
+    buildingEnvelope?: ProjectBuildingEnvelope;
     customer?: string;
     city?: string;
     notes?: string;
@@ -37,6 +68,7 @@ export interface ProjectInput {
   roof: {
     roofType: RoofType;
     roofShape?: ProjectRoofShape;
+    drainage?: ProjectRoofDrainage;
     roofConstruction: string;
     roofLoadKpa: number;
     useManualRoofLoad: boolean;
@@ -53,6 +85,7 @@ export interface ProjectInput {
     openingHeightM?: number;
     windowType?: number;
   };
+  openings?: ProjectOpenings;
   cranes: {
     supportCrane: {
       enabled: boolean;
@@ -93,12 +126,16 @@ export interface ProjectInput {
     lstkMp350RubPerTon?: number;
     lstkMp390RubPerTon?: number;
   };
+  projectCosts?: {
+    design: ProjectDesignCost;
+  };
   calculationSettings: {
     maxUtilization: number;
     purlinMinStepMm: number;
     purlinMaxStepMm: number;
     purlinSystemPreference: PurlinSystemPreference;
     deflectionLimit?: number;
+    enableOracleBlocks: boolean;
     useOracleForCraneBeam: boolean;
     useOracleForWindowRiegel: boolean;
     useOracleForBeamCell: boolean;
@@ -139,9 +176,15 @@ export type ProjectBlockName =
   | "windowRiegel"
   | "beamCell";
 
-export type ProjectBlockCalculationStatus = "ok" | "warning" | "error" | "notCalculated";
+export type ProjectBlockCalculationStatus = "ok" | "warning" | "error" | "notCalculated" | "skipped";
 
-export type ProjectBlockCalculationSource = "native" | "velican-oracle" | "mixed" | "unknown";
+export type ProjectBlockCalculationSource =
+  | "native"
+  | "velican-oracle"
+  | "native-skeleton"
+  | "mixed"
+  | "unknown"
+  | "skipped";
 
 export interface ProjectBlockStatus {
   block: ProjectBlockName;
@@ -172,4 +215,5 @@ export interface ProjectCalculationSummary {
 export interface ProjectCalculationWithSummary {
   result: ProjectCalculationResult;
   summary: ProjectCalculationSummary;
+  purlinAlternativesSummary: PurlinAlternativesSummary;
 }

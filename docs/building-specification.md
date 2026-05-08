@@ -1,5 +1,18 @@
 # Building Specification
 
+## Stage 8.7.2 Oracle Blocks In Normal Mode
+
+`calculationSettings.enableOracleBlocks` is `false` by default. In the normal
+project UI, `craneBeams`, `windowRiegels` and `beamCells` are included as
+`skipped`/warning specification rows without running VELICAN. Derived layout
+quantities can still be shown where they are independent of oracle output, but
+profile, mass and cost remain `null` until an explicit dev/oracle calculation is
+run.
+
+If dev/oracle mode is enabled, the async project calculation can populate those
+rows from the dynamically imported VELICAN-backed results. Native formulas,
+native engines and oracle formulas are not changed by this specification layer.
+
 `BuildingSpecification` is the first structured specification layer for the
 project-level calculator. It is built from `ProjectInput` through
 `calculateProjectWithSummary()` and returns a list of specification items grouped
@@ -74,9 +87,20 @@ calculation mass/cost. This avoids double counting until beam-cell output
 semantics are approved.
 
 Purlin mass is not recalculated from the preliminary layout. The purlin row uses
-layout quantity/length for specification and keeps aggregate mass from the
-selected purlin calculation result. The selected system is preliminary and
-preserves the `sortSteel` / `MP350` / `MP390` alternatives for later UI choice.
+layout quantity/length for specification and keeps mass/profile from the
+selected `PurlinAlternative`. The alternative model preserves the `sortSteel` /
+`MP350` / `MP390` choices from the `insi-next` approach.
+
+Specification tables show all three length-related fields where available:
+
+- `quantity` is the number of pieces;
+- `lengthM` is the length of one piece when pieces have a uniform length;
+- `totalLengthM` is the total meterage for the item.
+
+This is especially important for `purlins.main`: purlin mass comes from the
+selected calculation alternative, while `totalLengthM` comes from `PurlinLayout`
+and shows the overall roof-purlin meterage in the UI and markdown
+specification.
 
 Some calculation outputs still expose aggregate mass but do not yet expose
 reliable quantity, member length, or per-unit mass. In those cases values stay

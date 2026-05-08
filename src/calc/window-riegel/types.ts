@@ -4,7 +4,7 @@ import type {
   WindowRiegelResult as VelicanWindowRiegelResult,
 } from "../velican/window-riegel";
 
-export type WindowRiegelSource = "velican-oracle";
+export type WindowRiegelSource = "velican-oracle" | "native-skeleton";
 
 export type WindowRiegelCheckStatus = "ok" | "fail" | "not-comparable" | "missing";
 

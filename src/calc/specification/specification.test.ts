@@ -43,9 +43,9 @@ describe("BuildingSpecification", () => {
     expect(spec.totals.massByGroup.columns).toBeGreaterThan(0);
     expect(spec.totals.massByGroup.trusses).toBeGreaterThan(0);
     expect(spec.totals.massByGroup.purlins).toBeGreaterThan(0);
-    expect(spec.totals.massByGroup.craneBeams).toBeGreaterThan(0);
-    expect(spec.totals.massByGroup.windowRiegels).toBeGreaterThan(0);
-    expect(spec.totals.massByGroup.beamCells).toBeGreaterThan(0);
+    expect(spec.totals.massByGroup.craneBeams).toBeUndefined();
+    expect(spec.totals.massByGroup.windowRiegels).toBeUndefined();
+    expect(spec.totals.massByGroup.beamCells).toBeUndefined();
   }, 60_000);
 
   it("formats specification as markdown table", () => {
@@ -54,6 +54,7 @@ describe("BuildingSpecification", () => {
 
     expect(markdown).toContain("# Building Specification");
     expect(markdown).toContain("| Group | Element | Profile | Steel | Qty |");
+    expect(markdown).toContain("Общая длина, м");
     expect(markdown).toContain("## Totals");
   }, 60_000);
 
@@ -104,6 +105,17 @@ describe("BuildingSpecification", () => {
     expect(purlins?.notes.join(" ")).toContain("layout quantity is preliminary");
   }, 60_000);
 
+  it("formats purlin total length in specification markdown", () => {
+    const spec = buildBuildingSpecification(defaultProjectInput);
+    const purlins = spec.items.find((item) => item.id === "purlins.main");
+    const markdown = formatSpecificationMarkdown(spec);
+    const purlinLine = markdown.split("\n").find((line) => line.includes("| purlins | Selected purlin profile |"));
+
+    expect(purlins?.totalLengthM).toBeGreaterThan(0);
+    expect(purlinLine).toBeTruthy();
+    expect(purlinLine).toContain(String(Number(purlins!.totalLengthM!.toFixed(3))));
+  }, 60_000);
+
   it("passes variable purlin bay warning into specification warnings", () => {
     const project: ProjectInput = {
       ...defaultProjectInput,
@@ -120,7 +132,7 @@ describe("BuildingSpecification", () => {
     expect(spec.warnings.join(" ")).toContain("Last bay adjusted");
   }, 60_000);
 
-  it("keeps beam-cell end roof beam quantity separate from aggregate mass", () => {
+  it("keeps skipped beam-cell end roof beam quantity separate from aggregate mass", () => {
     const spec = buildBuildingSpecification(defaultProjectInput);
     const endRoofBeams = spec.items.find((item) => item.id === "beamCells.endRoofBeams");
     const aggregate = spec.items.find((item) => item.id === "beamCells.aggregate");
@@ -130,11 +142,12 @@ describe("BuildingSpecification", () => {
 
     expect(endRoofBeams?.quantity).toBe(2);
     expect(endRoofBeams?.totalMassKg).toBeNull();
-    expect(endRoofBeams?.status).toBe("warning");
+    expect(endRoofBeams?.status).toBe("skipped");
     expect(endRoofBeams?.warnings.join(" ")).toContain("layout-only");
     expect(aggregate?.quantity).toBeNull();
-    expect(aggregate?.totalMassKg).toBeGreaterThan(0);
-    expect(beamCellMassTotal).toBe(aggregate?.totalMassKg);
+    expect(aggregate?.totalMassKg).toBeNull();
+    expect(aggregate?.status).toBe("skipped");
+    expect(beamCellMassTotal).toBe(0);
   }, 60_000);
 
   it("uses BuildingLayout end roof beam quantity for multi-span layouts", () => {
@@ -159,15 +172,16 @@ describe("BuildingSpecification", () => {
     expect(spec.warnings.join(" ")).toContain("Building length is not divisible by frame step");
   }, 60_000);
 
-  it("fills crane-beam quantity and length when support crane is enabled", () => {
+  it("fills crane-beam quantity and length but skips oracle mass in normal mode", () => {
     const enabledProject = withSupportCraneEnabled(defaultProjectInput);
     const spec = buildBuildingSpecification(enabledProject);
     const craneBeams = spec.items.find((item) => item.group === "craneBeams");
 
     expect(craneBeams?.quantity).toBe(2);
     expect(craneBeams?.lengthM).toBe(defaultProjectInput.geometry.buildingLengthM);
-    expect(craneBeams?.unitMassKg).toBeGreaterThan(0);
-    expect(craneBeams?.unitPriceRub).toBeGreaterThanOrEqual(0);
+    expect(craneBeams?.unitMassKg).toBeNull();
+    expect(craneBeams?.unitPriceRub).toBeNull();
+    expect(craneBeams?.status).toBe("skipped");
   }, 60_000);
 
   it("uses warning or missing status for items without fully derived quantity and length", () => {
@@ -176,7 +190,7 @@ describe("BuildingSpecification", () => {
 
     expect(incompleteItems.length).toBeGreaterThan(0);
     for (const item of incompleteItems) {
-      expect(["warning", "missing"]).toContain(item.status);
+      expect(["warning", "missing", "skipped"]).toContain(item.status);
       expect(item.warnings.length).toBeGreaterThan(0);
     }
   }, 60_000);

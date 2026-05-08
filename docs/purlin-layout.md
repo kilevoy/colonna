@@ -13,8 +13,8 @@ The purlin calculation block can expose alternatives:
 - `mp390`.
 
 The specification should not collapse those systems into an unnamed aggregate.
-`PurlinLayout` keeps a selected preliminary system and derives a first layout
-for specification quantities.
+`PurlinAlternativesSummary` selects the system, while `PurlinLayout` derives a
+first layout for specification quantities.
 
 ## Roof Shape
 
@@ -79,12 +79,13 @@ If the last bay is adjusted, `pieceLengthM = null`, but:
 
 `ProjectInput.calculationSettings.purlinSystemPreference` controls selection:
 
-- `auto`: preliminary `mp350`;
+- `auto`: uses `PurlinAlternativesSummary` preliminary auto selection;
 - `sortSteel`;
 - `mp350`;
 - `mp390`.
 
-UI selection is intentionally not added in this stage.
+The `Единое здание` technical UI now exposes this preference, but it still only
+updates draft state. Recalculation happens after pressing `Рассчитать`.
 
 ## Specification
 
@@ -93,12 +94,20 @@ UI selection is intentionally not added in this stage.
 - `quantity = totalPieces`;
 - `lengthM = pieceLengthM` when all pieces have the same length;
 - `totalLengthM = totalLengthM`;
-- profile and mass are taken from the selected purlin calculation result where
+- profile and mass are taken from the selected `PurlinAlternative` where
   available.
 
 Mass is still taken from the calculation result. It is not recomputed from
 layout length. This preserves engineering parity and keeps the layout layer as a
 specification helper.
+
+The project specification UI and markdown formatter display `totalLengthM` as
+the overall length column. For purlins, this means:
+
+- `quantity` is the number of purlin pieces;
+- `lengthM` is the length of one piece when all pieces are equal;
+- `totalLengthM` is the total roof-purlin meterage, including adjusted last-bay
+  layouts where individual piece lengths are not uniform.
 
 Excel/VELICAN remains an oracle/reference for workbook-backed calculations, but
 this layout does not blindly import rough workbook estimate formulas.

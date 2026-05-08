@@ -33,7 +33,7 @@ export function formatSpecificationMarkdown(spec: BuildingSpecification): string
     `Project: ${spec.projectName}`,
     `Created at: ${spec.createdAt}`,
     "",
-    "| Group | Element | Profile | Steel | Qty | Length m | Total length m | Unit kg | Total kg | Unit price | Total cost | Source | Status |",
+    "| Group | Element | Profile | Steel | Qty | Length m | Общая длина, м | Unit kg | Total kg | Unit price | Total cost | Source | Status |",
     "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|",
     ...rows.map((row) => `| ${row} |`),
     "",

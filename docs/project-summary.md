@@ -1,5 +1,16 @@
 # Project Summary
 
+## Stage 8.7.2 Oracle Blocks
+
+`calculationSettings.enableOracleBlocks` is `false` by default. In normal mode
+crane beam, window riegel and beam-cell have status/source `skipped` in
+`ProjectCalculationSummary`; VELICAN is not loaded for them.
+
+For explicit dev/oracle runs use `calculateProjectWithSummaryAsync(project)` with
+`enableOracleBlocks` and the corresponding per-block oracle flags enabled. That
+path uses dynamic imports and reports those blocks with source `velican-oracle`
+when results are available.
+
 `ProjectCalculationSummary` is a compact building-level summary built on top of
 `calculateProject()`. It does not replace engineering results, detailed debug
 reports, acceptance tests, or a future bill of materials. Its job is to collect
