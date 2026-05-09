@@ -15,11 +15,25 @@ import { OpeningsCard } from "./components/building/OpeningsCard";
 import { DesignCostCard } from "./components/building/DesignCostCard";
 import { CalculationSummaryCard, type ProjectCalculationView } from "./components/building/CalculationSummaryCard";
 
-const inputCardsGridStyle = {
+const twoColumnLayoutStyle = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+  gridTemplateColumns: "480px minmax(380px, 1fr)",
+  gap: 20,
+  alignItems: "start",
+} as const;
+
+const leftColumnStyle = {
+  display: "grid",
   gap: 14,
   alignItems: "start",
+} as const;
+
+const rightColumnStyle = {
+  display: "grid",
+  gap: 14,
+  alignItems: "start",
+  position: "sticky",
+  top: 14,
 } as const;
 
 function buildProjectView(project: ProjectInput): ProjectCalculationView {
@@ -122,22 +136,26 @@ export function ProjectApp() {
         а спецификация и варианты прогонов обновляются только после кнопки «Рассчитать».
       </div>
 
-      <div style={inputCardsGridStyle}>
-        <RegionConstructionCard project={draftProject} onProjectChange={setDraftProject} defaultOpen />
-        <BuildingDimensionsCard project={draftProject} onProjectChange={setDraftProject} />
-        <FrameCard project={draftProject} onProjectChange={setDraftProject} />
-        <WallCard project={draftProject} onProjectChange={setDraftProject} />
-        <RoofCard project={draftProject} onProjectChange={setDraftProject} />
-        <OpeningsCard project={draftProject} onProjectChange={setDraftProject} />
-        <DesignCostCard project={draftProject} onProjectChange={setDraftProject} />
+      <div style={twoColumnLayoutStyle}>
+        <div style={leftColumnStyle}>
+          <RegionConstructionCard project={draftProject} onProjectChange={setDraftProject} defaultOpen />
+          <BuildingDimensionsCard project={draftProject} onProjectChange={setDraftProject} defaultOpen />
+          <FrameCard project={draftProject} onProjectChange={setDraftProject} />
+          <WallCard project={draftProject} onProjectChange={setDraftProject} />
+          <RoofCard project={draftProject} onProjectChange={setDraftProject} />
+          <OpeningsCard project={draftProject} onProjectChange={setDraftProject} />
+          <DesignCostCard project={draftProject} onProjectChange={setDraftProject} />
+        </div>
+        <div style={rightColumnStyle}>
+          <CalculationSummaryCard
+            calculatedProject={calculatedProject}
+            view={view}
+            hasPendingChanges={hasPendingChanges}
+            onCalculate={calculateDraft}
+            onReset={resetProject}
+          />
+        </div>
       </div>
-      <CalculationSummaryCard
-        calculatedProject={calculatedProject}
-        view={view}
-        hasPendingChanges={hasPendingChanges}
-        onCalculate={calculateDraft}
-        onReset={resetProject}
-      />
     </div>
   );
 }
