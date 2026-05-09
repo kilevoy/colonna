@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Карточка EVRAZ-style — Район строительства</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #F5F5F5;
+    color: #212121;
+    padding: 24px;
+    line-height: 1.4;
+  }
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* ===== КАРТОЧКА ===== */
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  /* Шапка карточки */
+  .card-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    background: #9E9E9E;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .step-num.done {
+    background: #4CAF50;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+  }
+  .card-summary {
+    font-size: 13px;
+    color: #757575;
+    margin-right: 12px;
+  }
+  .card-toggle {
+    color: #757575;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Тело карточки */
+  .card-body {
+    padding: 0 20px 20px 20px;
+    display: block;
+  }
+  .card.collapsed .card-body {
+    display: none;
+  }
+
+  /* Поле */
+  .field {
+    margin-bottom: 16px;
+  }
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #424242;
+    margin-bottom: 6px;
+  }
+
+  /* Input / Select / Search */
+  .field-input,
+  .field-select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    background: #fff;
+    color: #212121;
+  }
+  .field-input:focus,
+  .field-select:focus {
+    outline: none;
+    border-color: #757575;
+  }
+  .field-input:disabled,
+  .field-select:disabled {
+    background: #F5F5F5;
+    color: #9E9E9E;
+  }
+
+  /* Search wrap */
+  .search-wrap {
+    position: relative;
+  }
+  .search-wrap .field-input {
+    padding-left: 32px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9E9E9E;
+    font-size: 14px;
+  }
+
+  /* Autocomplete */
+  .autocomplete-list {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    max-height: 180px;
+    overflow-y: auto;
+    z-index: 10;
+    display: none;
+  }
+  .autocomplete-list.visible {
+    display: block;
+  }
+  .autocomplete-item {
+    padding: 8px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    border-bottom: 1px solid #EEEEEE;
+  }
+  .autocomplete-item:hover {
+    background: #F5F5F5;
+  }
+  .autocomplete-item .city-region {
+    font-size: 11px;
+    color: #757575;
+  }
+
+  /* Ряд 2 поля */
+  .field-row {
+    display: flex;
+    gap: 16px;
+  }
+  .field-row .field {
+    flex: 1;
+  }
+  @media (max-width: 600px) {
+    .field-row {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  /* Link */
+  .field-link {
+    display: inline-block;
+    font-size: 12px;
+    color: #1976D2;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .field-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Micro info под городом */
+  .micro-info {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 4px;
+  }
+  .micro-info strong {
+    color: #424242;
+    font-weight: 500;
+  }
+
+  /* Disabled hint */
+  .field-hint {
+    font-size: 11px;
+    color: #9E9E9E;
+    margin-top: 4px;
+  }
+
+  /* Город уже выбран — зелёный бэдж */
+  .city-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #E8F5E9;
+    border: 1px solid #A5D6A7;
+    color: #2E7D32;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  .city-badge .remove {
+    cursor: pointer;
+    color: #757575;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .city-badge .remove:hover {
+    color: #C62828;
+  }
+</style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ===== СОСТОЯНИЕ 1: РАЗВЁРНУТАЯ, ГОРОД НЕ ВЫБРАН ===== -->
+    <div class="card" id="c1">
+      <div class="card-header" onclick="toggle('c1')">
+        <div class="card-header-left">
+          <span class="step-num">1</span>
+          <span class="card-title">Район строительства</span>
+        </div>
+        <span class="card-summary" id="sum1"></span>
+        <span class="card-toggle">−</span>
+      </div>
+      <div class="card-body">
+
+        <!-- Город -->
+        <div class="field">
+          <label class="field-label">Город</label>
+          <div class="search-wrap">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" class="field-input" id="city1" placeholder="Выбрать город"
+                   autocomplete="off" oninput="filterCities(this.value, 'list1')" />
+            <div class="autocomplete-list" id="list1">
+              <div class="autocomplete-item" onclick="selectCity('Москва',1)">
+                <div>Москва</div><div class="city-region">Московская обл.</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Ижевск',1)">
+                <div>Ижевск</div><div class="city-region">Республика Удмуртия</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Челябинск',1)">
+                <div>Челябинск</div><div class="city-region">Челябинская обл.</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Санкт-Петербург',1)">
+                <div>Санкт-Петербург</div><div class="city-region">Ленинградская обл.</div>
+              </div>
+            </div>
+          </div>
+          <div class="micro-info" id="micro1" style="display:none;">
+            w₀: <strong>0.30</strong> кН/м² · Sg: <strong>100</strong> кг/м² · <strong>II</strong> снеговой район
+          </div>
+        </div>
+
+        <!-- Снег + Ветер -->
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">Снеговой район</label>
+            <select class="field-select" id="snow1" disabled>
+              <option>III Снеговой район (150 кг/м²)</option>
+            </select>
+            <div class="field-hint"></div>
+          </div>
+          <div class="field">
+            <label class="field-label">Ветровой район</label>
+            <select class="field-select" id="wind1" disabled>
+              <option>I Ветровой район (23 кг/м²)</option>
+            </select>
+            <div class="field-hint"></div>
+          </div>
+        </div>
+
+        <!-- Сейсмичность + Тип местности -->
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">Сейсмичность</label>
+            <select class="field-select">
+              <option>6 и меньше</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">Тип местности</label>
+            <select class="field-select">
+              <option selected>B</option>
+              <option>A</option>
+              <option>C</option>
+            </select>
+          </div>
+        </div>
+
+        <a href="#" class="field-link">Карта климатических зон</a>
+      </div>
+    </div>
+
+    <!-- ===== СОСТОЯНИЕ 2: СВЁРНУТАЯ, ГОРОД ВЫБРАН ===== -->
+    <div class="card collapsed" id="c2">
+      <div class="card-header" onclick="toggle('c2')">
+        <div class="card-header-left">
+          <span class="step-num done">&#10003;</span>
+          <span class="card-title">Район строительства</span>
+        </div>
+        <span class="card-summary">Ижевск — II сн., I ветр., тип B</span>
+        <span class="card-toggle">&#9660;</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <div class="city-badge">
+            <span>Ижевск</span>
+            <span class="remove" onclick="clearCity(2)">&#10005;</span>
+          </div>
+          <div class="micro-info" style="margin-top:6px;">
+            w₀: <strong>0.30</strong> кН/м² · Sg: <strong>100</strong> кг/м² · <strong>II</strong> снеговой район
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">Снеговой район</label>
+            <select class="field-select" disabled><option>II Снеговой район (100 кг/м²)</option></select>
+          </div>
+          <div class="field">
+            <label class="field-label">Ветровой район</label>
+            <select class="field-select" disabled><option>I Ветровой район (23 кг/м²)</option></select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">Сейсмичность</label>
+            <select class="field-select" disabled><option>6 и меньше</option></select>
+          </div>
+          <div class="field">
+            <label class="field-label">Тип местности</label>
+            <select class="field-select" disabled><option>B</option></select>
+          </div>
+        </div>
+        <a href="#" class="field-link">Карта климатических зон</a>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+function toggle(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+function filterCities(val, listId) {
+  const list = document.getElementById(listId);
+  list.classList.toggle('visible', val.length >= 2);
+  const items = list.querySelectorAll('.autocomplete-item');
+  let has = false;
+  items.forEach(item => {
+    const city = item.textContent.toLowerCase();
+    item.style.display = city.includes(val.toLowerCase()) ? 'block' : 'none';
+    if (city.includes(val.toLowerCase())) has = true;
+  });
+  if (!has) list.classList.remove('visible');
+}
+function selectCity(name, card) {
+  const input = document.getElementById('city'+card);
+  input.value = '';
+  input.style.display = 'none';
+  document.getElementById('list'+card).classList.remove('visible');
+  document.getElementById('micro'+card).style.display = 'block';
+  if (card === 1) {
+    const snow = document.getElementById('snow1');
+    snow.innerHTML = '<option>II Снеговой район (100 кг/м²)</option>';
+    snow.disabled = true;
+    const wind = document.getElementById('wind1');
+    wind.innerHTML = '<option>I Ветровой район (23 кг/м²)</option>';
+    wind.disabled = true;
+    document.getElementById('sum1').textContent = 'Ижевск — II сн., I ветр., тип B';
+    document.querySelector('#c1 .step-num').classList.add('done');
+    document.querySelector('#c1 .step-num').textContent = '\u2713';
+  }
+}
+function clearCity(card) {
+  alert('Сброс города — перезагрузить поле');
+}
+</script>
+
+</body>
+</html>

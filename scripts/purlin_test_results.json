@@ -1,0 +1,5752 @@
+[
+  {
+    "scenario": "С1: ЛСТК, двускатная, снег 1.5, шаг 1500",
+    "input": {
+      "materialType": "lstk",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 24,
+      "length_m": 72,
+      "height_m": 8,
+      "roofSlope_deg": 5,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 1.5,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.15,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0
+    },
+    "output": {
+      "q_snow_kPa": 2.4703486694074392,
+      "q_windRoof_kPa": 0.09200487221183999,
+      "q_roof_kPa": 0.1425,
+      "q_total_kPa": 2.704853541619279,
+      "mu2": 1,
+      "designSpan_m": 24,
+      "L_slope_m": 11.85,
+      "sections": [
+        {
+          "grade": "MP350",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 200х65х2",
+              "type": "2TPS",
+              "h_mm": 200,
+              "b_mm": 65,
+              "t_mm": 2,
+              "M_pred_baseline_kNm": 18.55,
+              "default_coef": 0.87,
+              "mass_kg_per_m": 10.0176,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1485,
+            "M_pred_eff_kNm": 18.986470588235296,
+            "M_design_kNm": 18.503436191870833,
+            "K": 0.9745590211661682,
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 1081.9008,
+            "massPerBuilding_kg": 12982.809599999999
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 245х65х1,5",
+              "type": "2PS",
+              "h_mm": 245,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 17.79,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 9.19,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1320,
+            "M_pred_eff_kNm": 17.79,
+            "M_design_kNm": 16.45970253721852,
+            "K": 0.92522217747153,
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1102.8,
+            "massPerBuilding_kg": 13233.599999999999
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 300х2",
+              "type": "Z",
+              "h_mm": 300,
+              "b_mm": null,
+              "t_mm": 2,
+              "M_pred_baseline_kNm": 20.75,
+              "default_coef": 0.87,
+              "mass_kg_per_m": 8.12,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1485,
+            "M_pred_eff_kNm": 21.238235294117647,
+            "M_design_kNm": 18.422313791870835,
+            "K": 0.8674126421875202,
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 907.92,
+            "massPerBuilding_kg": 10895.039999999999
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 245х65х1,5",
+              "type": "2TPS",
+              "h_mm": 245,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 17.71,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 8.6338,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1320,
+            "M_pred_eff_kNm": 17.71,
+            "M_design_kNm": 16.43592498721852,
+            "K": 0.9280590054894703,
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1036.056,
+            "massPerBuilding_kg": 12432.672
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 200х65х1,5",
+              "type": "2PS",
+              "h_mm": 200,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 16.96,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 8.14,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1320,
+            "M_pred_eff_kNm": 16.96,
+            "M_design_kNm": 16.41481503721852,
+            "K": 0.9678546602133561,
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 976.8000000000001,
+            "massPerBuilding_kg": 11721.6
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 250х2",
+              "type": "Z",
+              "h_mm": 250,
+              "b_mm": null,
+              "t_mm": 2,
+              "M_pred_baseline_kNm": 15.21,
+              "default_coef": 0.87,
+              "mass_kg_per_m": 6.57,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1185,
+            "M_pred_eff_kNm": 15.567882352941176,
+            "M_design_kNm": 14.704499010684806,
+            "K": 0.9445407331143368,
+            "nPurlins": 22,
+            "massPerFrameStep_kg": 905.08,
+            "massPerBuilding_kg": 10860.960000000001
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1185,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 14.704499010684806,
+          "K": 0.9445407331143368,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1190,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 14.765358215371238,
+          "K": 0.9484500127007756,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1195,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 14.826217420057676,
+          "K": 0.9523592922872146,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1200,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 14.887076624744108,
+          "K": 0.9562685718736533,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1205,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 14.947935829430545,
+          "K": 0.9601778514600923,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1210,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 15.008795034116977,
+          "K": 0.964087131046531,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1215,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 15.069654238803409,
+          "K": 0.9679964106329697,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1220,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 15.130513443489843,
+          "K": 0.9719056902194085,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1225,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 15.191372648176278,
+          "K": 0.9758149698058474,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        },
+        {
+          "profile": {
+            "name": "Z 250х2",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 15.21,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 6.57,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1230,
+          "M_pred_eff_kNm": 15.567882352941176,
+          "M_design_kNm": 15.25223185286271,
+          "K": 0.9797242493922861,
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 905.08,
+          "massPerBuilding_kg": 10860.960000000001
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С2: ЛСТК, односкатная, снег 2.4, along-занос",
+    "input": {
+      "materialType": "lstk",
+      "gamma_n": 0.95,
+      "roofShape": "monoslope",
+      "span_m": 18,
+      "length_m": 60,
+      "height_m": 6,
+      "roofSlope_deg": 3,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 2.4,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.18,
+      "snowDrift": "along",
+      "drift_dropHeight_m": 3,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": true,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0
+    },
+    "output": {
+      "q_snow_kPa": 9.905546163365482,
+      "q_windRoof_kPa": 0.08550091429824,
+      "q_roof_kPa": 0.17099999999999999,
+      "q_total_kPa": 10.162047077663722,
+      "mu2": 2.5,
+      "designSpan_m": 18,
+      "L_slope_m": 17.7,
+      "sections": [
+        {
+          "grade": "MP350",
+          "type": "2TPS",
+          "best": null
+        },
+        {
+          "grade": "MP350",
+          "type": "2PS",
+          "best": null
+        },
+        {
+          "grade": "MP350",
+          "type": "Z",
+          "best": null
+        },
+        {
+          "grade": "MP390",
+          "type": "2TPS",
+          "best": null
+        },
+        {
+          "grade": "MP390",
+          "type": "2PS",
+          "best": null
+        },
+        {
+          "grade": "MP390",
+          "type": "Z",
+          "best": null
+        }
+      ],
+      "top10": []
+    }
+  },
+  {
+    "scenario": "С5: ЛСТК, террен A, 15м, ураган",
+    "input": {
+      "materialType": "lstk",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 21,
+      "length_m": 60,
+      "height_m": 15,
+      "roofSlope_deg": 5,
+      "framePitch_m": 6,
+      "terrainType": "A",
+      "w0_kPa": 0.48,
+      "Sg_kPa": 0.8,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.22,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0
+    },
+    "output": {
+      "q_snow_kPa": 1.3175192903506343,
+      "q_windRoof_kPa": 0.2305544094,
+      "q_roof_kPa": 0.209,
+      "q_total_kPa": 1.7570736997506344,
+      "mu2": 1,
+      "designSpan_m": 21,
+      "L_slope_m": 10.35,
+      "sections": [
+        {
+          "grade": "MP350",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 200х65х1,5",
+              "type": "2TPS",
+              "h_mm": 200,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 12.68,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 7.584,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1480,
+            "M_pred_eff_kNm": 12.68,
+            "M_design_kNm": 12.026326840339225,
+            "K": 0.9484484889857433,
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 728.064,
+            "massPerBuilding_kg": 7280.639999999999
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 200х45х1,5",
+              "type": "2PS",
+              "h_mm": 200,
+              "b_mm": 45,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 12.63,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 7.2,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1480,
+            "M_pred_eff_kNm": 12.63,
+            "M_design_kNm": 12.009910840339224,
+            "K": 0.9509034711274127,
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 691.2,
+            "massPerBuilding_kg": 6912
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 250х1,5",
+              "type": "Z",
+              "h_mm": 250,
+              "b_mm": null,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.36,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 4.94,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1150,
+            "M_pred_eff_kNm": 10.36,
+            "M_design_kNm": 9.304041396209534,
+            "K": 0.8980734938426191,
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 627.2,
+            "massPerBuilding_kg": 6272
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 195х45х1,5",
+              "type": "2TPS",
+              "h_mm": 195,
+              "b_mm": 45,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 11.28,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 6.5184,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1295,
+            "M_pred_eff_kNm": 11.28,
+            "M_design_kNm": 10.51800858529682,
+            "K": 0.9324475696185125,
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 703.9872,
+            "massPerBuilding_kg": 7039.872
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 195х45х1,5",
+              "type": "2PS",
+              "h_mm": 195,
+              "b_mm": 45,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 13.9,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 7.08,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1480,
+            "M_pred_eff_kNm": 13.900000000000002,
+            "M_design_kNm": 12.004780840339224,
+            "K": 0.8636532978661311,
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 679.6800000000001,
+            "massPerBuilding_kg": 6796.8
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 250х1,5",
+              "type": "Z",
+              "h_mm": 250,
+              "b_mm": null,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.88,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 4.94,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1295,
+            "M_pred_eff_kNm": 10.88,
+            "M_design_kNm": 10.450531985296822,
+            "K": 0.960526836883899,
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 564.48,
+            "massPerBuilding_kg": 5644.8
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1295,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.450531985296822,
+          "K": 0.960526836883899,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1300,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.490066143541213,
+          "K": 0.9641604911343026,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1305,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.529600301785601,
+          "K": 0.9677941453847059,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1310,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.569134460029993,
+          "K": 0.9714277996351096,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1315,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.608668618274379,
+          "K": 0.9750614538855127,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1320,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.648202776518769,
+          "K": 0.9786951081359162,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1325,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.687736934763157,
+          "K": 0.9823287623863195,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1330,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.727271093007548,
+          "K": 0.9859624166367231,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1335,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.766805251251938,
+          "K": 0.9895960708871266,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1340,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.806339409496328,
+          "K": 0.99322972513753,
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 564.48,
+          "massPerBuilding_kg": 5644.8
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С6: ЛСТК, малый пролёт 6м, минимум материала",
+    "input": {
+      "materialType": "lstk",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 6,
+      "length_m": 24,
+      "height_m": 4,
+      "roofSlope_deg": 3,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 0.8,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.12,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1800,
+      "minStep_mm": 1200,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0
+    },
+    "output": {
+      "q_snow_kPa": 1.3207394884487311,
+      "q_windRoof_kPa": 0.08477316857142855,
+      "q_roof_kPa": 0.11399999999999999,
+      "q_total_kPa": 1.5195126570201598,
+      "mu2": 1,
+      "designSpan_m": 6,
+      "L_slope_m": 2.85,
+      "sections": [
+        {
+          "grade": "MP350",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 195х45х1,5",
+              "type": "2TPS",
+              "h_mm": 195,
+              "b_mm": 45,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.07,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 6.5184,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 10.07,
+            "M_design_kNm": 10.022536513141773,
+            "K": 0.9952866448005733,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 234.6624,
+            "massPerBuilding_kg": 938.6496000000001
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 150х65х1,5",
+              "type": "2PS",
+              "h_mm": 150,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.13,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 6.97,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 10.13,
+            "M_design_kNm": 10.041842413141776,
+            "K": 0.9912973754335415,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 250.92000000000002,
+            "massPerBuilding_kg": 1003.68
+          }
+        },
+        {
+          "grade": "MP350",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 250х1,5",
+              "type": "Z",
+              "h_mm": 250,
+              "b_mm": null,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.36,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 4.94,
+              "Ry_MPa": 350
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 10.36,
+            "M_design_kNm": 9.955059913141776,
+            "K": 0.960913119029129,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 188.16,
+            "massPerBuilding_kg": 752.64
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2TPS",
+          "best": {
+            "profile": {
+              "name": "2ТПС 150х65х1,5",
+              "type": "2TPS",
+              "h_mm": 150,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.25,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 6.4088,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 10.25,
+            "M_design_kNm": 10.017851113141774,
+            "K": 0.9773513281113926,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 230.71680000000003,
+            "massPerBuilding_kg": 922.8672000000001
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 150х65х1,5",
+              "type": "2PS",
+              "h_mm": 150,
+              "b_mm": 65,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 11.93,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 6.97,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 11.93,
+            "M_design_kNm": 10.041842413141776,
+            "K": 0.8417302944796125,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 250.92000000000002,
+            "massPerBuilding_kg": 1003.68
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "Z",
+          "best": {
+            "profile": {
+              "name": "Z 250х1,5",
+              "type": "Z",
+              "h_mm": 250,
+              "b_mm": null,
+              "t_mm": 1.5,
+              "M_pred_baseline_kNm": 10.88,
+              "default_coef": 0.85,
+              "mass_kg_per_m": 4.94,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1425,
+            "M_pred_eff_kNm": 10.88,
+            "M_design_kNm": 9.955059913141776,
+            "K": 0.9149871243696485,
+            "nPurlins": 6,
+            "massPerFrameStep_kg": 188.16,
+            "massPerBuilding_kg": 752.64
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.36,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 350
+          },
+          "spacing_mm": 1425,
+          "M_pred_eff_kNm": 10.36,
+          "M_design_kNm": 9.955059913141776,
+          "K": 0.960913119029129,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1425,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 9.955059913141776,
+          "K": 0.9149871243696485,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.36,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 350
+          },
+          "spacing_mm": 1430,
+          "M_pred_eff_kNm": 10.36,
+          "M_design_kNm": 9.989248947924729,
+          "K": 0.9642132189116535,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1430,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 9.989248947924729,
+          "K": 0.9181294988901405,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.36,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 350
+          },
+          "spacing_mm": 1435,
+          "M_pred_eff_kNm": 10.36,
+          "M_design_kNm": 10.023437982707684,
+          "K": 0.967513318794178,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1435,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.023437982707684,
+          "K": 0.9212718734106327,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.36,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 350
+          },
+          "spacing_mm": 1440,
+          "M_pred_eff_kNm": 10.36,
+          "M_design_kNm": 10.057627017490635,
+          "K": 0.9708134186767022,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1440,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.057627017490635,
+          "K": 0.9244142479311245,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.36,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 350
+          },
+          "spacing_mm": 1445,
+          "M_pred_eff_kNm": 10.36,
+          "M_design_kNm": 10.091816052273591,
+          "K": 0.974113518559227,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        },
+        {
+          "profile": {
+            "name": "Z 250х1,5",
+            "type": "Z",
+            "h_mm": 250,
+            "b_mm": null,
+            "t_mm": 1.5,
+            "M_pred_baseline_kNm": 10.88,
+            "default_coef": 0.85,
+            "mass_kg_per_m": 4.94,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1445,
+          "M_pred_eff_kNm": 10.88,
+          "M_design_kNm": 10.091816052273591,
+          "K": 0.9275566224516167,
+          "nPurlins": 6,
+          "massPerFrameStep_kg": 188.16,
+          "massPerBuilding_kg": 752.64
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С7: ЛСТК, фильтр кассеты 150мм, снег 2.0",
+    "input": {
+      "materialType": "lstk",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 18,
+      "length_m": 48,
+      "height_m": 6,
+      "roofSlope_deg": 5,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 2,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.18,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 150
+    },
+    "output": {
+      "q_snow_kPa": 3.293798225876585,
+      "q_windRoof_kPa": 0.08550091429824,
+      "q_roof_kPa": 0.17099999999999999,
+      "q_total_kPa": 3.550299140174825,
+      "mu2": 1,
+      "designSpan_m": 18,
+      "L_slope_m": 8.85,
+      "sections": [
+        {
+          "grade": "MP350",
+          "type": "2TPS",
+          "best": null
+        },
+        {
+          "grade": "MP350",
+          "type": "2PS",
+          "best": null
+        },
+        {
+          "grade": "MP350",
+          "type": "Z",
+          "best": null
+        },
+        {
+          "grade": "MP390",
+          "type": "2TPS",
+          "best": null
+        },
+        {
+          "grade": "MP390",
+          "type": "2PS",
+          "best": {
+            "profile": {
+              "name": "2ПС 150х65х2",
+              "type": "2PS",
+              "h_mm": 150,
+              "b_mm": 65,
+              "t_mm": 2,
+              "M_pred_baseline_kNm": 16.6,
+              "default_coef": 0.87,
+              "mass_kg_per_m": 9.2,
+              "Ry_MPa": 390
+            },
+            "spacing_mm": 1000,
+            "M_pred_eff_kNm": 16.99058823529412,
+            "M_design_kNm": 16.369646130786712,
+            "K": 0.9634537606404033,
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1104,
+            "massPerBuilding_kg": 8832
+          }
+        },
+        {
+          "grade": "MP390",
+          "type": "Z",
+          "best": null
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1000,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.369646130786712,
+          "K": 0.9634537606404033,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1005,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.449527861440643,
+          "K": 0.9681552888952046,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1010,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.52940959209458,
+          "K": 0.9728568171500064,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1015,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.60929132274851,
+          "K": 0.9775583454048078,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1020,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.68917305340245,
+          "K": 0.9822598736596095,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1025,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.76905478405638,
+          "K": 0.9869614019144108,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1030,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.848936514710314,
+          "K": 0.9916629301692124,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        },
+        {
+          "profile": {
+            "name": "2ПС 150х65х2",
+            "type": "2PS",
+            "h_mm": 150,
+            "b_mm": 65,
+            "t_mm": 2,
+            "M_pred_baseline_kNm": 16.6,
+            "default_coef": 0.87,
+            "mass_kg_per_m": 9.2,
+            "Ry_MPa": 390
+          },
+          "spacing_mm": 1035,
+          "M_pred_eff_kNm": 16.99058823529412,
+          "M_design_kNm": 16.928818245364248,
+          "K": 0.9963644584240139,
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1104,
+          "massPerBuilding_kg": 8832
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С3: Сортовой, двускат 30м, снег 1.8",
+    "input": {
+      "materialType": "rolled",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 30,
+      "length_m": 84,
+      "height_m": 10,
+      "roofSlope_deg": 6,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 1.8,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.15,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1800,
+      "minStep_mm": 1200,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0,
+      "prices": {
+        "С255Б": 75000,
+        "С355Б": 85000,
+        "С245": 70000,
+        "С345": 82000
+      }
+    },
+    "output": {
+      "q_total_kPa": 3.197796333966976,
+      "q_snow_kPa": 2.959440573966976,
+      "q_windRoof_kPa": 0.09585576000000001,
+      "q_roof_kPa": 0.1425,
+      "mu2": 1,
+      "designSpan_m": 30,
+      "L_slope_m": 14.85,
+      "sections": [
+        {
+          "steel": "С255Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 25.864037779704795,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.14700797308669608,
+              "прогиб": 1.1573892095766747e-17,
+              "срез": 5.986090095912142e-18,
+              "устойч.стенки": 0.4987849313752274,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 5356.8,
+            "massPerBuilding_kg": 74995.2
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 25.628912779704798,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.22492291423654578,
+              "прогиб": 2.5402686613796966e-17,
+              "срез": 8.452188126378446e-18,
+              "устойч.стенки": 0.33759224013811123,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 4762.8,
+            "massPerBuilding_kg": 66679.2
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 248.78048780487808,
+            "M_design_kNm": 25.513487779704796,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.2750364480994647,
+              "прогиб": 4.0253471927246305e-17,
+              "срез": 1.0741013912843517e-17,
+              "устойч.стенки": 0.2940518257048426,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 4471.2,
+            "massPerBuilding_kg": 62596.799999999996
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С255Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 25.864037779704795,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.10145620677814236,
+              "прогиб": 1.1573892095766747e-17,
+              "срез": 4.131245277460493e-18,
+              "устойч.стенки": 0.600405219481594,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 5356.8,
+            "massPerBuilding_kg": 74995.2
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 25.628912779704798,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.15522849010691186,
+              "прогиб": 2.5402686613796966e-17,
+              "срез": 5.8332002562330136e-18,
+              "устойч.стенки": 0.406371825380835,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 4762.8,
+            "massPerBuilding_kg": 66679.2
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1650,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 25.513487779704796,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.1975613922967986,
+              "прогиб": 4.0253471927246305e-17,
+              "срез": 7.715376190915767e-18,
+              "устойч.стенки": 0.3469508585372063,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 4471.2,
+            "massPerBuilding_kg": 62596.799999999996
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.160х4",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 24.7,
+              "mass_kg_per_m": 19.4,
+              "Ix_cm4": 989.7,
+              "Wx_cm3": 123.7,
+              "Sx_cm3": null,
+              "ix_cm": 6.33,
+              "Iy_cm4": 989.7,
+              "Wy_cm3": 123.7,
+              "iy_cm": 6.33
+            },
+            "steel": "С245",
+            "spacing_mm": 1485,
+            "Ry_MPa": 240,
+            "M_design_kNm": 22.19862400173432,
+            "K_max": 0.7870847693817214,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7870847693817214,
+              "прогиб": 1.3610224144694186e-16,
+              "срез": 0.045308011527999896,
+              "устойч.стенки": 0,
+              "гибкость": 0.526592943654555
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 2328,
+            "massPerBuilding_kg": 32592
+          }
+        },
+        {
+          "steel": "С245",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.180х140х4",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 24.6,
+              "mass_kg_per_m": 19.3,
+              "Ix_cm4": 1165,
+              "Wx_cm3": 128.2,
+              "Sx_cm3": null,
+              "ix_cm": 6.91,
+              "Iy_cm4": 782.4,
+              "Wy_cm3": 111.8,
+              "iy_cm": 5.7
+            },
+            "steel": "С245",
+            "spacing_mm": 1650,
+            "Ry_MPa": 240,
+            "M_design_kNm": 24.568712779704796,
+            "K_max": 0.8405422167838353,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8405422167838353,
+              "прогиб": 1.279673777017001e-16,
+              "срез": 0.05034927212021667,
+              "устойч.стенки": 0,
+              "гибкость": 0.5847953216374269
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 2084.4,
+            "massPerBuilding_kg": 29181.600000000002
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.140х4",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 21.6,
+              "mass_kg_per_m": 17,
+              "Ix_cm4": 657.9,
+              "Wx_cm3": 94,
+              "Sx_cm3": null,
+              "ix_cm": 5.52,
+              "Iy_cm4": 657.9,
+              "Wy_cm3": 94,
+              "iy_cm": 5.52
+            },
+            "steel": "С345",
+            "spacing_mm": 1650,
+            "Ry_MPa": 340,
+            "M_design_kNm": 24.4703877797048,
+            "K_max": 0.8059544094494698,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8059544094494698,
+              "прогиб": 2.256959457986429e-16,
+              "срез": 0.040314875738745294,
+              "устойч.стенки": 0,
+              "гибкость": 0.6038647342995169
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 1836,
+            "massPerBuilding_kg": 25704
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.160х120х4",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 21.6,
+              "mass_kg_per_m": 17,
+              "Ix_cm4": 799.2,
+              "Wx_cm3": 99.9,
+              "Sx_cm3": null,
+              "ix_cm": 6.08,
+              "Iy_cm4": 514,
+              "Wy_cm3": 85.7,
+              "iy_cm": 4.88
+            },
+            "steel": "С345",
+            "spacing_mm": 1650,
+            "Ry_MPa": 340,
+            "M_design_kNm": 24.4703877797048,
+            "K_max": 0.7583555003828845,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7583555003828845,
+              "прогиб": 1.8579249592208105e-16,
+              "срез": 0.040314875738745294,
+              "устойч.стенки": 0,
+              "гибкость": 0.6830601092896175
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 1836,
+            "massPerBuilding_kg": 25704
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "кв.140х4",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 657.9,
+            "Wx_cm3": 94,
+            "Sx_cm3": null,
+            "ix_cm": 5.52,
+            "Iy_cm4": 657.9,
+            "Wy_cm3": 94,
+            "iy_cm": 5.52
+          },
+          "steel": "С345",
+          "spacing_mm": 1650,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.4703877797048,
+          "K_max": 0.8059544094494698,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8059544094494698,
+            "прогиб": 2.256959457986429e-16,
+            "срез": 0.040314875738745294,
+            "устойч.стенки": 0,
+            "гибкость": 0.6038647342995169
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "пр.160х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 799.2,
+            "Wx_cm3": 99.9,
+            "Sx_cm3": null,
+            "ix_cm": 6.08,
+            "Iy_cm4": 514,
+            "Wy_cm3": 85.7,
+            "iy_cm": 4.88
+          },
+          "steel": "С345",
+          "spacing_mm": 1650,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.4703877797048,
+          "K_max": 0.7583555003828845,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7583555003828845,
+            "прогиб": 1.8579249592208105e-16,
+            "срез": 0.040314875738745294,
+            "устойч.стенки": 0,
+            "гибкость": 0.6830601092896175
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "кв.140х4",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 657.9,
+            "Wx_cm3": 94,
+            "Sx_cm3": null,
+            "ix_cm": 5.52,
+            "Iy_cm4": 657.9,
+            "Wy_cm3": 94,
+            "iy_cm": 5.52
+          },
+          "steel": "С345",
+          "spacing_mm": 1655,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.54233819721906,
+          "K_max": 0.808324161689581,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.808324161689581,
+            "прогиб": 2.263595608454366e-16,
+            "срез": 0.04043341379247586,
+            "устойч.стенки": 0,
+            "гибкость": 0.6038647342995169
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "пр.160х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 799.2,
+            "Wx_cm3": 99.9,
+            "Sx_cm3": null,
+            "ix_cm": 6.08,
+            "Iy_cm4": 514,
+            "Wy_cm3": 85.7,
+            "iy_cm": 4.88
+          },
+          "steel": "С345",
+          "spacing_mm": 1655,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.54233819721906,
+          "K_max": 0.7605852972854916,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7605852972854916,
+            "прогиб": 1.8633878263289881e-16,
+            "срез": 0.04043341379247586,
+            "устойч.стенки": 0,
+            "гибкость": 0.6830601092896175
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "кв.140х4",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 657.9,
+            "Wx_cm3": 94,
+            "Sx_cm3": null,
+            "ix_cm": 5.52,
+            "Iy_cm4": 657.9,
+            "Wy_cm3": 94,
+            "iy_cm": 5.52
+          },
+          "steel": "С345",
+          "spacing_mm": 1660,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.61428861473331,
+          "K_max": 0.8106939139296921,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8106939139296921,
+            "прогиб": 2.2702317589223024e-16,
+            "срез": 0.0405519518462064,
+            "устойч.стенки": 0,
+            "гибкость": 0.6038647342995169
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "пр.160х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 799.2,
+            "Wx_cm3": 99.9,
+            "Sx_cm3": null,
+            "ix_cm": 6.08,
+            "Iy_cm4": 514,
+            "Wy_cm3": 85.7,
+            "iy_cm": 4.88
+          },
+          "steel": "С345",
+          "spacing_mm": 1660,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.61428861473331,
+          "K_max": 0.7628150941880987,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7628150941880987,
+            "прогиб": 1.8688506934371655e-16,
+            "срез": 0.0405519518462064,
+            "устойч.стенки": 0,
+            "гибкость": 0.6830601092896175
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "кв.140х4",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 657.9,
+            "Wx_cm3": 94,
+            "Sx_cm3": null,
+            "ix_cm": 5.52,
+            "Iy_cm4": 657.9,
+            "Wy_cm3": 94,
+            "iy_cm": 5.52
+          },
+          "steel": "С345",
+          "spacing_mm": 1665,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.68623903224757,
+          "K_max": 0.8130636661698033,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8130636661698033,
+            "прогиб": 2.276867909390239e-16,
+            "срез": 0.040670489899936955,
+            "устойч.стенки": 0,
+            "гибкость": 0.6038647342995169
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "пр.160х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 799.2,
+            "Wx_cm3": 99.9,
+            "Sx_cm3": null,
+            "ix_cm": 6.08,
+            "Iy_cm4": 514,
+            "Wy_cm3": 85.7,
+            "iy_cm": 4.88
+          },
+          "steel": "С345",
+          "spacing_mm": 1665,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.68623903224757,
+          "K_max": 0.765044891090706,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.765044891090706,
+            "прогиб": 1.8743135605453432e-16,
+            "срез": 0.040670489899936955,
+            "устойч.стенки": 0,
+            "гибкость": 0.6830601092896175
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "кв.140х4",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 657.9,
+            "Wx_cm3": 94,
+            "Sx_cm3": null,
+            "ix_cm": 5.52,
+            "Iy_cm4": 657.9,
+            "Wy_cm3": 94,
+            "iy_cm": 5.52
+          },
+          "steel": "С345",
+          "spacing_mm": 1670,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.75818944976183,
+          "K_max": 0.8154334184099147,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8154334184099147,
+            "прогиб": 2.283504059858175e-16,
+            "срез": 0.04078902795366751,
+            "устойч.стенки": 0,
+            "гибкость": 0.6038647342995169
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        },
+        {
+          "profile": {
+            "name": "пр.160х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 21.6,
+            "mass_kg_per_m": 17,
+            "Ix_cm4": 799.2,
+            "Wx_cm3": 99.9,
+            "Sx_cm3": null,
+            "ix_cm": 6.08,
+            "Iy_cm4": 514,
+            "Wy_cm3": 85.7,
+            "iy_cm": 4.88
+          },
+          "steel": "С345",
+          "spacing_mm": 1670,
+          "Ry_MPa": 340,
+          "M_design_kNm": 24.75818944976183,
+          "K_max": 0.7672746879933131,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7672746879933131,
+            "прогиб": 1.8797764276535206e-16,
+            "срез": 0.04078902795366751,
+            "устойч.стенки": 0,
+            "гибкость": 0.6830601092896175
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 1836,
+          "massPerBuilding_kg": 25704
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С4: Сортовой, across-занос, квадр.труба",
+    "input": {
+      "materialType": "rolled",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 18,
+      "length_m": 36,
+      "height_m": 6,
+      "roofSlope_deg": 4,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.48,
+      "Sg_kPa": 2.4,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.22,
+      "snowDrift": "across",
+      "drift_dropHeight_m": 2.5,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": true,
+      "fencePurlin": true,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0,
+      "prices": {
+        "С255Б": 75000,
+        "С355Б": 85000,
+        "С245": 70000,
+        "С345": 82000
+      }
+    },
+    "output": {
+      "q_total_kPa": 8.591616024122377,
+      "q_snow_kPa": 8.245814561245194,
+      "q_windRoof_kPa": 0.136801462877184,
+      "q_roof_kPa": 0.209,
+      "mu2": 2.0833333333333335,
+      "designSpan_m": 5,
+      "L_slope_m": 8.85,
+      "sections": [
+        {
+          "steel": "С255Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 59.14725136011228,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.33618561843125633,
+              "прогиб": 2.646778940062876e-17,
+              "срез": 1.3689307856061876e-17,
+              "устойч.стенки": 0.4987849313752274,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 4464,
+            "massPerBuilding_kg": 26784
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 58.91212636011228,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.5170210402089755,
+              "прогиб": 5.839210958895688e-17,
+              "срез": 1.9428696769180047e-17,
+              "устойч.стенки": 0.33759224013811123,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 3969,
+            "massPerBuilding_kg": 23814
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 248.78048780487808,
+            "M_design_kNm": 58.79670136011228,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.6338308600407809,
+              "прогиб": 9.27654967462606e-17,
+              "срез": 2.4753032309468842e-17,
+              "устойч.стенки": 0.2940518257048426,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 3726,
+            "massPerBuilding_kg": 22356
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С255Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 59.14725136011228,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.23201542680466986,
+              "прогиб": 2.646778940062876e-17,
+              "срез": 9.44755049221172e-18,
+              "устойч.стенки": 0.600405219481594,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 4464,
+            "massPerBuilding_kg": 26784
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 58.91212636011228,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.3568173376090113,
+              "прогиб": 5.839210958895688e-17,
+              "срез": 1.3408537206898908e-17,
+              "устойч.стенки": 0.406371825380835,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 3969,
+            "massPerBuilding_kg": 23814
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1475,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 58.79670136011228,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.45528695580394124,
+              "прогиб": 9.27654967462606e-17,
+              "срез": 1.778034715187199e-17,
+              "устойч.стенки": 0.3469508585372063,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 3726,
+            "massPerBuilding_kg": 22356
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.200х5",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 38.4,
+              "mass_kg_per_m": 30.1,
+              "Ix_cm4": 2410,
+              "Wx_cm3": 241,
+              "Sx_cm3": null,
+              "ix_cm": 7.93,
+              "Iy_cm4": 2410,
+              "Wy_cm3": 241,
+              "iy_cm": 7.93
+            },
+            "steel": "С245",
+            "spacing_mm": 1110,
+            "Ry_MPa": 240,
+            "M_design_kNm": 44.201897040491275,
+            "K_max": 0.8044314086134395,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8044314086134395,
+              "прогиб": 1.1129269488098558e-16,
+              "срез": 0.05803040274061271,
+              "устойч.стенки": 0,
+              "гибкость": 0.42034468263976466
+            },
+            "nPurlins": 19,
+            "massPerFrameStep_kg": 3431.3999999999996,
+            "massPerBuilding_kg": 20588.399999999998
+          }
+        },
+        {
+          "steel": "С245",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х160х6",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 41.4,
+              "mass_kg_per_m": 32.5,
+              "Ix_cm4": 2412.4,
+              "Wx_cm3": 241.2,
+              "Sx_cm3": null,
+              "ix_cm": 7.63,
+              "Iy_cm4": 1712.3,
+              "Wy_cm3": 214,
+              "iy_cm": 6.43
+            },
+            "steel": "С245",
+            "spacing_mm": 1110,
+            "Ry_MPa": 240,
+            "M_design_kNm": 44.30449704049127,
+            "K_max": 0.805630055869979,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.805630055869979,
+              "прогиб": 1.1144004621070685e-16,
+              "срез": 0.053950238623976604,
+              "устойч.стенки": 0,
+              "гибкость": 0.5184033177812338
+            },
+            "nPurlins": 19,
+            "massPerFrameStep_kg": 3705,
+            "massPerBuilding_kg": 22230
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.200х5",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 38.4,
+              "mass_kg_per_m": 30.1,
+              "Ix_cm4": 2410,
+              "Wx_cm3": 241,
+              "Sx_cm3": null,
+              "ix_cm": 7.93,
+              "Iy_cm4": 2410,
+              "Wy_cm3": 241,
+              "iy_cm": 7.93
+            },
+            "steel": "С345",
+            "spacing_mm": 1475,
+            "Ry_MPa": 340,
+            "M_design_kNm": 58.31362636011227,
+            "K_max": 0.7491184353135449,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7491184353135449,
+              "прогиб": 1.4682357682419604e-16,
+              "срез": 0.05404021279650513,
+              "устойч.стенки": 0,
+              "гибкость": 0.42034468263976466
+            },
+            "nPurlins": 15,
+            "massPerFrameStep_kg": 2709,
+            "massPerBuilding_kg": 16254
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х120х4",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 27.7,
+              "mass_kg_per_m": 21.8,
+              "Ix_cm4": 1631.8,
+              "Wx_cm3": 163.2,
+              "Sx_cm3": null,
+              "ix_cm": 7.68,
+              "Iy_cm4": 1160,
+              "Wy_cm3": 145,
+              "iy_cm": 6.47
+            },
+            "steel": "С345",
+            "spacing_mm": 1110,
+            "Ry_MPa": 340,
+            "M_design_kNm": 43.84707204049128,
+            "K_max": 0.8317980946186806,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8317980946186806,
+              "прогиб": 1.6304837010833859e-16,
+              "срез": 0.056329909557147055,
+              "устойч.стенки": 0,
+              "гибкость": 0.5151983513652757
+            },
+            "nPurlins": 19,
+            "massPerFrameStep_kg": 2485.2,
+            "massPerBuilding_kg": 14911.199999999999
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1110,
+          "Ry_MPa": 340,
+          "M_design_kNm": 43.84707204049128,
+          "K_max": 0.8317980946186806,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8317980946186806,
+            "прогиб": 1.6304837010833859e-16,
+            "срез": 0.056329909557147055,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 19,
+          "massPerFrameStep_kg": 2485.2,
+          "massPerBuilding_kg": 14911.199999999999
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1115,
+          "Ry_MPa": 340,
+          "M_design_kNm": 44.04038340103402,
+          "K_max": 0.8354652955031344,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8354652955031344,
+            "прогиб": 1.6376721177308677e-16,
+            "срез": 0.05657825479319123,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 19,
+          "massPerFrameStep_kg": 2485.2,
+          "massPerBuilding_kg": 14911.199999999999
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1120,
+          "Ry_MPa": 340,
+          "M_design_kNm": 44.233694761576785,
+          "K_max": 0.8391324963875887,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8391324963875887,
+            "прогиб": 1.64486053437835e-16,
+            "срез": 0.056826600029235425,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 19,
+          "massPerFrameStep_kg": 2485.2,
+          "massPerBuilding_kg": 14911.199999999999
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1125,
+          "Ry_MPa": 340,
+          "M_design_kNm": 44.427006122119536,
+          "K_max": 0.8427996972720426,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8427996972720426,
+            "прогиб": 1.652048951025832e-16,
+            "срез": 0.057074945265279606,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 19,
+          "massPerFrameStep_kg": 2485.2,
+          "massPerBuilding_kg": 14911.199999999999
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1130,
+          "Ry_MPa": 340,
+          "M_design_kNm": 44.62031748266229,
+          "K_max": 0.8464668981564965,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8464668981564965,
+            "прогиб": 1.6592373676733137e-16,
+            "срез": 0.0573232905013238,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 19,
+          "massPerFrameStep_kg": 2485.2,
+          "massPerBuilding_kg": 14911.199999999999
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1475,
+          "Ry_MPa": 340,
+          "M_design_kNm": 58.31362636011227,
+          "K_max": 0.7491184353135449,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7491184353135449,
+            "прогиб": 1.4682357682419604e-16,
+            "срез": 0.05404021279650513,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 15,
+          "massPerFrameStep_kg": 2709,
+          "massPerBuilding_kg": 16254
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1480,
+          "Ry_MPa": 340,
+          "M_design_kNm": 58.50693772065503,
+          "K_max": 0.751601784626171,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.751601784626171,
+            "прогиб": 1.4731030123437697e-16,
+            "срез": 0.05421935766729743,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 15,
+          "massPerFrameStep_kg": 2709,
+          "massPerBuilding_kg": 16254
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1485,
+          "Ry_MPa": 340,
+          "M_design_kNm": 58.70024908119779,
+          "K_max": 0.7540851339387972,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7540851339387972,
+            "прогиб": 1.4779702564455793e-16,
+            "срез": 0.05439850253808972,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 15,
+          "massPerFrameStep_kg": 2709,
+          "massPerBuilding_kg": 16254
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1490,
+          "Ry_MPa": 340,
+          "M_design_kNm": 58.89356044174053,
+          "K_max": 0.7565684832514232,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7565684832514232,
+            "прогиб": 1.4828375005473887e-16,
+            "срез": 0.05457764740888201,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 15,
+          "massPerFrameStep_kg": 2709,
+          "massPerBuilding_kg": 16254
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1495,
+          "Ry_MPa": 340,
+          "M_design_kNm": 59.0868718022833,
+          "K_max": 0.7590518325640494,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7590518325640494,
+            "прогиб": 1.487704744649199e-16,
+            "срез": 0.05475679227967431,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 15,
+          "massPerFrameStep_kg": 2709,
+          "massPerBuilding_kg": 16254
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С8: Сортовой, террен C, широкий 30м, жёсткая проверка",
+    "input": {
+      "materialType": "rolled",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 30,
+      "length_m": 60,
+      "height_m": 5,
+      "roofSlope_deg": 5,
+      "framePitch_m": 6,
+      "terrainType": "C",
+      "w0_kPa": 0.4,
+      "Sg_kPa": 0.5,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.12,
+      "snowDrift": "none",
+      "drift_dropHeight_m": 0,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0,
+      "prices": {
+        "С255Б": 75000,
+        "С355Б": 85000,
+        "С245": 70000,
+        "С345": 82000
+      }
+    },
+    "output": {
+      "q_total_kPa": 1.0436452684691462,
+      "q_snow_kPa": 0.8234495564691463,
+      "q_windRoof_kPa": 0.10619571200000001,
+      "q_roof_kPa": 0.11399999999999999,
+      "mu2": 1,
+      "designSpan_m": 30,
+      "L_slope_m": 14.85,
+      "sections": [
+        {
+          "steel": "С255Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 9.094559506545068,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.051692344813331514,
+              "прогиб": 4.06972226393352e-18,
+              "срез": 2.1048860604252652e-18,
+              "устойч.стенки": 0.4987849313752274,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 5952,
+            "massPerBuilding_kg": 59520
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 8.859434506545071,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.07775163327559943,
+              "прогиб": 8.781232363607724e-18,
+              "срез": 2.9217629240185913e-18,
+              "устойч.стенки": 0.33759224013811123,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 5292,
+            "massPerBuilding_kg": 52920
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 248.78048780487808,
+            "M_design_kNm": 8.74400950654507,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.09426078228085893,
+              "прогиб": 1.3795712457756308e-17,
+              "срез": 3.681171644378104e-18,
+              "устойч.стенки": 0.2940518257048426,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 4968,
+            "massPerBuilding_kg": 49680
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С255Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 9.094559506545068,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.035674998533144285,
+              "прогиб": 4.06972226393352e-18,
+              "срез": 1.4526678445188453e-18,
+              "устойч.стенки": 0.600405219481594,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 5952,
+            "massPerBuilding_kg": 59520
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 8.859434506545071,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.053659577894427775,
+              "прогиб": 8.781232363607724e-18,
+              "срез": 2.01642793347762e-18,
+              "устойч.стенки": 0.406371825380835,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 5292,
+            "massPerBuilding_kg": 52920
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 8.74400950654507,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.06770844924399726,
+              "прогиб": 1.3795712457756308e-17,
+              "срез": 2.644221885398357e-18,
+              "устойч.стенки": 0.3469508585372063,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 4968,
+            "massPerBuilding_kg": 49680
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.100х3",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 11.6,
+              "mass_kg_per_m": 9.1,
+              "Ix_cm4": 180.2,
+              "Wx_cm3": 36,
+              "Sx_cm3": null,
+              "ix_cm": 3.94,
+              "Iy_cm4": 180.2,
+              "Wy_cm3": 36,
+              "iy_cm": 3.94
+            },
+            "steel": "С245",
+            "spacing_mm": 1350,
+            "Ry_MPa": 240,
+            "M_design_kNm": 6.7291700059500625,
+            "K_max": 0.8460236886632826,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.8198306537463526,
+              "прогиб": 2.265945741904243e-16,
+              "срез": 0.029244850906528636,
+              "устойч.стенки": 0,
+              "гибкость": 0.8460236886632826
+            },
+            "nPurlins": 22,
+            "massPerFrameStep_kg": 1201.1999999999998,
+            "massPerBuilding_kg": 12011.999999999998
+          }
+        },
+        {
+          "steel": "С245",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.140х100х3",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 14.2,
+              "mass_kg_per_m": 11.1,
+              "Ix_cm4": 404.2,
+              "Wx_cm3": 57.7,
+              "Sx_cm3": null,
+              "ix_cm": 5.31,
+              "Iy_cm4": 241.2,
+              "Wy_cm3": 48.2,
+              "iy_cm": 4.1
+            },
+            "steel": "С245",
+            "spacing_mm": 1485,
+            "Ry_MPa": 240,
+            "M_design_kNm": 7.44868450654507,
+            "K_max": 0.8130081300813008,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.5661987675624882,
+              "прогиб": 1.1182169301438462e-16,
+              "срез": 0.02644460813368591,
+              "устойч.стенки": 0,
+              "гибкость": 0.8130081300813008
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1332,
+            "massPerBuilding_kg": 13320
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.100х3",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 11.6,
+              "mass_kg_per_m": 9.1,
+              "Ix_cm4": 180.2,
+              "Wx_cm3": 36,
+              "Sx_cm3": null,
+              "ix_cm": 3.94,
+              "Iy_cm4": 180.2,
+              "Wy_cm3": 36,
+              "iy_cm": 3.94
+            },
+            "steel": "С345",
+            "spacing_mm": 1485,
+            "Ry_MPa": 340,
+            "M_design_kNm": 7.363184506545069,
+            "K_max": 0.8460236886632826,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.6332288017324621,
+              "прогиб": 2.4794404903886026e-16,
+              "срез": 0.022588423367388668,
+              "устойч.стенки": 0,
+              "гибкость": 0.8460236886632826
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1092,
+            "massPerBuilding_kg": 10920
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.140х100х3",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 14.2,
+              "mass_kg_per_m": 11.1,
+              "Ix_cm4": 404.2,
+              "Wx_cm3": 57.7,
+              "Sx_cm3": null,
+              "ix_cm": 5.31,
+              "Iy_cm4": 241.2,
+              "Wy_cm3": 48.2,
+              "iy_cm": 4.1
+            },
+            "steel": "С345",
+            "spacing_mm": 1485,
+            "Ry_MPa": 340,
+            "M_design_kNm": 7.44868450654507,
+            "K_max": 0.8130081300813008,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.39966971827940345,
+              "прогиб": 1.1182169301438462e-16,
+              "срез": 0.018666782212013584,
+              "устойч.стенки": 0,
+              "гибкость": 0.8130081300813008
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 1332,
+            "massPerBuilding_kg": 13320
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1485,
+          "Ry_MPa": 340,
+          "M_design_kNm": 7.363184506545069,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.6332288017324621,
+            "прогиб": 2.4794404903886026e-16,
+            "срез": 0.022588423367388668,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1092,
+          "massPerBuilding_kg": 10920
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1490,
+          "Ry_MPa": 340,
+          "M_design_kNm": 7.386666525085625,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.6352482391714502,
+            "прогиб": 2.4873477032954297e-16,
+            "срез": 0.022660460374724748,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1092,
+          "massPerBuilding_kg": 10920
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1495,
+          "Ry_MPa": 340,
+          "M_design_kNm": 7.41014854362618,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.6372676766104385,
+            "прогиб": 2.495254916202258e-16,
+            "срез": 0.02273249738206083,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1092,
+          "massPerBuilding_kg": 10920
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1500,
+          "Ry_MPa": 340,
+          "M_design_kNm": 7.433630562166737,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.639287114049427,
+            "прогиб": 2.503162129109086e-16,
+            "срез": 0.022804534389396922,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 20,
+          "massPerFrameStep_kg": 1092,
+          "massPerBuilding_kg": 10920
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С245",
+          "spacing_mm": 1350,
+          "Ry_MPa": 240,
+          "M_design_kNm": 6.7291700059500625,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.8198306537463526,
+            "прогиб": 2.265945741904243e-16,
+            "срез": 0.029244850906528636,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1350,
+          "Ry_MPa": 340,
+          "M_design_kNm": 6.7291700059500625,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.5787039908797782,
+            "прогиб": 2.265945741904243e-16,
+            "срез": 0.02064342416931433,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С245",
+          "spacing_mm": 1355,
+          "Ry_MPa": 240,
+          "M_design_kNm": 6.752652024490618,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.8226915234515858,
+            "прогиб": 2.2738529548110713e-16,
+            "срез": 0.029346903333588092,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1355,
+          "Ry_MPa": 340,
+          "M_design_kNm": 6.752652024490618,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.5807234283187664,
+            "прогиб": 2.2738529548110713e-16,
+            "срез": 0.020715461176650418,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С245",
+          "spacing_mm": 1360,
+          "Ry_MPa": 240,
+          "M_design_kNm": 6.776134043031176,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.8255523931568195,
+            "прогиб": 2.2817601677178994e-16,
+            "срез": 0.029448955760647558,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        },
+        {
+          "profile": {
+            "name": "кв.100х3",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 11.6,
+            "mass_kg_per_m": 9.1,
+            "Ix_cm4": 180.2,
+            "Wx_cm3": 36,
+            "Sx_cm3": null,
+            "ix_cm": 3.94,
+            "Iy_cm4": 180.2,
+            "Wy_cm3": 36,
+            "iy_cm": 3.94
+          },
+          "steel": "С345",
+          "spacing_mm": 1360,
+          "Ry_MPa": 340,
+          "M_design_kNm": 6.776134043031176,
+          "K_max": 0.8460236886632826,
+          "limitingCheck": "гибкость",
+          "checks": {
+            "прочность": 0.5827428657577549,
+            "прогиб": 2.2817601677178994e-16,
+            "срез": 0.02078749818398651,
+            "устойч.стенки": 0,
+            "гибкость": 0.8460236886632826
+          },
+          "nPurlins": 22,
+          "massPerFrameStep_kg": 1201.1999999999998,
+          "massPerBuilding_kg": 12011.999999999998
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С9: Сортовой, односкат 12м, сильный снег+ветер",
+    "input": {
+      "materialType": "rolled",
+      "gamma_n": 0.95,
+      "roofShape": "monoslope",
+      "span_m": 12,
+      "length_m": 36,
+      "height_m": 5,
+      "roofSlope_deg": 6,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.48,
+      "Sg_kPa": 2.4,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.18,
+      "snowDrift": "along",
+      "drift_dropHeight_m": 2,
+      "drift_existingSize_m": 0,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0,
+      "prices": {
+        "С255Б": 75000,
+        "С355Б": 85000,
+        "С245": 70000,
+        "С345": 82000
+      }
+    },
+    "output": {
+      "q_total_kPa": 6.880882819101217,
+      "q_snow_kPa": 6.576534608815503,
+      "q_windRoof_kPa": 0.13334821028571425,
+      "q_roof_kPa": 0.17099999999999999,
+      "mu2": 1.6666666666666667,
+      "designSpan_m": 12,
+      "L_slope_m": 11.7,
+      "sections": [
+        {
+          "steel": "С255Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 47.482619984924774,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.26988530485008094,
+              "прогиб": 2.1247986289327535e-17,
+              "срез": 1.0989592717141565e-17,
+              "устойч.стенки": 0.4987849313752274,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 2380.8,
+            "massPerBuilding_kg": 14284.800000000001
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 47.24749498492478,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.41465060784011404,
+              "прогиб": 4.683044180240925e-17,
+              "срез": 1.5581804797780663e-17,
+              "устойч.стенки": 0.33759224013811123,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 2116.8,
+            "massPerBuilding_kg": 12700.800000000001
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 248.78048780487808,
+            "M_design_kNm": 47.132069984924776,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.5080856538376067,
+              "прогиб": 7.436182275009714e-17,
+              "срез": 1.9842297682714112e-17,
+              "устойч.стенки": 0.2940518257048426,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 1987.1999999999998,
+            "massPerBuilding_kg": 11923.199999999999
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С255Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 47.482619984924774,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.18625887236132346,
+              "прогиб": 2.1247986289327535e-17,
+              "срез": 7.584366804787843e-18,
+              "устойч.стенки": 0.600405219481594,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 2380.8,
+            "massPerBuilding_kg": 14284.800000000001
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 47.24749498492478,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.2861673209037407,
+              "прогиб": 4.683044180240925e-17,
+              "срез": 1.0753639930862713e-17,
+              "устойч.стенки": 0.406371825380835,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 2116.8,
+            "massPerBuilding_kg": 12700.800000000001
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1465,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 47.132069984924776,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.3649629344467316,
+              "прогиб": 7.436182275009714e-17,
+              "срез": 1.4252918053780564e-17,
+              "устойч.стенки": 0.3469508585372063,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 1987.1999999999998,
+            "massPerBuilding_kg": 11923.199999999999
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.200х5",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 38.4,
+              "mass_kg_per_m": 30.1,
+              "Ix_cm4": 2410,
+              "Wx_cm3": 241,
+              "Sx_cm3": null,
+              "ix_cm": 7.93,
+              "Iy_cm4": 2410,
+              "Wy_cm3": 241,
+              "iy_cm": 7.93
+            },
+            "steel": "С245",
+            "spacing_mm": 1465,
+            "Ry_MPa": 240,
+            "M_design_kNm": 46.64899498492478,
+            "K_max": 0.8489662041370892,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8489662041370892,
+              "прогиб": 1.1745406222284972e-16,
+              "срез": 0.0612430720776576,
+              "устойч.стенки": 0,
+              "гибкость": 0.42034468263976466
+            },
+            "nPurlins": 8,
+            "massPerFrameStep_kg": 1444.8000000000002,
+            "massPerBuilding_kg": 8668.800000000001
+          }
+        },
+        {
+          "steel": "С245",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х160х5",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 34.6,
+              "mass_kg_per_m": 27.2,
+              "Ix_cm4": 2039.7,
+              "Wx_cm3": 204,
+              "Sx_cm3": null,
+              "ix_cm": 7.67,
+              "Iy_cm4": 1450,
+              "Wy_cm3": 181.2,
+              "iy_cm": 6.46
+            },
+            "steel": "С245",
+            "spacing_mm": 1170,
+            "Ry_MPa": 240,
+            "M_design_kNm": 37.3906480425679,
+            "K_max": 0.8038925017751958,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8038925017751958,
+              "прогиб": 1.1123449539554855e-16,
+              "срез": 0.05447945995686,
+              "устойч.стенки": 0,
+              "гибкость": 0.5159958720330238
+            },
+            "nPurlins": 10,
+            "massPerFrameStep_kg": 1632,
+            "massPerBuilding_kg": 9792
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.160х4",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 24.7,
+              "mass_kg_per_m": 19.4,
+              "Ix_cm4": 989.7,
+              "Wx_cm3": 123.7,
+              "Sx_cm3": null,
+              "ix_cm": 6.33,
+              "Iy_cm4": 989.7,
+              "Wy_cm3": 123.7,
+              "iy_cm": 6.33
+            },
+            "steel": "С345",
+            "spacing_mm": 1065,
+            "Ry_MPa": 340,
+            "M_design_kNm": 33.80598091054258,
+            "K_max": 0.846099269193234,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.846099269193234,
+              "прогиб": 2.0726824220626935e-16,
+              "срез": 0.048705141979246615,
+              "устойч.стенки": 0,
+              "гибкость": 0.526592943654555
+            },
+            "nPurlins": 11,
+            "massPerFrameStep_kg": 1280.3999999999999,
+            "massPerBuilding_kg": 7682.399999999999
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х120х4",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 27.7,
+              "mass_kg_per_m": 21.8,
+              "Ix_cm4": 1631.8,
+              "Wx_cm3": 163.2,
+              "Sx_cm3": null,
+              "ix_cm": 7.68,
+              "Iy_cm4": 1160,
+              "Wy_cm3": 145,
+              "iy_cm": 6.47
+            },
+            "steel": "С345",
+            "spacing_mm": 1300,
+            "Ry_MPa": 340,
+            "M_design_kNm": 41.18511449174212,
+            "K_max": 0.7812995980495,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7812995980495,
+              "прогиб": 1.531496968464084e-16,
+              "срез": 0.05291011842884701,
+              "устойч.стенки": 0,
+              "гибкость": 0.5151983513652757
+            },
+            "nPurlins": 9,
+            "massPerFrameStep_kg": 1177.2,
+            "massPerBuilding_kg": 7063.200000000001
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1300,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.18511449174212,
+          "K_max": 0.7812995980495,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7812995980495,
+            "прогиб": 1.531496968464084e-16,
+            "срез": 0.05291011842884701,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1305,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.33993435517189,
+          "K_max": 0.7842365984332675,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7842365984332675,
+            "прогиб": 1.537254052168398e-16,
+            "срез": 0.05310901401066819,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1310,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.49475421860167,
+          "K_max": 0.7871735988170353,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7871735988170353,
+            "прогиб": 1.5430111358727124e-16,
+            "срез": 0.05330790959248939,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1315,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.64957408203146,
+          "K_max": 0.7901105992008032,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7901105992008032,
+            "прогиб": 1.5487682195770267e-16,
+            "срез": 0.05350680517431059,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1320,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.804393945461236,
+          "K_max": 0.7930475995845709,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7930475995845709,
+            "прогиб": 1.5545253032813412e-16,
+            "срез": 0.053705700756131784,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1325,
+          "Ry_MPa": 340,
+          "M_design_kNm": 41.95921380889101,
+          "K_max": 0.7959845999683386,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7959845999683386,
+            "прогиб": 1.5602823869856552e-16,
+            "срез": 0.05390459633795296,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1330,
+          "Ry_MPa": 340,
+          "M_design_kNm": 42.11403367232079,
+          "K_max": 0.7989216003521062,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7989216003521062,
+            "прогиб": 1.5660394706899697e-16,
+            "срез": 0.054103491919774156,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1335,
+          "Ry_MPa": 340,
+          "M_design_kNm": 42.26885353575055,
+          "K_max": 0.8018586007358737,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8018586007358737,
+            "прогиб": 1.5717965543942837e-16,
+            "срез": 0.054302387501595335,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1340,
+          "Ry_MPa": 340,
+          "M_design_kNm": 42.423673399180345,
+          "K_max": 0.8047956011196418,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8047956011196418,
+            "прогиб": 1.5775536380985982e-16,
+            "срез": 0.05450128308341655,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        },
+        {
+          "profile": {
+            "name": "пр.200х120х4",
+            "category": "rect_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 27.7,
+            "mass_kg_per_m": 21.8,
+            "Ix_cm4": 1631.8,
+            "Wx_cm3": 163.2,
+            "Sx_cm3": null,
+            "ix_cm": 7.68,
+            "Iy_cm4": 1160,
+            "Wy_cm3": 145,
+            "iy_cm": 6.47
+          },
+          "steel": "С345",
+          "spacing_mm": 1345,
+          "Ry_MPa": 340,
+          "M_design_kNm": 42.578493262610124,
+          "K_max": 0.8077326015034095,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8077326015034095,
+            "прогиб": 1.5833107218029127e-16,
+            "срез": 0.05470017866523774,
+            "устойч.стенки": 0,
+            "гибкость": 0.5151983513652757
+          },
+          "nPurlins": 9,
+          "massPerFrameStep_kg": 1177.2,
+          "massPerBuilding_kg": 7063.200000000001
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "С10: Сортовой, across с existingSize 5м",
+    "input": {
+      "materialType": "rolled",
+      "gamma_n": 0.95,
+      "roofShape": "gable",
+      "span_m": 24,
+      "length_m": 72,
+      "height_m": 8,
+      "roofSlope_deg": 5,
+      "framePitch_m": 6,
+      "terrainType": "B",
+      "w0_kPa": 0.3,
+      "Sg_kPa": 2,
+      "roofStructure": "сэндвич 150 мм",
+      "roofLoad_kPa": 0.15,
+      "snowDrift": "across",
+      "drift_dropHeight_m": 3,
+      "drift_existingSize_m": 5,
+      "maxStep_mm": 1500,
+      "minStep_mm": 1000,
+      "snowGuardPurlin": false,
+      "fencePurlin": false,
+      "maxUtilization": "default",
+      "cassetteHeightFilter_mm": 0,
+      "prices": {
+        "С255Б": 75000,
+        "С355Б": 85000,
+        "С245": 70000,
+        "С345": 82000
+      }
+    },
+    "output": {
+      "q_total_kPa": 10.115899549841597,
+      "q_snow_kPa": 9.881394677629757,
+      "q_windRoof_kPa": 0.09200487221183999,
+      "q_roof_kPa": 0.1425,
+      "mu2": 3,
+      "designSpan_m": 15,
+      "L_slope_m": 11.85,
+      "sections": [
+        {
+          "steel": "С255Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 69.71989874181648,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.3962792308433257,
+              "прогиб": 3.119894085519611e-17,
+              "срез": 1.613628927165712e-17,
+              "устойч.стенки": 0.4987849313752274,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 4761.6,
+            "massPerBuilding_kg": 57139.200000000004
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 239.02439024390247,
+            "M_design_kNm": 69.48477374181648,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.60980806870015,
+              "прогиб": 6.887143231419916e-17,
+              "срез": 2.291546210457074e-17,
+              "устойч.стенки": 0.33759224013811123,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 4233.6,
+            "massPerBuilding_kg": 50803.200000000004
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С255Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 248.78048780487808,
+            "M_design_kNm": 69.36934874181648,
+            "K_max": 0.7478044338610229,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7478044338610229,
+              "прогиб": 1.0944631154707527e-16,
+              "срез": 2.920404871314563e-17,
+              "устойч.стенки": 0.2940518257048426,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 3974.3999999999996,
+            "massPerBuilding_kg": 47692.799999999996
+          }
+        },
+        {
+          "steel": "С255Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С255Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_normal",
+          "best": {
+            "profile": {
+              "name": "35 Б2",
+              "category": "beam_normal",
+              "h_mm": 350,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 14,
+              "A_cm2": 63.14,
+              "mass_kg_per_m": 49.6,
+              "Ix_cm4": 13560,
+              "Wx_cm3": 774.8,
+              "Sx_cm3": 434,
+              "ix_cm": 14.65,
+              "Iy_cm4": 984.2,
+              "Wy_cm3": 112.5,
+              "iy_cm": 3.95
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 69.71989874181648,
+            "K_max": 0.8438818565400843,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.27348848325806985,
+              "прогиб": 3.119894085519611e-17,
+              "срез": 1.1136312314242241e-17,
+              "устойч.стенки": 0.600405219481594,
+              "гибкость": 0.8438818565400843
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 4761.6,
+            "massPerBuilding_kg": 57139.200000000004
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_wide",
+          "best": {
+            "profile": {
+              "name": "25 Ш1",
+              "category": "beam_wide",
+              "h_mm": 244,
+              "b_mm": 175,
+              "s_mm": 7,
+              "t_mm": 11,
+              "R_mm": 16,
+              "A_cm2": 56.24,
+              "mass_kg_per_m": 44.1,
+              "Ix_cm4": 6122,
+              "Wx_cm3": 501.8,
+              "Sx_cm3": 279.2,
+              "ix_cm": 10.43,
+              "Iy_cm4": 984.3,
+              "Wy_cm3": 112.5,
+              "iy_cm": 4.18
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 69.48477374181648,
+            "K_max": 0.7974481658692186,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.4208534558634838,
+              "прогиб": 6.887143231419916e-17,
+              "срез": 1.5814896382027697e-17,
+              "устойч.стенки": 0.406371825380835,
+              "гибкость": 0.7974481658692186
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 4233.6,
+            "massPerBuilding_kg": 50803.200000000004
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "beam_column",
+          "best": {
+            "profile": {
+              "name": "20 К1",
+              "category": "beam_column",
+              "h_mm": 196,
+              "b_mm": 199,
+              "s_mm": 6.5,
+              "t_mm": 10,
+              "R_mm": 13,
+              "A_cm2": 52.69,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3846,
+              "Wx_cm3": 392.5,
+              "Sx_cm3": 216.4,
+              "ix_cm": 8.54,
+              "Iy_cm4": 1314.4,
+              "Wy_cm3": 132.1,
+              "iy_cm": 4.99
+            },
+            "steel": "С355Б",
+            "spacing_mm": 1485,
+            "Ry_MPa": 346.3414634146342,
+            "M_design_kNm": 69.36934874181648,
+            "K_max": 0.668002672010688,
+            "limitingCheck": "гибкость",
+            "checks": {
+              "прочность": 0.5371552975621433,
+              "прогиб": 1.0944631154707527e-16,
+              "срез": 2.0977556117893344e-17,
+              "устойч.стенки": 0.3469508585372063,
+              "гибкость": 0.668002672010688
+            },
+            "nPurlins": 16,
+            "massPerFrameStep_kg": 3974.3999999999996,
+            "massPerBuilding_kg": 47692.799999999996
+          }
+        },
+        {
+          "steel": "С355Б",
+          "category": "square_tube",
+          "best": null
+        },
+        {
+          "steel": "С355Б",
+          "category": "rect_tube",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С245",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.200х7",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 52.8,
+              "mass_kg_per_m": 41.4,
+              "Ix_cm4": 3236,
+              "Wx_cm3": 324,
+              "Sx_cm3": null,
+              "ix_cm": 7.83,
+              "Iy_cm4": 3236,
+              "Wy_cm3": 324,
+              "iy_cm": 7.83
+            },
+            "steel": "С245",
+            "spacing_mm": 1320,
+            "Ry_MPa": 240,
+            "M_design_kNm": 61.85829332605909,
+            "K_max": 0.8373713088322922,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8373713088322922,
+              "прогиб": 1.15993115463136e-16,
+              "срез": 0.059062239651180494,
+              "устойч.стенки": 0,
+              "гибкость": 0.42571306939123027
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 4471.2,
+            "massPerBuilding_kg": 53654.399999999994
+          }
+        },
+        {
+          "steel": "С245",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х160х7",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 48.2,
+              "mass_kg_per_m": 37.8,
+              "Ix_cm4": 2767.1,
+              "Wx_cm3": 276.7,
+              "Sx_cm3": null,
+              "ix_cm": 7.58,
+              "Iy_cm4": 1962,
+              "Wy_cm3": 245.2,
+              "iy_cm": 6.38
+            },
+            "steel": "С245",
+            "spacing_mm": 1080,
+            "Ry_MPa": 240,
+            "M_design_kNm": 50.77922181223016,
+            "K_max": 0.8049001992821119,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8049001992821119,
+              "прогиб": 1.113535275009933e-16,
+              "срез": 0.05311105192477713,
+              "устойч.стенки": 0,
+              "гибкость": 0.522466039707419
+            },
+            "nPurlins": 22,
+            "massPerFrameStep_kg": 4989.599999999999,
+            "massPerBuilding_kg": 59875.19999999999
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "beam_normal",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_wide",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "beam_column",
+          "best": null
+        },
+        {
+          "steel": "С345",
+          "category": "square_tube",
+          "best": {
+            "profile": {
+              "name": "кв.200х5",
+              "category": "square_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 38.4,
+              "mass_kg_per_m": 30.1,
+              "Ix_cm4": 2410,
+              "Wx_cm3": 241,
+              "Sx_cm3": null,
+              "ix_cm": 7.93,
+              "Iy_cm4": 2410,
+              "Wy_cm3": 241,
+              "iy_cm": 7.93
+            },
+            "steel": "С345",
+            "spacing_mm": 1320,
+            "Ry_MPa": 340,
+            "M_design_kNm": 61.375218326059084,
+            "K_max": 0.7884487792872716,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.7884487792872716,
+              "прогиб": 1.545321333190466e-16,
+              "срез": 0.05687744127401595,
+              "устойч.стенки": 0,
+              "гибкость": 0.42034468263976466
+            },
+            "nPurlins": 18,
+            "massPerFrameStep_kg": 3250.8,
+            "massPerBuilding_kg": 39009.6
+          }
+        },
+        {
+          "steel": "С345",
+          "category": "rect_tube",
+          "best": {
+            "profile": {
+              "name": "пр.200х160х5",
+              "category": "rect_tube",
+              "h_mm": null,
+              "b_mm": null,
+              "s_mm": null,
+              "t_mm": null,
+              "R_mm": null,
+              "A_cm2": 34.6,
+              "mass_kg_per_m": 27.2,
+              "Ix_cm4": 2039.7,
+              "Wx_cm3": 204,
+              "Sx_cm3": null,
+              "ix_cm": 7.67,
+              "Iy_cm4": 1450,
+              "Wy_cm3": 181.2,
+              "iy_cm": 6.46
+            },
+            "steel": "С345",
+            "spacing_mm": 1185,
+            "Ry_MPa": 340,
+            "M_design_kNm": 55.10583434953031,
+            "K_max": 0.8363053838027427,
+            "limitingCheck": "прочность",
+            "checks": {
+              "прочность": 0.8363053838027427,
+              "прогиб": 1.639359037115988e-16,
+              "срез": 0.05667606746919126,
+              "устойч.стенки": 0,
+              "гибкость": 0.5159958720330238
+            },
+            "nPurlins": 20,
+            "massPerFrameStep_kg": 3264,
+            "massPerBuilding_kg": 39168
+          }
+        }
+      ],
+      "top10": [
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1320,
+          "Ry_MPa": 340,
+          "M_design_kNm": 61.375218326059084,
+          "K_max": 0.7884487792872716,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7884487792872716,
+            "прогиб": 1.545321333190466e-16,
+            "срез": 0.05687744127401595,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1325,
+          "Ry_MPa": 340,
+          "M_design_kNm": 61.602826065930515,
+          "K_max": 0.7913727125872656,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7913727125872656,
+            "прогиб": 1.5510521005199443e-16,
+            "срез": 0.05708836917311154,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1330,
+          "Ry_MPa": 340,
+          "M_design_kNm": 61.83043380580197,
+          "K_max": 0.7942966458872599,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7942966458872599,
+            "прогиб": 1.556782867849423e-16,
+            "срез": 0.057299297072207156,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1335,
+          "Ry_MPa": 340,
+          "M_design_kNm": 62.05804154567339,
+          "K_max": 0.7972205791872536,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.7972205791872536,
+            "прогиб": 1.5625136351789013e-16,
+            "срез": 0.05751022497130273,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1340,
+          "Ry_MPa": 340,
+          "M_design_kNm": 62.28564928554483,
+          "K_max": 0.8001445124872478,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8001445124872478,
+            "прогиб": 1.5682444025083804e-16,
+            "срез": 0.05772115287039833,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1345,
+          "Ry_MPa": 340,
+          "M_design_kNm": 62.51325702541626,
+          "K_max": 0.8030684457872417,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8030684457872417,
+            "прогиб": 1.5739751698378585e-16,
+            "срез": 0.05793208076949392,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1350,
+          "Ry_MPa": 340,
+          "M_design_kNm": 62.74086476528771,
+          "K_max": 0.805992379087236,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.805992379087236,
+            "прогиб": 1.5797059371673373e-16,
+            "срез": 0.05814300866858953,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1355,
+          "Ry_MPa": 340,
+          "M_design_kNm": 62.96847250515913,
+          "K_max": 0.8089163123872298,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8089163123872298,
+            "прогиб": 1.5854367044968157e-16,
+            "срез": 0.0583539365676851,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1360,
+          "Ry_MPa": 340,
+          "M_design_kNm": 63.19608024503057,
+          "K_max": 0.8118402456872239,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8118402456872239,
+            "прогиб": 1.5911674718262948e-16,
+            "срез": 0.058564864466780706,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        },
+        {
+          "profile": {
+            "name": "кв.200х5",
+            "category": "square_tube",
+            "h_mm": null,
+            "b_mm": null,
+            "s_mm": null,
+            "t_mm": null,
+            "R_mm": null,
+            "A_cm2": 38.4,
+            "mass_kg_per_m": 30.1,
+            "Ix_cm4": 2410,
+            "Wx_cm3": 241,
+            "Sx_cm3": null,
+            "ix_cm": 7.93,
+            "Iy_cm4": 2410,
+            "Wy_cm3": 241,
+            "iy_cm": 7.93
+          },
+          "steel": "С345",
+          "spacing_mm": 1365,
+          "Ry_MPa": 340,
+          "M_design_kNm": 63.423687984902,
+          "K_max": 0.8147641789872179,
+          "limitingCheck": "прочность",
+          "checks": {
+            "прочность": 0.8147641789872179,
+            "прогиб": 1.5968982391557731e-16,
+            "срез": 0.0587757923658763,
+            "устойч.стенки": 0,
+            "гибкость": 0.42034468263976466
+          },
+          "nPurlins": 18,
+          "massPerFrameStep_kg": 3250.8,
+          "massPerBuilding_kg": 39009.6
+        }
+      ]
+    }
+  }
+]

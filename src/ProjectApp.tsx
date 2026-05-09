@@ -17,7 +17,7 @@ import { CalculationSummaryCard, type ProjectCalculationView } from "./component
 
 const twoColumnLayoutStyle = {
   display: "grid",
-  gridTemplateColumns: "520px minmax(360px, 1fr)",
+  gridTemplateColumns: "440px minmax(360px, 1fr)",
   gap: 20,
   alignItems: "start",
 } as const;

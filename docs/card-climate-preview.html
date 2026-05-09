@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Карточка: Район строительства — ВЕЛИКАН</title>
+<style>
+  :root {
+    --brand: #E65100;
+    --brand-light: #FF8F00;
+    --bg: #F5F5F5;
+    --card-bg: #FFFFFF;
+    --text: #212121;
+    --text-muted: #757575;
+    --border: #E0E0E0;
+    --success: #2E7D32;
+    --warning: #F9A825;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .page { max-width: 800px; width: 100%; }
+
+  /* Карточка */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+
+  /* Шапка */
+  .card-header {
+    background: var(--brand);
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .card-title { font-size: 16px; font-weight: 600; }
+  .card-summary {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-left: auto;
+    margin-right: 16px;
+    display: none;
+  }
+  .card.collapsed .card-summary { display: block; }
+  .card-toggle {
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    transition: transform 0.2s;
+  }
+  .card.collapsed .card-toggle { transform: rotate(-90deg); }
+
+  /* Тело */
+  .card-body {
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  .card:not(.collapsed) .card-body { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Статус карточки */
+  .card-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .status-dot.ok { background: var(--success); }
+  .status-dot.warn { background: var(--warning); }
+  .status-dot.err { background: #C62828; }
+
+  /* Группа полей */
+  .field-group { margin-bottom: 20px; }
+  .field-label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .field-hint {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Input / Select */
+  input, select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--brand-light);
+    box-shadow: 0 0 0 3px rgba(230,81,0,0.08);
+  }
+  input:disabled, select:disabled {
+    background: #F5F5F5;
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+
+  /* Search с autocomplete */
+  .search-wrap { position: relative; }
+  .search-icon {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 14px;
+  }
+  .search-wrap input { padding-left: 32px; }
+  .autocomplete-list {
+    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-height: 200px; overflow-y: auto;
+    z-index: 10; display: none;
+  }
+  .autocomplete-list.visible { display: block; }
+  .autocomplete-item {
+    padding: 8px 12px; font-size: 13px; cursor: pointer;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .autocomplete-item:hover, .autocomplete-item.active {
+    background: #FFF3E0;
+  }
+  .autocomplete-item .city-region { font-size: 11px; color: var(--text-muted); }
+
+  /* Micro-info */
+  .micro-info {
+    display: flex; gap: 16px; margin-top: 8px;
+    font-size: 12px; color: var(--text-muted);
+  }
+  .micro-info span { display: flex; align-items: center; gap: 4px; }
+  .micro-info strong { color: var(--text); }
+
+  /* Radio group */
+  .radio-group {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .radio-pill {
+    display: flex; align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    background: #fff;
+  }
+  .radio-pill:hover { border-color: var(--brand-light); }
+  .radio-pill input[type="radio"] { display: none; }
+  .radio-pill.selected {
+    background: #FFF3E0;
+    border-color: var(--brand);
+    color: var(--brand);
+    font-weight: 600;
+  }
+
+  /* Link */
+  .map-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--brand);
+    text-decoration: none; margin-top: 8px;
+  }
+  .map-link:hover { text-decoration: underline; }
+
+  /* Row 2 cols */
+  .row { display: flex; gap: 16px; }
+  .row .field-group { flex: 1; }
+  @media (max-width: 640px) {
+    .row { flex-direction: column; gap: 0; }
+  }
+
+  /* Manual reset */
+  .manual-hint {
+    font-size: 11px; color: var(--text-muted);
+    background: #FFF8E1;
+    padding: 6px 10px; border-radius: 4px;
+    margin-top: 8px; display: none;
+  }
+  .manual-hint.visible { display: block; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- СОСТОЯНИЕ 1: РАЗВЁРНУТАЯ, ГОРОД НЕ ВЫБРАН -->
+    <h2 style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Состояние: развёрнута, ничего не выбрано</h2>
+
+    <div class="card" id="card1">
+      <div class="card-header" onclick="toggle('card1')">
+        <div class="card-header-left">
+          <span class="step-num">1</span>
+          <span class="card-title">Район строительства</span>
+        </div>
+        <span class="card-summary">Не указан</span>
+        <span class="card-toggle">−</span>
+      </div>
+      <div class="card-body">
+        <div class="card-status">
+          <span class="status-dot err"></span>
+          <span>Укажите город или введите нагрузки вручную</span>
+        </div>
+
+        <!-- Город -->
+        <div class="field-group">
+          <label class="field-label">Город</label>
+          <div class="search-wrap">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" id="cityInput" placeholder="Начните вводить город..." autocomplete="off" oninput="filterCities(this.value)" />
+            <div class="autocomplete-list" id="cityList">
+              <div class="autocomplete-item" onclick="selectCity('Москва')">
+                <div>Москва</div>
+                <div class="city-region">Московская обл., I ветровой, III снеговой</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Санкт-Петербург')">
+                <div>Санкт-Петербург</div>
+                <div class="city-region">Ленинградская обл., I ветровой, II снеговой</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Ижевск')">
+                <div>Ижевск</div>
+                <div class="city-region">Республика Удмуртия, I ветровой, II снеговой</div>
+              </div>
+              <div class="autocomplete-item" onclick="selectCity('Челябинск')">
+                <div>Челябинск</div>
+                <div class="city-region">Челябинская обл., II ветровой, III снеговой</div>
+              </div>
+            </div>
+          </div>
+          <div class="micro-info" id="cityMicro" style="display:none;">
+            <span>w₀: <strong>0.30</strong> кН/м²</span>
+            <span>Sg: <strong>100</strong> кг/м²</span>
+            <span>Район: <strong>II</strong> снеговой</span>
+          </div>
+        </div>
+
+        <!-- Снег / Ветер -->
+        <div class="row">
+          <div class="field-group">
+            <label class="field-label">Снеговой район</label>
+            <select id="snowSel" disabled>
+              <option>Выберите город...</option>
+            </select>
+            <div class="field-hint">Автозаполнение из справочника городов</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Ветровой w₀, кН/м²</label>
+            <select id="windSel" disabled>
+              <option>Выберите город...</option>
+            </select>
+            <div class="field-hint">СП 20.13330, табл. 11.1</div>
+          </div>
+        </div>
+
+        <!-- Тип местности -->
+        <div class="field-group">
+          <label class="field-label">Тип местности</label>
+          <div class="radio-group">
+            <label class="radio-pill" id="pillA">
+              <input type="radio" name="terrain" value="A" onchange="setTerrain('A')" />
+              <span>A — открытая</span>
+            </label>
+            <label class="radio-pill selected" id="pillB">
+              <input type="radio" name="terrain" value="B" checked onchange="setTerrain('B')" />
+              <span>B — застроенная</span>
+            </label>
+            <label class="radio-pill" id="pillC">
+              <input type="radio" name="terrain" value="C" onchange="setTerrain('C')" />
+              <span>C — плотная застройка</span>
+            </label>
+          </div>
+          <div class="field-hint">По умолчанию B — используется для большинства промзон</div>
+        </div>
+
+        <!-- Сейсмичность -->
+        <div class="field-group" style="max-width: 200px;">
+          <label class="field-label">Сейсмичность</label>
+          <select id="seismic">
+            <option value="6" selected>6 и меньше</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+        </div>
+
+        <a href="https://docs.cntd.ru/document/1200144538" target="_blank" class="map-link">
+          &#128205; Карта климатических зон (СП 20.13330)
+        </a>
+      </div>
+    </div>
+
+    <!-- СОСТОЯНИЕ 2: СВЁРНУТАЯ, ГОРОД ВЫБРАН -->
+    <h2 style="font-size:14px;color:var(--text-muted);margin-bottom:12px;margin-top:24px;">Состояние: свёрнута, город выбран</h2>
+
+    <div class="card collapsed" id="card2">
+      <div class="card-header" onclick="toggle('card2')">
+        <div class="card-header-left">
+          <span class="step-num">1</span>
+          <span class="card-title">Район строительства</span>
+        </div>
+        <span class="card-summary">Ижевск — II сн., I ветр., тип B</span>
+        <span class="card-toggle">&#9660;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-status">
+          <span class="status-dot ok"></span>
+          <span>Город выбран, климатические нагрузки определены</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Город</label>
+          <input type="text" value="Ижевск" disabled style="background:#E8F5E9;" />
+        </div>
+        <div class="row">
+          <div class="field-group">
+            <label class="field-label">Снеговой район</label>
+            <select disabled><option>II район — 100 кг/м² (1.00 кН/м²)</option></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Ветровой w₀, кН/м²</label>
+            <select disabled><option>0.30 кН/м²</option></select>
+          </div>
+        </div>
+        <div class="radio-group">
+          <label class="radio-pill selected"><input type="radio" name="t2" checked disabled /><span>B — застроенная</span></label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+function toggle(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+function filterCities(val) {
+  const list = document.getElementById('cityList');
+  list.classList.toggle('visible', val.length >= 2);
+  const items = list.querySelectorAll('.autocomplete-item');
+  let has = false;
+  items.forEach(item => {
+    const city = item.textContent.toLowerCase();
+    const show = city.includes(val.toLowerCase());
+    item.style.display = show ? 'block' : 'none';
+    if (show) has = true;
+  });
+  if (!has) list.classList.remove('visible');
+}
+function selectCity(name) {
+  document.getElementById('cityInput').value = name;
+  document.getElementById('cityList').classList.remove('visible');
+  document.getElementById('cityMicro').style.display = 'flex';
+  const snow = document.getElementById('snowSel');
+  snow.innerHTML = '<option>II район — 100 кг/м² (1.00 кН/м²)</option>';
+  snow.disabled = true;
+  const wind = document.getElementById('windSel');
+  wind.innerHTML = '<option>0.30 кН/м²</option>';
+  wind.disabled = true;
+}
+function setTerrain(v) {
+  ['pillA','pillB','pillC'].forEach(id => document.getElementById(id).classList.remove('selected'));
+  document.getElementById('pill'+v).classList.add('selected');
+}
+</script>
+</body>
+</html>

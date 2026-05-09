@@ -20,10 +20,7 @@ describe("window-riegel native vs VELICAN diagnostic comparison", () => {
   }, 20_000);
 
   it("documents that the skeleton is not parity-approved", async () => {
-    // @ts-expect-error This repo does not install Node type declarations for tests.
-    const { readFileSync } = (await import("node:fs")) as {
-      readFileSync: (path: string, encoding: string) => string;
-    };
+    const { readFileSync } = await import("node:fs");
     const doc = readFileSync("docs/window-riegel-native-migration.md", "utf8");
 
     expect(doc).toContain("not parity-approved");
