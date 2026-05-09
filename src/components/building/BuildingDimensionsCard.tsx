@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ProjectInput, ProjectBuildingEnvelope } from "../../calc/project/types";
+import cranesJson from "../../data/cranes/cranes.json";
 
 const cardStyle = {
   border: "1px solid #fb923c",
@@ -162,6 +163,106 @@ const supportOptions = [
   { value: "5t", label: "5 тонн" },
   { value: "10t", label: "10 тонн" },
 ];
+
+/* ── Crane catalog helpers ── */
+interface CraneRow {
+  capacity: string;
+  span_m: number;
+  base_mm: number;
+  gauge_mm: number;
+  wheelLoad_kN: number;
+  trolleyMass_t: number;
+  craneMass_t: number;
+}
+
+const CRANES = cranesJson as CraneRow[];
+const CRANE_CAPACITIES = ["5", "8", "10", "12.5", "16", "16/3.2", "20/5", "32/5", "50/12.5"];
+
+function lookupCrane(capacity: string, span_m: number): CraneRow | undefined {
+  return CRANES.find((c) => c.capacity === capacity && c.span_m === span_m);
+}
+
+function getCraneSpanOptions(capacity: string, buildingSpanM: number): [string, string][] {
+  const spans = [12, 18, 24, 30, 36].filter((s) => s <= buildingSpanM);
+  return spans.map((s) => [String(s), `${s} м`]);
+}
+
+function CraneCatalogSelect({
+  spanM,
+  value,
+  onChange,
+}: {
+  spanM: number;
+  value: string;
+  onChange: (capacity: string, auto: CraneRow) => void;
+}) {
+  return (
+    <div style={fieldRowStyle}>
+      <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Грузоподъёмность</span>
+      <select
+        value={value}
+        onChange={(e) => {
+          const capacity = e.target.value;
+          const spans = getCraneSpanOptions(capacity, spanM).map(([v]) => Number(v));
+          const bestSpan = spans.length > 0 ? spans[0] : 12;
+          const row = lookupCrane(capacity, bestSpan);
+          if (row) onChange(capacity, row);
+        }}
+        style={selectStyle}
+      >
+        {CRANE_CAPACITIES.map((c) => (
+          <option key={c} value={c}>{c} т</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: [string, string][];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div style={fieldRowStyle}>
+      <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={selectStyle}
+      >
+        {options.map(([v, label]) => (
+          <option key={v} value={v}>{label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+const fieldRowStyle = {
+  display: "grid",
+  gridTemplateColumns: "140px 1fr",
+  gap: 12,
+  alignItems: "center",
+} as const;
+
+const inputStyle = {
+  width: "100%",
+  height: 40,
+  padding: "0 10px",
+  border: "1px solid #b8bec7",
+  borderRadius: 2,
+  fontSize: 15,
+  color: "#111827",
+  background: "#fff",
+  boxSizing: "border-box",
+} as const;
 
 function HelpIcon() {
   return (
@@ -355,15 +456,6 @@ export function BuildingDimensionsCard({
             </div>
           </div>
 
-          {/* Система Великан */}
-          <div style={{ display: "grid", gap: 10 }}>
-            <SectionTitle label="Система" />
-            <div style={toggleGroupStyle}>
-              <ToggleButton active label="Великан" onClick={() => {}} />
-            </div>
-            <span style={{ color: "#64748b", fontSize: 13 }}>Базовое решение для расчёта быстровозводимого металлического здания. Другие системы в этом этапе не показываются.</span>
-          </div>
-
           {/* Размеры здания */}
           <div style={{ display: "grid", gap: 10 }}>
             <SectionTitle label="Размеры здания" />
@@ -394,19 +486,11 @@ export function BuildingDimensionsCard({
               unit="м"
               onChange={(v) => setGeometry({ buildingHeightM: v })}
             />
-            <SliderField
-              label="Уклон кровли"
-              value={g.roofSlopeDeg}
-              min={1}
-              max={45}
-              step={0.5}
-              unit="%"
-              onChange={(v) => setGeometry({ roofSlopeDeg: v })}
-            />
           </div>
 
           {/* Шаги */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div style={{ display: "grid", gap: 10 }}>
+            <SectionTitle label="Шаги" />
             <SliderField
               label="Шаг рам"
               value={g.frameStepM}
@@ -434,106 +518,163 @@ export function BuildingDimensionsCard({
           </div>
 
           {/* Крановое оборудование */}
-          <div style={{ display: "grid", gap: 10 }}>
+          <div style={{ display: "grid", gap: 14 }}>
             <SectionTitle label="Крановое оборудование" />
 
-            {/* Подвесной */}
-            <div style={craneRowStyle}>
-              <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Подвесной</span>
-              <select
-                value={cranes.hangingCrane.enabled ? `${cranes.hangingCrane.capacityT}t` : "none"}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (v === "none") {
-                    setHangingCrane({ enabled: false, capacityT: 0 });
-                  } else {
-                    const capacityT = Number(v.replace("t", ""));
-                    setHangingCrane({ enabled: true, capacityT });
-                  }
-                }}
-                style={selectStyle}
-              >
-                {suspendedOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="number"
-                min={1}
-                max={10}
-                step={1}
-                value={cranes.hangingCrane.count || 1}
-                onChange={(e) => setHangingCrane({ count: Number(e.target.value) })}
-                style={qtyStyle}
-              />
-              <button
-                type="button"
-                style={cranes.hangingCrane.enabled ? btnApplyActiveStyle : btnApplyStyle}
-                onClick={() => setHangingCrane({ enabled: true })}
-              >
-                Применить
-              </button>
-              <button
-                type="button"
-                style={btnDeleteStyle}
-                onClick={() => setHangingCrane({ enabled: false, capacityT: 0, count: 1 })}
-              >
-                Удалить
-              </button>
+            {/* Подвесной кран */}
+            <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 600 }}>Кран подвесной</span>
+                <span style={{ fontSize: 13, color: cranes.hangingCrane.enabled ? "#16a34a" : "#94a3b8", fontWeight: 600 }}>
+                  {cranes.hangingCrane.enabled ? "Есть" : "Нет"}
+                </span>
+              </div>
+              <div style={toggleGroupStyle}>
+                <ToggleButton
+                  active={cranes.hangingCrane.enabled === false}
+                  label="Нет"
+                  onClick={() => setHangingCrane({ enabled: false, capacityT: 2, count: 1 })}
+                />
+                <ToggleButton
+                  active={cranes.hangingCrane.enabled === true}
+                  label="Есть"
+                  onClick={() => setHangingCrane({ enabled: true })}
+                />
+              </div>
+              {cranes.hangingCrane.enabled && (
+                <div style={{ display: "grid", gap: 10, paddingTop: 4 }}>
+                  <div style={fieldRowStyle}>
+                    <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Грузоподъёмность, т</span>
+                    <input
+                      type="number"
+                      min={0.5}
+                      max={10}
+                      step={0.5}
+                      value={cranes.hangingCrane.capacityT}
+                      onChange={(e) => {
+                        const v = Number(e.target.value);
+                        if (Number.isFinite(v)) setHangingCrane({ capacityT: Math.max(0.5, Math.min(10, v)) });
+                      }}
+                      style={inputStyle}
+                    />
+                  </div>
+                  <div style={fieldRowStyle}>
+                    <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Кол-во кранов</span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={10}
+                      step={1}
+                      value={cranes.hangingCrane.count}
+                      onChange={(e) => {
+                        const v = Number(e.target.value);
+                        if (Number.isFinite(v)) setHangingCrane({ count: Math.max(1, Math.min(10, v)) });
+                      }}
+                      style={inputStyle}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Опорный */}
-            <div style={craneRowStyle}>
-              <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Опорный</span>
-              <select
-                value={cranes.supportCrane.enabled ? `${cranes.supportCrane.capacityT}` : "none"}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (v === "none") {
-                    setSupportCrane({ enabled: false, capacityT: 0 });
-                  } else {
-                    setSupportCrane({ enabled: true, capacityT: v });
-                  }
-                }}
-                style={selectStyle}
-              >
-                {supportOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="number"
-                min={1}
-                max={10}
-                step={1}
-                value={cranes.supportCrane.wheelCount || 1}
-                onChange={(e) => setSupportCrane({ wheelCount: Number(e.target.value) })}
-                style={qtyStyle}
-              />
-              <button
-                type="button"
-                style={cranes.supportCrane.enabled ? btnApplyActiveStyle : btnApplyStyle}
-                onClick={() => setSupportCrane({ enabled: true })}
-              >
-                Применить
-              </button>
-              <button
-                type="button"
-                style={btnDeleteStyle}
-                onClick={() =>
-                  setSupportCrane({
-                    enabled: false,
-                    capacityT: 0,
-                    wheelCount: 1,
-                  })
-                }
-              >
-                Удалить
-              </button>
+            {/* Опорный кран */}
+            <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 600 }}>Кран опорный</span>
+                <span style={{ fontSize: 13, color: cranes.supportCrane.enabled ? "#16a34a" : "#94a3b8", fontWeight: 600 }}>
+                  {cranes.supportCrane.enabled ? "Есть" : "Нет"}
+                </span>
+              </div>
+              <div style={toggleGroupStyle}>
+                <ToggleButton
+                  active={cranes.supportCrane.enabled === false}
+                  label="Нет"
+                  onClick={() => setSupportCrane({ enabled: false, capacityT: "5", count: "one", craneSpanM: 24, railLevelM: 3.5, wheelCount: 4 })}
+                />
+                <ToggleButton
+                  active={cranes.supportCrane.enabled === true}
+                  label="Есть"
+                  onClick={() => setSupportCrane({ enabled: true })}
+                />
+              </div>
+              {cranes.supportCrane.enabled && (
+                <div style={{ display: "grid", gap: 10, paddingTop: 4 }}>
+                  <CraneCatalogSelect
+                    spanM={g.buildingSpanM}
+                    value={cranes.supportCrane.capacityT as string}
+                    onChange={(capacityT, auto) => {
+                      setSupportCrane({
+                        capacityT,
+                        craneSpanM: auto.span_m,
+                        wheelBaseM: auto.base_mm / 1000,
+                        maxWheelLoadKn: auto.wheelLoad_kN,
+                        trolleyWeightT: auto.trolleyMass_t,
+                        craneWeightT: auto.craneMass_t,
+                      });
+                    }}
+                  />
+                  <SelectField
+                    label="Пролёт крана"
+                    value={String(cranes.supportCrane.craneSpanM)}
+                    options={getCraneSpanOptions(cranes.supportCrane.capacityT as string, g.buildingSpanM)}
+                    onChange={(v) => {
+                      const spanM = Number(v);
+                      const row = lookupCrane(cranes.supportCrane.capacityT as string, spanM);
+                      if (row) {
+                        setSupportCrane({
+                          craneSpanM: spanM,
+                          wheelBaseM: row.base_mm / 1000,
+                          maxWheelLoadKn: row.wheelLoad_kN,
+                          trolleyWeightT: row.trolleyMass_t,
+                          craneWeightT: row.craneMass_t,
+                        });
+                      } else {
+                        setSupportCrane({ craneSpanM: spanM });
+                      }
+                    }}
+                  />
+                  <SelectField
+                    label="Кол-во кранов"
+                    value={cranes.supportCrane.count}
+                    options={[
+                      ["one", "Один"],
+                      ["two", "Два"],
+                    ]}
+                    onChange={(v) => setSupportCrane({ count: v as "one" | "two" })}
+                  />
+                  <div style={fieldRowStyle}>
+                    <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 500 }}>Отметка рельса, м</span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={30}
+                      step={0.1}
+                      value={cranes.supportCrane.railLevelM}
+                      onChange={(e) => {
+                        const v = Number(e.target.value);
+                        if (Number.isFinite(v)) setSupportCrane({ railLevelM: Math.max(1, Math.min(30, v)) });
+                      }}
+                      style={inputStyle}
+                    />
+                  </div>
+                  <div style={fieldRowStyle}>
+                    <span style={{ fontSize: 14, color: "#64748b" }}>Нагрузка на колесо, кН</span>
+                    <input
+                      readOnly
+                      value={cranes.supportCrane.maxWheelLoadKn.toFixed(0)}
+                      style={{ ...inputStyle, background: "#f8fafc", color: "#64748b", cursor: "default" }}
+                    />
+                  </div>
+                  <div style={fieldRowStyle}>
+                    <span style={{ fontSize: 14, color: "#64748b" }}>База, м</span>
+                    <input
+                      readOnly
+                      value={cranes.supportCrane.wheelBaseM?.toFixed(2) ?? "—"}
+                      style={{ ...inputStyle, background: "#f8fafc", color: "#64748b", cursor: "default" }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
